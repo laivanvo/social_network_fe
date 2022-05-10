@@ -5,6 +5,8 @@ Vue.use(VueRouter)
 Vue.config.productionTip = false
 Vue.component('jw-pagination', JwPagination);
 
+export const bus = new Vue()
+
 import HomeIndex from '@/views/pages/home/HomeIndex'
 import LoginApp from '@/views/pages/auth/LoginApp'
 import PersonalIndex from '@/views/pages/personal/PersonalIndex'
@@ -14,9 +16,9 @@ import "bootstrap-icons/font/bootstrap-icons.css";
 import JwPagination from 'jw-vue-pagination';
 
 const routes = [
-  { path: '/home', component: HomeIndex, name: 'home'},
-  { path: '/personal', component: PersonalIndex, name: 'personal'},
-  { path: '/login', component: LoginApp, name: 'login'}
+  { path: '/home', component: HomeIndex, name: 'home' },
+  { path: '/personal', component: PersonalIndex, name: 'personal' },
+  { path: '/login', component: LoginApp, name: 'login' }
 ]
 
 const router = new VueRouter({

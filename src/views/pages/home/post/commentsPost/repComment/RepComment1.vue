@@ -23,8 +23,20 @@
       </div>
       <div class="row">
         <div class="row" v-show="commentShow">
+          <div class="row">
+            <div class="col-1"></div>
+            <div class="col-11">
+              <input
+                v-on:keyup.enter="addComment"
+                type="text"
+                class="form-control"
+                placeholder="comment in this"
+                v-model="addText"
+              />
+            </div>
+          </div>
           <div v-for="item in pageOfItems" :key="item.id">
-            <RepComment1 :comment="item" :user="user" />
+            <RepComment2 :comment="item" :user="user" />
           </div>
           <div class="row" @click="loadMoreComment">
             <styledLink>load more</styledLink>
@@ -36,7 +48,6 @@
             :items="comment.replies"
             @changePage="onChangePage"
           ></jw-pagination>
-          <add-comment :comment="comment" :user="user" />
         </div>
       </div>
     </div>
@@ -45,7 +56,6 @@
 
 <script>
 import styled, { css } from "vue-styled-components";
-import AddComment from "@/views/pages/home/post/commentsPost/AddComment.vue";
 import DropDownComment from "@/views/pages/home/post/commentsPost/DropDownComment.vue";
 const styledLink = styled.p`
   &:hover {
@@ -55,16 +65,17 @@ const styledLink = styled.p`
     `}
   }
 `;
-import RepComment1 from "@/views/pages/home/post/commentsPost/repComment/RepComment1.vue";
+import BaseRequest from "@/helpers/BaseRequest";
+import RepComment2 from "@/views/pages/home/post/commentsPost/repComment/RepComment2.vue";
+import { bus } from "@/main";
 import ReactionComment from "@/views/pages/home/post/commentsPost/ReactionComment.vue";
 
 export default {
   components: {
     styledLink,
-    RepComment1,
+    RepComment2,
     DropDownComment,
     ReactionComment,
-    AddComment,
   },
   props: {
     comment: {
@@ -89,6 +100,18 @@ export default {
   },
   mounted() {},
   methods: {
+    addLike() {
+      let data = new FormData();
+      data.append("id", this.comment.id);
+      data.append("type", "comment");
+      BaseRequest.post("reaction", data)
+        .then(function () {
+          bus.$emit("load");
+        })
+        .catch(function (err) {
+          console.log(err);
+        });
+    },
     onChangePage(pageOfItems) {
       this.pageOfItems = pageOfItems;
     },
@@ -111,6 +134,22 @@ export default {
     },
     EditPost() {
       this.edit = true;
+    },
+    addComment() {
+      let _this = this;
+      let data = new FormData();
+      data.append("id", this.comment.id);
+      data.append("type", "comment");
+      data.append("text", this.addText);
+      this.addText = "";
+      BaseRequest.post("comment", data)
+        .then(function (res) {
+          console.log(res);
+          _this.getComments();
+        })
+        .catch(function (err) {
+          console.log(err);
+        });
     },
   },
 };
