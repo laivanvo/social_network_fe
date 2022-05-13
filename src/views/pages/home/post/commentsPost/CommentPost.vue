@@ -14,28 +14,21 @@
         </div>
       </div>
       <div class="row">
-        <reaction-comment :comment="comment" :user="user" />
+        <reaction-app :id="comment.id" :type="'comment'" :user="user" />
         <div class="col-2"></div>
         <div class="col-3" @click="showComment">
           <styledLink>comment</styledLink>
         </div>
-        <div class="col-2">{{ comment.reactions.length }} like</div>
+        <div class="col-2">{{ 2 }} like</div>
       </div>
       <div class="row">
         <div class="row" v-show="commentShow">
-          <div v-for="item in pageOfItems" :key="item.id">
+          <div v-for="item in commnents" :key="item.id">
             <RepComment1 :comment="item" :user="user" />
           </div>
           <div class="row" @click="loadMoreComment">
             <styledLink>load more</styledLink>
           </div>
-          <jw-pagination
-            :key="keyPage"
-            v-show="false"
-            :page-size="pageSize"
-            :items="comment.replies"
-            @changePage="onChangePage"
-          ></jw-pagination>
           <add-comment :comment="comment" :user="user" />
         </div>
       </div>
@@ -56,21 +49,19 @@ const styledLink = styled.p`
   }
 `;
 import RepComment1 from "@/views/pages/home/post/commentsPost/repComment/RepComment1.vue";
-import ReactionComment from "@/views/pages/home/post/commentsPost/ReactionComment.vue";
+import ReactionApp from "@/views/pages/home/post/commentsPost/ReactionApp.vue";
+import BaseRequest from "@/helpers/BaseRequest";
 
 export default {
   components: {
     styledLink,
     RepComment1,
     DropDownComment,
-    ReactionComment,
+    ReactionApp,
     AddComment,
   },
   props: {
     comment: {
-      type: Object,
-    },
-    ReactionComment: {
       type: Object,
     },
     user: {
@@ -85,10 +76,25 @@ export default {
       pageSize: 4,
       keyPage: 10000,
       addText: "",
+      comments: [],
     };
   },
-  mounted() {},
+  mounted() { this.getComment },
   methods: {
+    getComment(page) {
+      let data = new FormData();
+      data.append("id", this.post.id);
+      data.append("type", "comment");
+      BaseRequest.post("comments?page=" + page, data)
+        .then((response) => {
+          this.comments = this.comments.concat(response.data.comments.data);
+          this.countCommnet = response.data.countCommnet
+          console.log(this.comments);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
     onChangePage(pageOfItems) {
       this.pageOfItems = pageOfItems;
     },

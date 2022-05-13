@@ -14,7 +14,7 @@
         </div>
       </div>
       <div class="row">
-        <reaction-comment :comment="comment" :user="user" />
+        <reaction-app :comment="comment" :user="user" />
         <div class="col-2"></div>
         <div class="col-3" @click="showComment">
           <styledLink>comment</styledLink>
@@ -68,20 +68,20 @@ const styledLink = styled.p`
 import BaseRequest from "@/helpers/BaseRequest";
 import RepComment2 from "@/views/pages/home/post/commentsPost/repComment/RepComment2.vue";
 import { bus } from "@/main";
-import ReactionComment from "@/views/pages/home/post/commentsPost/ReactionComment.vue";
+import ReactionApp from "@/views/pages/home/post/commentsPost/ReactionApp.vue";
 
 export default {
   components: {
     styledLink,
     RepComment2,
     DropDownComment,
-    ReactionComment,
+    ReactionApp,
   },
   props: {
     comment: {
       type: Object,
     },
-    ReactionComment: {
+    ReactionApp: {
       type: Object,
     },
     user: {

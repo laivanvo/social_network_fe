@@ -7,7 +7,7 @@
       <div class="row">{{ comment.user.name }}</div>
       <div class="row">{{ comment.text }}</div>
       <div class="row">
-        <reaction-comment :comment="comment" :user="user" />
+        <reaction-app :comment="comment" :user="user" />
         <div class="col-2"></div>
         <div class="col-3" @click="showComment"></div>
         <div class="col-2">{{ comment.reactions.length }} like</div>
@@ -19,11 +19,11 @@
 <script>
 import BaseRequest from "@/helpers/BaseRequest";
 import { bus } from "@/main";
-import ReactionComment from "@/views/pages/home/post/commentsPost/ReactionComment.vue";
+import ReactionApp from "@/views/pages/home/post/commentsPost/ReactionApp.vue";
 
 
 export default {
-  components: { ReactionComment },
+  components: { ReactionApp },
   props: {
     comment: {
       type: Object,

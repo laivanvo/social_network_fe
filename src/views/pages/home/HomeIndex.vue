@@ -17,22 +17,10 @@
           />
           <create-post-modal @getPost="getPost" class="col-10" :user="user" />
         </div>
-        <div v-for="item in pageOfItems" :key="item.id">
-          <post-app
-            class="border mt-4"
-            :post="item"
-            :key="keyPostApp"
-            :user="user"
-          />
+        <div v-for="post in posts" :key="post.id">
+          <post-app :post="post" :user="user"/>
         </div>
       </div>
-      <jw-pagination
-        :key="keyPage"
-        v-show="false"
-        :page-size="pageSize"
-        @changePage="onChangePage"
-        :items="posts"
-      ></jw-pagination>
       <div class="col-3"></div>
     </div>
   </div>
@@ -58,7 +46,6 @@ export default {
   data() {
     return {
       keyPostApp: 0,
-      posts: [],
       pageOfItems: [],
       pageSize: 4,
       keyPage: 10000,
@@ -68,19 +55,22 @@ export default {
       success: "",
       images: [],
       videos: [],
+      posts:[],
+      page: 1,
     };
   },
   mounted() {
-    this.getPost();
-    this.getFile();
+    this.getPost(this.page);
+    console.log(this.posts)
   },
   methods: {
-    getPost() {
-      BaseRequest.get("posts")
+    getPost(page) {
+      BaseRequest.get('posts?page=' + page)
         .then((response) => {
-          console.log(response);
-          this.posts = response.data.posts;
+          this.posts = this.posts.concat(response.data.posts.data);
+          console.log(this.posts)
           this.user = response.data.user;
+
         })
         .catch((error) => {
           console.log(error);
@@ -88,32 +78,8 @@ export default {
     },
     handleScroll() {
       if ($(window).scrollTop() + $(window).height() == $(document).height()) {
-        this.pageSize += 4;
-        this.keyPage++;
+        this.getPost(++this.page)
       }
-    },
-    onChangePage(pageOfItems) {
-      this.pageOfItems = pageOfItems;
-    },
-    getFile() {
-      let _this = this;
-      BaseRequest.get("file")
-        .then(function (res) {
-          _this.images = res.data.images;
-          _this.videos = res.data.videos;
-        })
-        .catch(function (err) {
-          console.log(err);
-        });
-    },
-    onChange(e) {
-      this.file = e.target.files[0];
-      let data = new FormData();
-      data.append("file", this.file);
-      BaseRequest.post("upload", data);
-    },
-    load() {
-      this.getPost();
     },
   },
 };

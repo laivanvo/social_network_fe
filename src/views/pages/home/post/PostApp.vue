@@ -68,46 +68,27 @@
       <div class="col-1">
         <i class="bi bi-star-half"></i>
       </div>
-      <div class="col-2">{{ post.reactions.length }}</div>
+      <div class="col-2">{{ countReaction }}</div>
     </div>
     <div></div>
     <div class="row">
       <div class="col-2">
-        <i
-          @click="addLike()"
-          v-show="
-            !(post.reactions.map((r) => r.user_id).indexOf(this.user.id) != -1)
-          "
-          class="bi bi-star"
-        ></i>
-        <i
-          @click="addLike()"
-          v-show="
-            post.reactions.map((r) => r.user_id).indexOf(this.user.id) != -1
-          "
-          class="bi bi-star-fill"
-        ></i>
+        <i @click="addLike()" v-show="!isLike" class="bi bi-star"></i>
+        <i @click="addLike()" v-show="isLike" class="bi bi-star-fill"></i>
       </div>
       <div class="col-2"></div>
       <div class="col-3" @click="showComment">
-        <styledLink>comment</styledLink>
+        <styledLink>{{ countCommnet }} comment</styledLink>
       </div>
     </div>
     <div class="row" v-show="commentShow">
       <div>
-        <div v-for="item in pageOfItems" :key="item.id">
-          <comment-post :comment="item" :user="user" />
+        <div v-for="comment in comments" :key="comment.id">
+          <comment-post :comment="comment" :user="user" />
         </div>
         <div class="row" @click="loadMoreComment">
           <styledLink>load more</styledLink>
         </div>
-        <jw-pagination
-          :key="keyPage"
-          v-show="false"
-          :page-size="pageSize"
-          :items="post.comments"
-          @changePage="onChangePage"
-        ></jw-pagination>
       </div>
     </div>
     <div class="row">
@@ -157,8 +138,6 @@ export default {
   data() {
     return {
       commentShow: false,
-      pageOfItems: [],
-      pageSize: 4,
       keyPage: 10000,
       image: false,
       video: false,
@@ -167,10 +146,16 @@ export default {
       text: "",
       bg_image: "",
       addText: "",
-      commentsReverse: [],
+      comments: [],
+      page: 1,
+      isLike: false,
+      countReaction: 0,
+      countCommnet: 0,
     };
   },
   mounted() {
+    this.getComment
+    this.getReaction
     this.text = this.post.text;
     if (this.post.bg_image) {
       this.bg_image =
@@ -181,13 +166,46 @@ export default {
     this.getFile();
   },
   methods: {
+    getComment(page) {
+      let data = new FormData();
+      data.append("id", this.post.id);
+      data.append("type", "post");
+      BaseRequest.post("comments?page=" + page, data)
+        .then((response) => {
+          this.comments = this.comments.concat(response.data.comments.data);
+          this.countCommnet = response.data.countCommnet
+          console.log(this.comments);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    getReaction() {
+      let data = new FormData();
+      data.append("id", this.post.id);
+      data.append("type", "post");
+      BaseRequest.post("reactions", data)
+        .then((response) => {
+          this.isLike = response.data.isLike;
+          this.countReaction = response.data.count;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
     addLike() {
+      let _this = this
       let data = new FormData();
       data.append("id", this.post.id);
       data.append("type", "post");
       BaseRequest.post("reaction", data)
         .then(function () {
-          bus.$emit("load");
+          if (_this.isLike) {
+            _this.countReaction--;
+          } else {
+            _this.countReaction++;
+          }
+          _this.isLike = !_this.isLike;
         })
         .catch(function (err) {
           console.log(err);
@@ -198,10 +216,10 @@ export default {
     },
     showComment() {
       this.commentShow = !this.commentShow;
+      this.getComment(this.page);
     },
     loadMoreComment() {
-      this.pageSize += 4;
-      this.keyPage++;
+      this.getComment(++this.page);
     },
     personal() {
       this.$router.push({ name: "personal" });
