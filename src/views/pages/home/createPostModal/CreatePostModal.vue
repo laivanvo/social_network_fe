@@ -209,11 +209,12 @@ export default {
             data.append("text", this.post.text);
             data.append("audience", this.post.audience);
             data.append("bg", this.post.bg);
-            BaseRequest.post("post", data)
+            BaseRequest.post("posts", data)
                 .then(function (res) {
                     _this.$emit("addPost", res.data.post);
                 })
                 .catch(function (err) {
+                    alert(2)
                     console.log(err)
                 });
         },

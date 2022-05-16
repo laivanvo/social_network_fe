@@ -1,27 +1,79 @@
 <template>
-  <div class="bg-light text-dark border row">
-    <div class="col-1">
-      <img src="@/assets/logo.png" class="card-img-top" alt="..." />
+  <div class="bg-light text-dark border row" v-show="!isDelete">
+    <div class="row">
+      <div class="col-10">
+        <div class="row">
+          <div class="col-2">
+            <!-- <img src="#"/> -->
+          </div>
+          <div class="col-3">
+            {{ user.name }}
+          </div>
+        </div>
+        <div v-show="!isEdit" class="row">
+          {{ editText }}
+        </div>
+        <div v-show="isEdit" class="row">
+          <input
+            type="text"
+            v-on:keyup.enter="editComment"
+            v-model="editText"
+          />
+        </div>
+      </div>
+      <div class="col-2">
+        <div class="dropdown col-1">
+          <i
+            class="bi bi-card-list"
+            type="button"
+            id="dropdownMenuButton1"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+          </i>
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+            <li>
+              <a @click="edit" class="dropdown-item"> Edit </a>
+            </li>
+            <li>
+              <a @click="deleteComment" class="dropdown-item">Delete</a>
+            </li>
+            <li>
+              <a class="dropdown-item" href="#">Something else here</a>
+            </li>
+          </ul>
+        </div>
+      </div>
     </div>
-    <div class="col-11">
-      <div class="row">{{ user.name }}</div>
-      <div class="row">{{ comment.text }}</div>
-      <div class="row">
-        <reaction-app :comment="comment" :user="user" />
-        <div class="col-2"></div>
-        <div class="col-3" @click="showComment"></div>
+    <div class="row">
+      <div class="col-3">
+        <reaction-app :id="comment.id" :type="'comment'" :user="user" />
+      </div>
+      <div class="col-3" @click="showComment">
+        <styledLink>comment</styledLink>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import BaseRequest from "@/helpers/BaseRequest";
+import styled, { css } from "vue-styled-components";
+const styledLink = styled.p`
+  &:hover {
+    ${() => css`
+      text-decoration: underline;
+      color: blue;
+    `}
+  }
+`;
 import ReactionApp from "@/views/pages/home/post/commentsPost/ReactionApp.vue";
-
+import BaseRequest from "@/helpers/BaseRequest";
 
 export default {
-  components: { ReactionApp },
+  components: {
+    styledLink,
+    ReactionApp,
+  },
   props: {
     comment: {
       type: Object,
@@ -29,26 +81,26 @@ export default {
     user: {
       type: Object,
     },
+    post: {
+      type: Object,
+    },
   },
   data() {
     return {
-      like: true,
       commentShow: false,
       pageOfItems: [],
-      pageSize: 4,
-      keyPage: 10000,
       addText: "",
+      comments: [],
+      page: 0,
+      editText: "",
+      isEdit: false,
+      isDelete: false,
     };
   },
-  mounted() {},
+  mounted() {
+    this.editText = this.comment.text;
+  },
   methods: {
-    showComment() {
-      this.commentShow = !this.commentShow;
-    },
-    loadMoreComment() {
-      this.pageSize += 4;
-      this.keyPage++;
-    },
     personal() {
       this.$router.push({ name: "personal" });
     },
@@ -62,14 +114,29 @@ export default {
     EditPost() {
       this.edit = true;
     },
-    addComment() {
+    edit() {
+      this.isEdit = !this.isEdit;
+    },
+    editComment() {
+      let _this = this;
+      let data = new FormData();
+      data.append("text", this.editText);
+      BaseRequest.get("comments/" + this.comment.id)
+        .then(function () {
+          _this.isEdit = !_this.isEdit;
+        })
+        .catch(function (err) {
+          console.log(err);
+        });
+    },
+    deleteComment() {
+      let _this = this;
       let data = new FormData();
       data.append("id", this.comment.id);
       data.append("type", "comment");
-      data.append("text", this.addText);
-      this.addText = "";
-      BaseRequest.post("comment", data)
+      BaseRequest.get("comments/" + this.comment.id, data)
         .then(function () {
+          _this.isDelete = true;
         })
         .catch(function (err) {
           console.log(err);

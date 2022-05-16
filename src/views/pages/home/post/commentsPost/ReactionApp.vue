@@ -26,9 +26,6 @@ export default {
         type: {
             type: String,
         },
-        count_reaction: {
-            type: Number,
-        },
     },
     data() {
         return {
@@ -38,7 +35,6 @@ export default {
     },
     mounted() {
         this.getReaction();
-        this.countReaction = this.count_reaction;
     },
     methods: {
         getReaction() {
