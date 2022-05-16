@@ -201,7 +201,6 @@ export default {
         this.file = this.post.file;
         this.getBgImage();
         this.getFile();
-        console.log(this.post);
     },
     methods: {
         upload() {
@@ -219,21 +218,19 @@ export default {
                 });
         },
         showBgImage() {
-            console.log(this.post);
             this.isBgImage = !this.isBgImage;
         },
         addBg(name, id) {
             this.post.bg = id;
-            console.log(this.post.bg)
             this.bg_image = this.bg_image = 'background-image: url(http://localhost:8080' + name + ')';
-            console.log(this.bg_image);
         },
         onChange(e) {
             this.file = e.target.files[0];
-            this.post.type = this.post.file.type.substr(0, 5);
+            this.post.type = this.file.type.substr(0, 5);
             this.getFile();
             document.getElementById(this.post.type + this.post.id).src =
                 URL.createObjectURL(e.target.files[0]);
+                console.log(this.file)
         },
         updatePost() {
             let data = new FormData();
@@ -242,11 +239,8 @@ export default {
             data.append("text", this.post.text);
             data.append("audience", this.post.audience);
             data.append("bg", this.post.bg);
-            console.log(this.post.bg)
-            console.log(data);
             BaseRequest.post("postUpdate", data)
-                .then(function (res) {
-                    console.log(res);
+                .then(function () {
                 })
                 .catch(function () {
                     alert(1);

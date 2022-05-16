@@ -1,16 +1,15 @@
 <template>
-  <div class="row">
+  <div class="bg-light text-dark border row">
     <div class="col-1">
       <img src="@/assets/logo.png" class="card-img-top" alt="..." />
     </div>
     <div class="col-11">
-      <div class="row">{{ comment.user.name }}</div>
+      <div class="row">{{ user.name }}</div>
       <div class="row">{{ comment.text }}</div>
       <div class="row">
         <reaction-app :comment="comment" :user="user" />
         <div class="col-2"></div>
         <div class="col-3" @click="showComment"></div>
-        <div class="col-2">{{ comment.reactions.length }} like</div>
       </div>
     </div>
   </div>
@@ -18,7 +17,6 @@
 
 <script>
 import BaseRequest from "@/helpers/BaseRequest";
-import { bus } from "@/main";
 import ReactionApp from "@/views/pages/home/post/commentsPost/ReactionApp.vue";
 
 
@@ -44,21 +42,6 @@ export default {
   },
   mounted() {},
   methods: {
-    addLike() {
-      let data = new FormData();
-      data.append("id", this.comment.id);
-      data.append("type", "comment");
-      BaseRequest.post("reaction", data)
-        .then(function () {
-          bus.$emit("load");
-        })
-        .catch(function (err) {
-          console.log(err);
-        });
-    },
-    onChangePage(pageOfItems) {
-      this.pageOfItems = pageOfItems;
-    },
     showComment() {
       this.commentShow = !this.commentShow;
     },
@@ -87,7 +70,6 @@ export default {
       this.addText = "";
       BaseRequest.post("comment", data)
         .then(function () {
-          bus.$emit("load");
         })
         .catch(function (err) {
           console.log(err);

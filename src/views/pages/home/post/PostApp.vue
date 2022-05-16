@@ -1,109 +1,120 @@
 <template>
-  <div name="post" class="border rounded p-4 bg-light">
-    <edit-post-modal :id="'postEdit' + post.id" :user="user" :postPre="post" />
-    <div class="row">
-      <div class="card col-2" style="width: 4rem">
-        <img src="@/assets/logo.png" class="card-img-top" alt="..." />
-      </div>
-      <div class="col-9">
-        <div class="row">
-          <div class="col-4">
-            <styledLink @click="personal" class="row">{{
-              post.user.name
-            }}</styledLink>
-            <div class="row">
-              {{ new Date(post.created_at).toDateString() }}
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="dropdown col-1">
-        <i
-          class="bi bi-card-list"
-          type="button"
-          id="dropdownMenuButton1"
-          data-bs-toggle="dropdown"
-          aria-expanded="false"
-        >
-        </i>
-        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-          <li>
-            <a
-              class="dropdown-item"
-              data-bs-toggle="modal"
-              :data-bs-target="'#postEdit' + post.id"
-            >
-              Edit
-            </a>
-          </li>
-          <li>
-            <a class="dropdown-item" href="#">Delete</a>
-          </li>
-          <li>
-            <a class="dropdown-item" href="#">Something else here</a>
-          </li>
-        </ul>
-      </div>
-    </div>
-    <div class="row">{{ post.name }}</div>
-    <textarea
-      class="form-control"
-      disabled
-      v-model="text"
-      id="content"
-      :style="'; height: 100px;' + bg_image"
-    ></textarea>
-    <div class="row">
-      <img
-        v-show="image"
-        class="row"
-        :src="'http://localhost:8080' + post.file"
-      />
-      <video v-show="video" width="row" controls>
-        <source :src="'http://localhost:8080' + post.file" type="video/mp4" />
-        Your browser does not support HTML video.
-      </video>
-    </div>
-    <div class="row">
-      <div class="col-1">
-        <i class="bi bi-star-half"></i>
-      </div>
-      <div class="col-2">{{ countReaction }}</div>
-    </div>
-    <div></div>
-    <div class="row">
-      <div class="col-2">
-        <i @click="addLike()" v-show="!isLike" class="bi bi-star"></i>
-        <i @click="addLike()" v-show="isLike" class="bi bi-star-fill"></i>
-      </div>
-      <div class="col-2"></div>
-      <div class="col-3" @click="showComment">
-        <styledLink>{{ countCommnet }} comment</styledLink>
-      </div>
-    </div>
-    <div class="row" v-show="commentShow">
-      <div>
-        <div v-for="comment in comments" :key="comment.id">
-          <comment-post :comment="comment" :user="user" />
-        </div>
-        <div class="row" @click="loadMoreComment">
-          <styledLink>load more</styledLink>
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-1"></div>
-      <div class="col-11">
-        <input
-          v-on:keyup.enter="addComment"
-          type="text"
-          class="form-control"
-          placeholder="comment in this"
-          v-model="addText"
+    <div name="post" v-show="!isDelete" class="row m-0 p-0">
+        <edit-post-modal
+            :id="'postEdit' + post.id"
+            :user="user"
+            :postPre="post"
+            class="row m-0 p-0"
         />
-      </div>
+        <div class="row border m-0 p-0">
+            <img src="@/assets/logo.png" class="col-2" alt="..." />
+            <div class="col-9">
+                <div class="row">
+                    <div class="col-4">
+                        <styledLink @click="personal" class="row">{{
+                            user.name
+                        }}</styledLink>
+                        <div class="row">
+                            {{ new Date(post.created_at).toDateString() }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="dropdown col-1">
+                <i
+                    class="bi bi-card-list"
+                    type="button"
+                    id="dropdownMenuButton1"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                >
+                </i>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                    <li>
+                        <a
+                            class="dropdown-item"
+                            data-bs-toggle="modal"
+                            :data-bs-target="'#postEdit' + post.id"
+                        >
+                            Edit
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" @click="isDelete = !isDelete"
+                            >Delete</a
+                        >
+                    </li>
+                    <li>
+                        <a class="dropdown-item" href="#"
+                            >Something else here</a
+                        >
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="row m-0 p-0 border">
+            <textarea
+                class="m-0 p-0 form-control row"
+                disabled
+                v-model="text"
+                id="content"
+                :style="'; height: 100px;' + bg_image"
+            ></textarea>
+        </div>
+        <div class="row m-0 p-0">
+            <img
+                v-show="image"
+                class="row m-0"
+                :src="'http://localhost:8080' + post.file"
+            />
+            <video v-show="video" class="row m-0 p-0" controls>
+                <source
+                    :src="'http://localhost:8080' + post.file"
+                    type="video/mp4"
+                />
+                Your browser does not support HTML video.
+            </video>
+        </div>
+        <div class="row m-0 p-0">
+            <div class="col-3">
+                <reaction-app :count_reaction="post.count_reaction" :id="post.id" :type="'post'" />
+            </div>
+            <div class="col-9" @click="showComment">
+                <div class="row">
+                    <div class="col-8"></div>
+                    <div class="col-4">{{ countComment }} comment</div>
+                </div>
+                <styledLink class="row">
+                    <div class="col-2"></div>
+                    <div class="col-10">comment</div>
+                </styledLink>
+            </div>
+        </div>
+        <div class="row m-0 p-0">
+            <div class="col-1"></div>
+            <div class="col-11">
+                <input
+                    v-on:keyup.enter="addComment"
+                    type="text"
+                    class="form-control"
+                    placeholder="comment in this"
+                    v-model="addText"
+                />
+            </div>
+        </div>
+        <div class="row m-0 p-0" v-show="commentShow">
+            <div class="row" v-for="comment in comments" :key="comment.id">
+                <comment-post
+                    class="bg-light text-dark border m-0 p-0 row"
+                    :comment="comment"
+                    :user="user"
+                />
+            </div>
+            <div class="row" @click="loadMoreComment">
+                <styledLink>load more</styledLink>
+            </div>
+        </div>
     </div>
-  </div>
 </template>
 
 <script>
@@ -111,144 +122,115 @@ import BaseRequest from "@/helpers/BaseRequest";
 import CommentPost from "./commentsPost/CommentPost.vue";
 import styled, { css } from "vue-styled-components";
 import EditPostModal from "@/views/pages/home/createPostModal/EditPostModal.vue";
-import { bus } from "@/main";
+import ReactionApp from "./commentsPost/ReactionApp.vue";
 
 const styledLink = styled.p`
-  &:hover {
-    ${() => css`
-      text-decoration: underline;
-      color: blue;
-    `}
-  }
+    &:hover {
+        ${() => css`
+            text-decoration: underline;
+            color: blue;
+        `}
+    }
 `;
 export default {
-  components: {
-    CommentPost,
-    styledLink,
-    EditPostModal,
-  },
-  props: {
-    post: {
-      type: Object,
+    components: {
+        CommentPost,
+        styledLink,
+        EditPostModal,
+        ReactionApp,
     },
-    user: {
-      type: Object,
+    props: {
+        post: {
+            type: Object,
+        },
+        user: {
+            type: Object,
+        },
     },
-  },
-  data() {
-    return {
-      commentShow: false,
-      keyPage: 10000,
-      image: false,
-      video: false,
-      edit: false,
-      file: this.post.file,
-      text: "",
-      bg_image: "",
-      addText: "",
-      comments: [],
-      page: 1,
-      isLike: false,
-      countReaction: 0,
-      countCommnet: 0,
-    };
-  },
-  mounted() {
-    this.getComment
-    this.getReaction
-    this.text = this.post.text;
-    if (this.post.bg_image) {
-      this.bg_image =
-        "background-image: url(http://localhost:8080" +
-        this.post.bg_image.path +
-        ")";
-    }
-    this.getFile();
-  },
-  methods: {
-    getComment(page) {
-      let data = new FormData();
-      data.append("id", this.post.id);
-      data.append("type", "post");
-      BaseRequest.post("comments?page=" + page, data)
-        .then((response) => {
-          this.comments = this.comments.concat(response.data.comments.data);
-          this.countCommnet = response.data.countCommnet
-          console.log(this.comments);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+    data() {
+        return {
+            commentShow: false,
+            keyPage: 10000,
+            image: false,
+            video: false,
+            edit: false,
+            file: this.post.file,
+            text: "",
+            bg_image: "",
+            addText: "",
+            comments: [],
+            page: 1,
+            isLike: false,
+            countReaction: 0,
+            countComment: 0,
+            isDelete: false,
+        };
     },
-    getReaction() {
-      let data = new FormData();
-      data.append("id", this.post.id);
-      data.append("type", "post");
-      BaseRequest.post("reactions", data)
-        .then((response) => {
-          this.isLike = response.data.isLike;
-          this.countReaction = response.data.count;
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+    mounted() {
+        this.getComment(1);
+        this.text = this.post.text;
+        if (this.post.bg_image) {
+            this.bg_image =
+                "background-image: url(http://localhost:8080" +
+                this.post.bg_image.path +
+                ")";
+        }
+        this.getFile();
     },
-    addLike() {
-      let _this = this
-      let data = new FormData();
-      data.append("id", this.post.id);
-      data.append("type", "post");
-      BaseRequest.post("reaction", data)
-        .then(function () {
-          if (_this.isLike) {
-            _this.countReaction--;
-          } else {
-            _this.countReaction++;
-          }
-          _this.isLike = !_this.isLike;
-        })
-        .catch(function (err) {
-          console.log(err);
-        });
+    methods: {
+        getComment(page) {
+            let data = new FormData();
+            let _this = this;
+            data.append("id", this.post.id);
+            data.append("type", "post");
+            BaseRequest.post("comments?page=" + page, data)
+                .then((response) => {
+                    _this.comments = _this.comments.concat(
+                        response.data.comments.data
+                    );
+                    _this.countComment = response.data.comments.total;
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+        },
+        showComment() {
+            this.commentShow = !this.commentShow;
+            this.getComment(++this.page);
+        },
+        loadMoreComment() {
+            this.getComment(++this.page);
+        },
+        personal() {
+            this.$router.push({ name: "personal" });
+        },
+        getFile() {
+            if (this.post.type === "image") {
+                this.image = true;
+            } else if (this.post.type === "video") {
+                this.video = true;
+            }
+        },
+        EditPost() {
+            this.edit = true;
+        },
+        addComment() {
+            let _this = this;
+            let data = new FormData();
+            data.append("id", this.post.id);
+            data.append("type", "post");
+            data.append("text", this.addText);
+            BaseRequest.post("comment", data)
+                .then(function (res) {
+                    _this.addText = "";
+                    _this.comments.unshift(res.data.comment);
+                    _this.countComment++;
+                    _this.commentShow = true;
+                })
+                .catch(function (err) {
+                    console.log(err);
+                });
+        },
     },
-    onChangePage(pageOfItems) {
-      this.pageOfItems = pageOfItems;
-    },
-    showComment() {
-      this.commentShow = !this.commentShow;
-      this.getComment(this.page);
-    },
-    loadMoreComment() {
-      this.getComment(++this.page);
-    },
-    personal() {
-      this.$router.push({ name: "personal" });
-    },
-    getFile() {
-      if (this.post.type === "image") {
-        this.image = true;
-      } else if (this.post.type === "video") {
-        this.video = true;
-      }
-    },
-    EditPost() {
-      this.edit = true;
-    },
-    addComment() {
-      let _this = this;
-      let data = new FormData();
-      data.append("id", this.post.id);
-      data.append("type", "post");
-      data.append("text", this.addText);
-      BaseRequest.post("comment", data)
-        .then(function () {
-          _this.addText = "";
-          bus.$emit("load");
-        })
-        .catch(function (err) {
-          console.log(err);
-        });
-    },
-  },
 };
 </script>

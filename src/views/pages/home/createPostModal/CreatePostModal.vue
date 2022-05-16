@@ -129,6 +129,7 @@
                             @click="createPost"
                             type="button"
                             class="btn btn-primary"
+                            data-bs-dismiss="modal"
                         >
                             Post
                         </button>
@@ -168,7 +169,10 @@ export default {
     },
     mounted() {
         if (this.post.bg_image) {
-            this.bg_image = 'background-image: url(http://localhost:8080' + this.post.bg_image.path + ')';
+            this.bg_image =
+                "background-image: url(http://localhost:8080" +
+                this.post.bg_image.path +
+                ")";
         }
         this.getBgImage();
     },
@@ -192,28 +196,26 @@ export default {
         },
         addBg(name, id) {
             this.post.bg = id;
-            console.log(this.post.bg)
-            this.bg_image = this.bg_image = 'background-image: url(http://localhost:8080' + name + ')';
-            console.log(this.bg_image);
+            this.bg_image = this.bg_image =
+                "background-image: url(http://localhost:8080" + name + ")";
         },
         onChange(e) {
             this.post.file = e.target.files[0];
         },
         createPost() {
             let data = new FormData();
+            let _this = this;
             data.append("file", this.post.file);
             data.append("text", this.post.text);
             data.append("audience", this.post.audience);
             data.append("bg", this.post.bg);
-            console.log(this.post.file);
             BaseRequest.post("post", data)
                 .then(function (res) {
-                    console.log(res);
+                    _this.$emit("addPost", res.data.post);
                 })
-                .catch(function () {
-                    alert(1);
+                .catch(function (err) {
+                    console.log(err)
                 });
-            this.$emit('getPost')
         },
     },
 };
