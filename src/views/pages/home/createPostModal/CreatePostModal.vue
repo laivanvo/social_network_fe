@@ -61,6 +61,26 @@
                                 :style="'; height:' + height + 'px;' + bg_image"
                             ></textarea>
                         </div>
+                        <div class="row">
+                            <img
+                                :id="'image'"
+                                v-show="image"
+                                class="row"
+                                :src="'http://localhost:8080' + fileName"
+                            />
+                            <video
+                                :id="'video'"
+                                v-show="video"
+                                width="row"
+                                controls
+                            >
+                                <source
+                                    :src="'http://localhost:8080' + fileName"
+                                    type="video/mp4"
+                                />
+                                Your browser does not support HTML video.
+                            </video>
+                        </div>
                         <div v-show="isFile" class="row justify-content-center">
                             <div class="col-md-8">
                                 <div class="card">
@@ -155,30 +175,24 @@ export default {
             isFile: false,
             isBgImage: false,
             post: {
-                text: "",
-                file: "",
-                audience: "",
-                bg: 0,
             },
             success: "",
             height: 100,
             bg: "",
             options: ["public", "private"],
             bg_image: "",
+            image: "",
+            video: "",
+            file: "",
+            fileName: null,
         };
     },
     mounted() {
-        if (this.post.bg_image) {
-            this.bg_image =
-                "background-image: url(http://localhost:8080" +
-                this.post.bg_image.path +
-                ")";
-        }
         this.getBgImage();
+        this.getFile();
     },
     methods: {
         upload() {
-            this.height = 30;
             this.isFile = !this.isFile;
         },
         getBgImage() {
@@ -194,29 +208,44 @@ export default {
         showBgImage() {
             this.isBgImage = !this.isBgImage;
         },
-        addBg(name, id) {
-            this.post.bg = id;
+        addBg(name) {
+            this.post.bg = name;
             this.bg_image = this.bg_image =
                 "background-image: url(http://localhost:8080" + name + ")";
         },
         onChange(e) {
-            this.post.file = e.target.files[0];
+            this.file = e.target.files[0];
+            this.post.type = this.file.type.substr(0, 5);
+            this.getFile();
+            document.getElementById(this.post.type).src =
+                URL.createObjectURL(e.target.files[0]);
         },
         createPost() {
             let data = new FormData();
             let _this = this;
-            data.append("file", this.post.file);
+            data.append("file", this.file);
+            console.log(this.file)
             data.append("text", this.post.text);
             data.append("audience", this.post.audience);
-            data.append("bg", this.post.bg);
+            data.append("bg", this.post.bg ? this.post.bg : '');
             BaseRequest.post("posts", data)
                 .then(function (res) {
                     _this.$emit("addPost", res.data.post);
                 })
                 .catch(function (err) {
-                    alert(2)
-                    console.log(err)
+                    console.log(err);
                 });
+        },
+        getFile() {
+            if (this.post.type === "image") {
+                this.image = true;
+                this.video = false;
+            } else if (this.post.type === "video") {
+                this.image = false;
+                this.video = true;
+            } else {
+                this.isFile = false;
+            }
         },
     },
 };
