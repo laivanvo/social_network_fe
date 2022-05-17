@@ -10,6 +10,7 @@ import HomeIndex from '@/views/pages/home/HomeIndex'
 import LoginApp from '@/views/pages/auth/LoginApp'
 import PersonalIndex from '@/views/pages/personal/PersonalIndex'
 import ListRequest from '@/views/pages/personal/request/ListRequest'
+import EditProfile from '@/views/pages/personal/profile/EditProfile'
 import "bootstrap/dist/css/bootstrap.min.css"
 import "bootstrap"
 import "bootstrap-icons/font/bootstrap-icons.css";
@@ -18,7 +19,8 @@ const routes = [
   { path: '/home', component: HomeIndex, name: 'home' },
   { path: '/personal', component: PersonalIndex, name: 'personal' },
   { path: '/login', component: LoginApp, name: 'login' },
-  { path: '/friend', component: ListRequest, name: 'list' }
+  { path: '/friend', component: ListRequest, name: 'list' },
+  { path: '/profile', component: EditProfile, name: 'profile' },
 ]
 
 const router = new VueRouter({
