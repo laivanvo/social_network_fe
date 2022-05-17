@@ -23,7 +23,7 @@
           <post-app
             class="row border mt-5 bg-white"
             :postP="post"
-            :user="user"
+            :user="post.user"
           />
         </div>
       </div>

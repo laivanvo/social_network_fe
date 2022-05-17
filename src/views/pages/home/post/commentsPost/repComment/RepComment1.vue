@@ -1,6 +1,6 @@
 <template>
-  <div class="bg-light text-dark border row" v-show="!isDelete">
-    <div class="row">
+  <div class="bg-light text-dark border row m-0 p-0" v-show="!isDelete">
+    <div class="row m-0 p-0">
       <div class="col-10">
         <div class="row">
           <div class="col-2">
@@ -45,7 +45,7 @@
         </div>
       </div>
     </div>
-    <div class="row">
+    <div class="row m-0 p-0">
       <div class="col-3">
         <reaction-app :id="comment.id" :type="'comment'" :user="user" />
       </div>
@@ -53,12 +53,12 @@
         <styledLink>comment</styledLink>
       </div>
     </div>
-    <div class="row">
+    <div class="row m-0 p-0">
       <div class="col-2"></div>
-      <div class="col-10">
-        <div class="row" v-show="commentShow">
-          <div class="row" v-for="item in comments" :key="item.id">
-            <RepComment2 :comment="item" :user="user" />
+      <div class="col-10 row m-0 p-0">
+        <div class="row m-0 p-0" v-show="commentShow">
+          <div class="row m-0 p-0" v-for="item in comments" :key="item.id">
+            <RepComment2 class="row m-0 p-0" :comment="item" :user="user" />
           </div>
           <div class="row" @click="loadMoreComment">
             <styledLink>load more</styledLink>
@@ -66,7 +66,7 @@
           <input
             v-on:keyup.enter="addComment"
             type="text"
-            class="form-control row"
+            class="form-control"
             placeholder="comment in this"
             v-model="addText"
           />
@@ -138,6 +138,7 @@ export default {
         });
     },
     showComment() {
+      this.getComment(++this.page)
       this.commentShow = !this.commentShow;
     },
     loadMoreComment() {
@@ -192,15 +193,17 @@ export default {
         });
     },
     addComment() {
-      let data = new FormData();
       let _this = this;
+      let data = new FormData();
       data.append("id", this.comment.id);
       data.append("type", "comment");
       data.append("text", this.addText);
-      this.addText = "";
       BaseRequest.post("comment", data)
         .then(function (res) {
+          _this.addText = "";
           _this.comments.push(res.data.comment);
+          _this.comment.count_rep++;
+          _this.commentShow = true;
         })
         .catch(function (err) {
           console.log(err);

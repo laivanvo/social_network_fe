@@ -230,6 +230,7 @@ export default {
             data.append("bg", this.post.bg ? this.post.bg : '');
             BaseRequest.post("posts", data)
                 .then(function (res) {
+                    console.log(res.data.post)
                     _this.$emit("addPost", res.data.post);
                 })
                 .catch(function (err) {

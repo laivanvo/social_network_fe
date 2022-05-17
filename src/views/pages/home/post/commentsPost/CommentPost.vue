@@ -1,6 +1,6 @@
 <template>
-  <div class="row" v-show="!isDelete">
-    <div class="row">
+  <div class="row m-0 p-0" v-show="!isDelete">
+    <div class="row m-0 p-0">
       <div class="col-10">
         <div class="row">
           <div class="col-2">
@@ -11,7 +11,7 @@
           </div>
         </div>
         <div v-show="!isEdit" class="row">
-          {{ editText }}
+          <div class="shadow p-3 mb-5 bg-body rounded">{{ editText }}</div>
         </div>
         <div v-show="isEdit" class="row">
           <input
@@ -50,14 +50,14 @@
         <reaction-app :id="comment.id" :type="'comment'" :user="user" />
       </div>
       <div class="col-3" @click="showComment">
-        <styledLink>comment</styledLink>
+        <styledLink class="fs-6 fw-bold">rep</styledLink>
       </div>
     </div>
-    <div class="row">
+    <div class="row m-0 p-0">
       <div class="col-2"></div>
-      <div class="col-10">
-        <div class="row" v-show="commentShow">
-          <div v-for="item in comments" :key="item.id">
+      <div class="col-10 m-0 p-0">
+        <div class="row m-0 p-0" v-show="commentShow">
+          <div class="row m-0 p-0" v-for="item in comments" :key="item.id">
             <RepComment1 class="m-0 p-0" :comment="item" :user="user" />
           </div>
           <div class="row" @click="loadMoreComment">
@@ -138,6 +138,7 @@ export default {
         });
     },
     showComment() {
+      this.getComment(++this.page);
       this.commentShow = !this.commentShow;
     },
     loadMoreComment() {
@@ -176,27 +177,29 @@ export default {
       BaseRequest.post("comments/" + this.comment.id, data)
         .then(function () {
           _this.isDelete = true;
-          _this.$emit('deleteComment');
+          _this.$emit("deleteComment");
         })
         .catch(function (err) {
           console.log(err);
         });
     },
     addComment() {
-      let data = new FormData();
-      let _this = this;
-      data.append("id", this.comment.id);
-      data.append("type", "comment");
-      data.append("text", this.addText);
-      this.addText = "";
-      BaseRequest.post("comment", data)
-        .then(function (res) {
-          _this.comments.push(res.data.comment);
-        })
-        .catch(function (err) {
-          console.log(err);
-        });
-    },
+            let _this = this;
+            let data = new FormData();
+            data.append("id", this.comment.id);
+            data.append("type", "comment");
+            data.append("text", this.addText);
+            BaseRequest.post("comment", data)
+                .then(function (res) {
+                    _this.addText = "";
+                    _this.comments.push(res.data.comment);
+                    _this.comment.count_rep++;
+                    _this.commentShow = true;
+                })
+                .catch(function (err) {
+                    console.log(err);
+                });
+        },
   },
 };
 </script>

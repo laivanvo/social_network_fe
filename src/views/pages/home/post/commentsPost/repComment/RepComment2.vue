@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-light text-dark border row" v-show="!isDelete">
+  <div class="bg-light text-dark border row m-0 p-0" v-show="!isDelete">
     <div class="row">
       <div class="col-10">
         <div class="row">
@@ -49,29 +49,16 @@
       <div class="col-3">
         <reaction-app :id="comment.id" :type="'comment'" :user="user" />
       </div>
-      <div class="col-3" @click="showComment">
-        <styledLink>comment</styledLink>
-      </div>
     </div>
   </div>
 </template>
 
 <script>
-import styled, { css } from "vue-styled-components";
-const styledLink = styled.p`
-  &:hover {
-    ${() => css`
-      text-decoration: underline;
-      color: blue;
-    `}
-  }
-`;
 import ReactionApp from "@/views/pages/home/post/commentsPost/ReactionApp.vue";
 import BaseRequest from "@/helpers/BaseRequest";
 
 export default {
   components: {
-    styledLink,
     ReactionApp,
   },
   props: {
