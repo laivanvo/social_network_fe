@@ -1,33 +1,23 @@
 <template>
-  <div class="home row bg-light">
-    <div class="row p-0" name="posts">
-      <div class="col-3"></div>
-      <div class="col-6">
-        <div class="row">
-          <img src="@/assets/logo.png" class="col-1" alt="..." />
-          <div class="col-1"></div>
-          <input
-            class="col-10"
-            type="text"
-            data-bs-toggle="modal"
-            data-bs-target="#exampleModal"
-            placeholder="how are you today"
-          />
-        </div>
-        <create-post-modal
-          @addPost="addPost($event)"
-          class="row"
-          :user="user"
-        />
-        <div class="row" v-for="post in posts" :key="post.id">
-          <post-app
-            class="row border mt-5 bg-white"
-            :postP="post"
-            :user="post.user"
-          />
-        </div>
-      </div>
-      <div class="col-3"></div>
+  <div class="home row p-0 m-0 bg-light">
+    <div class="row p-0 m-0">
+      <img src="@/assets/logo.png" class="col-1" alt="..." />
+      <div class="col-1"></div>
+      <input
+        class="col-10"
+        type="text"
+        data-bs-toggle="modal"
+        data-bs-target="#exampleModal"
+        placeholder="how are you today"
+      />
+    </div>
+    <create-post-modal @addPost="addPost($event)" class="row" :user="user" />
+    <div class="row p-0 m-0" v-for="post in posts" :key="post.id">
+      <post-app
+        class="row border mt-5 bg-white"
+        :postP="post"
+        :user="post.user"
+      />
     </div>
   </div>
 </template>
