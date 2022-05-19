@@ -130,7 +130,7 @@
 import BaseRequest from "@/helpers/BaseRequest";
 import CommentPost from "./commentsPost/CommentPost.vue";
 import styled, { css } from "vue-styled-components";
-import EditPostModal from "@/views/pages/home/createPostModal/EditPostModal.vue";
+import EditPostModal from "@/views/pages//post/createPostModal/EditPostModal.vue";
 import ReactionApp from "./commentsPost/ReactionApp.vue";
 
 const styledLink = styled.p`

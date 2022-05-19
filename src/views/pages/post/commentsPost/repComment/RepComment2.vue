@@ -54,7 +54,7 @@
 </template>
 
 <script>
-import ReactionApp from "@/views/pages/home/post/commentsPost/ReactionApp.vue";
+import ReactionApp from "@/views/pages//post/commentsPost/ReactionApp.vue";
 import BaseRequest from "@/helpers/BaseRequest";
 
 export default {

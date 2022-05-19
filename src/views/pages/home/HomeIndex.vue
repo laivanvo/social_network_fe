@@ -1,31 +1,35 @@
 <template>
-  <div class="home row p-0 m-0 bg-light">
-    <div class="row p-0 m-0">
-      <img src="@/assets/logo.png" class="col-1" alt="..." />
-      <div class="col-1"></div>
-      <input
-        class="col-10"
-        type="text"
-        data-bs-toggle="modal"
-        data-bs-target="#exampleModal"
-        placeholder="how are you today"
-      />
+  <div class="home row p-0 m-0">
+    <div class="col-2"></div>
+    <div class="col-8 p-0 m-0">
+      <div class="row p-0 m-0">
+        <img src="@/assets/logo.png" class="col-1" alt="..." />
+        <div class="col-1"></div>
+        <input
+          class="col-10"
+          type="text"
+          data-bs-toggle="modal"
+          data-bs-target="#exampleModal"
+          placeholder="how are you today"
+        />
+      </div>
+      <create-post-modal @addPost="addPost($event)" class="row" :user="user" />
+      <div class="row p-0 m-0" v-for="post in posts" :key="post.id">
+        <post-app
+          class="row border mt-5 bg-white"
+          :postP="post"
+          :user="post.user"
+        />
+      </div>
     </div>
-    <create-post-modal @addPost="addPost($event)" class="row" :user="user" />
-    <div class="row p-0 m-0" v-for="post in posts" :key="post.id">
-      <post-app
-        class="row border mt-5 bg-white"
-        :postP="post"
-        :user="post.user"
-      />
-    </div>
+    <div class="col-2"></div>
   </div>
 </template>
 <script>
 import BaseRequest from "@/helpers/BaseRequest";
-import PostApp from "@/views/pages/home/post/PostApp.vue";
+import PostApp from "@/views/pages//post/PostApp.vue";
 import $ from "jquery";
-import CreatePostModal from "@/views/pages/home/createPostModal/CreatePostModal.vue";
+import CreatePostModal from "@/views/pages//post/createPostModal/CreatePostModal.vue";
 export default {
   components: {
     PostApp,

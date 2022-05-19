@@ -5,15 +5,15 @@
       type="button"
       class="btn btn-primary"
       data-bs-toggle="modal"
-      data-bs-target="#exampleModal"
+      data-bs-target="#EditProfile"
     >
-      Launch demo modal
+      Edit profile
     </button>
 
     <!-- Modal -->
     <div
       class="modal fade"
-      id="exampleModal"
+      id="EditProfile"
       tabindex="-1"
       aria-labelledby="exampleModalLabel"
       aria-hidden="true"
@@ -154,14 +154,8 @@
                 <input
                   class="col-9"
                   type="tel"
-                  id="phone"
                   v-model="profile.phone_number"
-                  name="phone"
-                  placeholder="123-45-678"
-                  pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}"
-                  required
-                /><br /><br />
-                <small>Format: 123-45-678</small><br /><br />
+                />
               </div>
             </div>
           </div>

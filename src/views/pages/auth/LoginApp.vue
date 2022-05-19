@@ -19,19 +19,19 @@
                         <input
                             class="form-control"
                             v-model="user.password"
-                            type="text"
+                            type="password"
                             placeholder="Password"
                         />
                     </div>
                     <div class="row">
                         <button type="submit" class="btn btn-primary">
-                            Đăng nhập
+                            Login
                         </button>
                     </div>
-                    <a href="#"><p class="text-center">Quên mật khẩu</p></a>
+                    <a href="#"><p class="text-center">forget password</p></a>
                     <div class="row">
                         <button class="btn btn-success">
-                            Tạo tài khoản mới
+                            create new
                         </button>
                     </div>
                 </form>

@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-light text-dark border row m-0 p-0" v-show="!isDelete">
+  <div class="row m-0 p-0" v-show="!isDelete">
     <div class="row m-0 p-0">
       <div class="col-10">
         <div class="row">
@@ -11,7 +11,7 @@
           </div>
         </div>
         <div v-show="!isEdit" class="row">
-          {{ editText }}
+          <div class="shadow p-3 mb-5 bg-body rounded">{{ editText }}</div>
         </div>
         <div v-show="isEdit" class="row">
           <input
@@ -45,20 +45,20 @@
         </div>
       </div>
     </div>
-    <div class="row m-0 p-0">
+    <div class="row">
       <div class="col-3">
         <reaction-app :id="comment.id" :type="'comment'" :user="user" />
       </div>
       <div class="col-3" @click="showComment">
-        <styledLink>comment</styledLink>
+        <styledLink class="fs-6 fw-bold">rep</styledLink>
       </div>
     </div>
     <div class="row m-0 p-0">
       <div class="col-2"></div>
-      <div class="col-10 row m-0 p-0">
+      <div class="col-10 m-0 p-0">
         <div class="row m-0 p-0" v-show="commentShow">
           <div class="row m-0 p-0" v-for="item in comments" :key="item.id">
-            <RepComment2 class="row m-0 p-0" :comment="item" :user="user" />
+            <RepComment1 class="m-0 p-0" :comment="item" :user="user" />
           </div>
           <div class="row" @click="loadMoreComment">
             <styledLink>load more</styledLink>
@@ -86,14 +86,14 @@ const styledLink = styled.p`
     `}
   }
 `;
-import RepComment2 from "@/views/pages/home/post/commentsPost/repComment/RepComment2.vue";
-import ReactionApp from "@/views/pages/home/post/commentsPost/ReactionApp.vue";
+import RepComment1 from "@/views/pages//post/commentsPost/repComment/RepComment1.vue";
+import ReactionApp from "@/views/pages//post/commentsPost/ReactionApp.vue";
 import BaseRequest from "@/helpers/BaseRequest";
 
 export default {
   components: {
     styledLink,
-    RepComment2,
+    RepComment1,
     ReactionApp,
   },
   props: {
@@ -138,7 +138,7 @@ export default {
         });
     },
     showComment() {
-      this.getComment(++this.page)
+      this.getComment(++this.page);
       this.commentShow = !this.commentShow;
     },
     loadMoreComment() {
@@ -154,16 +154,6 @@ export default {
         this.video = true;
       }
     },
-    EditPost() {
-      this.edit = true;
-    },
-    addLike(isLike) {
-      if (isLike) {
-        this.countReaction++;
-      } else {
-        this.countReaction--;
-      }
-    },
     edit() {
       this.isEdit = !this.isEdit;
     },
@@ -171,7 +161,7 @@ export default {
       let _this = this;
       let data = new FormData();
       data.append("text", this.editText);
-      BaseRequest.get("comments/" + this.comment.id)
+      BaseRequest.post("comments/" + this.comment.id, data)
         .then(function () {
           _this.isEdit = !_this.isEdit;
         })
@@ -182,33 +172,34 @@ export default {
     deleteComment() {
       let _this = this;
       let data = new FormData();
-      data.append("id", this.comment.id);
-      data.append("type", "comment");
-      BaseRequest.get("comments/" + this.comment.id, data)
+      data.append("id", this.post.id);
+      data.append("type", "post");
+      BaseRequest.post("comments/" + this.comment.id, data)
         .then(function () {
           _this.isDelete = true;
+          _this.$emit("deleteComment");
         })
         .catch(function (err) {
           console.log(err);
         });
     },
     addComment() {
-      let _this = this;
-      let data = new FormData();
-      data.append("id", this.comment.id);
-      data.append("type", "comment");
-      data.append("text", this.addText);
-      BaseRequest.post("comment", data)
-        .then(function (res) {
-          _this.addText = "";
-          _this.comments.push(res.data.comment);
-          _this.comment.count_rep++;
-          _this.commentShow = true;
-        })
-        .catch(function (err) {
-          console.log(err);
-        });
-    },
+            let _this = this;
+            let data = new FormData();
+            data.append("id", this.comment.id);
+            data.append("type", "comment");
+            data.append("text", this.addText);
+            BaseRequest.post("comment", data)
+                .then(function (res) {
+                    _this.addText = "";
+                    _this.comments.push(res.data.comment);
+                    _this.comment.count_rep++;
+                    _this.commentShow = true;
+                })
+                .catch(function (err) {
+                    console.log(err);
+                });
+        },
   },
 };
 </script>
