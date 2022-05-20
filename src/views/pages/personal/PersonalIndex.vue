@@ -136,7 +136,6 @@
       </div>
     </div>
     <div class="row m-0 p-0" v-show="isImage">
-        <list-group/>
     </div>
   </div>
 </template>
@@ -148,7 +147,6 @@ import CreatePostModal from "@/views/pages//post/createPostModal/CreatePostModal
 import styled, { css } from "vue-styled-components";
 import EditProfile from "@/views/pages/personal/profile/EditProfile.vue";
 import FriendApp from '@/views/pages/personal/friend/FriendApp.vue';
-import ListGroup from '@/views/pages/group/ListGroup.vue'
 
 const styledLink = styled.button`
   &:hover {
@@ -164,7 +162,6 @@ export default {
     styledLink,
     EditProfile,
     FriendApp,
-    ListGroup,
   },
   created() {
     window.addEventListener("scroll", this.handleScroll);
