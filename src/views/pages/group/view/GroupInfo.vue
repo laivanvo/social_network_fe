@@ -1,5 +1,5 @@
 <template>
-  <div class="row" v-if="group">
+  <div class="row">
     <div class="row">
       <div class="col-6">
         <div class="row">

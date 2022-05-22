@@ -1,16 +1,35 @@
 <template>
-  <div class="row">
-    <div v-for="member in members" :key="member.id">
-        {{ member.user.profile.first_name }}
+    <div class="row">
+        <div v-for="profile in profiles" :key="profile.id">
+            {{ profile.first_name }}
+        </div>
     </div>
-  </div>
 </template>
 <script>
+import BaseRequest from "@/helpers/BaseRequest";
 export default {
-  props: {
-    members: {
-      type: Array,
+    props: {
+        id: {
+            type: Number,
+        },
     },
-  },
+    data() {
+        return {
+            profiles: [],
+        };
+    },
+    created() {
+        this.getProfile();
+    },
+    methods: {
+        getProfile() {
+            let _this = this;
+            BaseRequest.get("members/" + this.id + "/accept").then(
+                (res) => {
+                    _this.profiles = res.data.profiles;
+                }
+            );
+        },
+    },
 };
 </script>

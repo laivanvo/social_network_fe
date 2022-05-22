@@ -11,20 +11,20 @@
         <h5>post</h5>
       </styledLink>
       <styledLink @click="search()" class="col-3">
-        <h5>search</h5>
+        <h5>member request</h5>
       </styledLink>
     </div>
     <div class="row m-0 p-0" v-show="isInfo">
       <group-info :group="group" class="row m-0 p-0" />
     </div>
-    <div class="row m-0 p-0" v-show="isMember">
-      <group-member :members="group.members" class="row m-0 p-0" />
+    <div class="row m-0 p-0" v-show="isMember" v-if="group.id">
+      <group-member :id="group.id" class="row m-0 p-0" />
     </div>
-    <div class="row m-0 p-0" v-show="isPost">
-      <group-post class="row m-0 p-0" />
+    <div class="row m-0 p-0" v-show="isPost" v-if="group.id">
+      <group-post :id="group.id" class="row m-0 p-0" />
     </div>
-    <div class="row m-0 p-0" v-show="isSearch">
-      <group-search class="row m-0 p-0" />
+    <div class="row m-0 p-0" v-show="isSearch" v-if="group.id">
+      <group-search :id="group.id" class="row m-0 p-0" />
     </div>
   </div>
 </template>
@@ -54,12 +54,11 @@ export default {
   },
   created() {
     this.getGroup();
-    console.log(this.$route.params.id)
   },
   data() {
     return {
       group: {},
-      isInfo: false,
+      isInfo: true,
       isPost: false,
       isMember:false,
       isSearch: false,

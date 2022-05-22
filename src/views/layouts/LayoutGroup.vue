@@ -4,70 +4,53 @@
       <div class="col-3">
         <div class="row mb-3" style="overflow: auto; height: 200px">
           <div class="row mb-3">
-            <div class="col-2">
-              <img
-                class="w-100 ms-1"
-                style="border-radius: 50% 50% 50% 50%"
-                :src="'http://localhost:8080' + profile.avatar"
-              />
-            </div>
-            <div class="col-10">
-              {{ profile.last_name + " " + profile.first_name }}
-            </div>
+            <div class="col-2">Group</div>
+            <div class="col-9"></div>
+            <div class="col-1"></div>
+          </div>
+          <div class="row mb-3">
+            <i class="col-2 bi bi-search h-100 m-0"></i>
+            <input
+              type="text"
+              class="col-10 h-100 rounder-end"
+              placeholder="search group"
+            />
           </div>
           <div class="row mb-3">
             <div class="col-2 text-center">
               <i
-                class="w-100 ms-1 bi bi-people"
+                class="w-100 ms-1 bi bi-card-checklist"
                 style="border-radius: 50% 50% 50% 50%"
               >
               </i>
             </div>
-            <div class="col-10">Friend</div>
+            <div class="col-10">My feed</div>
           </div>
           <div class="row mb-3">
             <div class="col-2 text-center">
               <i
-                class="w-100 ms-1 bi bi-collection-fill"
+                class="w-100 ms-1 bi bi-globe"
                 style="border-radius: 50% 50% 50% 50%"
               >
               </i>
             </div>
-            <div class="col-10">Group</div>
+            <div class="col-10">discover</div>
           </div>
           <div class="row mb-3">
             <div class="col-2 text-center">
               <i
-                class="w-100 ms-1 bi bi-save2"
+                class="w-100 ms-1 bi bi-bell"
                 style="border-radius: 50% 50% 50% 50%"
               >
               </i>
             </div>
-            <div class="col-10">Saved</div>
-          </div>
-          <div class="row mb-3">
-            <div class="col-2 text-center">
-              <i
-                class="w-100 ms-1 bi bi-star-fill"
-                style="border-radius: 50% 50% 50% 50%"
-              >
-              </i>
-            </div>
-            <div class="col-10">Favourite</div>
-          </div>
-          <div class="row mb-3">
-            <div class="col-2 text-center">
-              <i
-                class="w-100 ms-1 bi bi-postcard-fill"
-                style="border-radius: 50% 50% 50% 50%"
-              >
-              </i>
-            </div>
-            <div class="col-10">recently</div>
+            <div class="col-10">Notification</div>
           </div>
         </div>
+        <create-group :profile="profile"/>
         <div class="row border mb-3"></div>
-        <div class="row" style="overflow: auto; height: 300px">
+        <div class="row mb-3">My groups</div>
+        <div class="row" style="overflow: auto; height: 200px">
           <div class="row mb-3" v-for="group in groups" :key="group.id">
             <div class="col-2 text-center">
               <i
@@ -80,7 +63,7 @@
           </div>
         </div>
       </div>
-      <div class="col-7" style="background-color: white; overflow: auto; height: 1000px">
+      <div class="col-7" style="overflow: auto; height: 1000px">
         <slot />
       </div>
       <div class="col-2"></div>
@@ -91,8 +74,10 @@
 
 <script>
 import BaseRequest from "@/helpers/BaseRequest";
+import CreateGroup from "@/views/pages/group/List/CreateGroup.vue";
 export default {
   components: {
+    CreateGroup,
   },
   data() {
     return {
@@ -102,7 +87,7 @@ export default {
   },
   mounted() {
     this.getProfile();
-    this.getGroup()
+    this.getGroup();
   },
   methods: {
     getProfile() {

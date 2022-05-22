@@ -28,7 +28,6 @@ export default {
     this.getGroup();
     EventBus.$on("createGroup", this.createGroup);
   },
-  mounted() {},
   methods: {
     getGroup() {
       BaseRequest.get("groups/me").then((res) => {

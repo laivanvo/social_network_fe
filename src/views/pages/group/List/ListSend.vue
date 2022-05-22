@@ -1,6 +1,6 @@
 <template>
-  <div class="row">
-    <div class="col-4 row border" v-for="group in groups" :key="group.id">
+  <div class="row m-0 p-0">
+    <div class="col-4 m-0 p-0 row border" v-for="group in groups" :key="group.id">
       <app-group class="row" :group="group" :typeP="'send'" />
     </div>
   </div>
@@ -9,7 +9,6 @@
 <script>
 import BaseRequest from "@/helpers/BaseRequest";
 import AppGroup from "@/views/pages/group/List/AppGroup.vue";
-import EventBus from '@/main'
 export default {
   components: {
     AppGroup,
@@ -18,9 +17,6 @@ export default {
     return {
       groups: [],
     };
-  },
-  created() {
-      EventBus.$on('join', this.join);
   },
   mounted() {
     this.getGroup();
@@ -32,10 +28,6 @@ export default {
         _this.groups = res.data.groups;
       });
     },
-    join(e) {
-        this.groups.unshift(e);
-        console.log(e)
-    }
   },
 };
 </script>

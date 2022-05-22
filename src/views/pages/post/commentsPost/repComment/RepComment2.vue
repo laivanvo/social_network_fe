@@ -108,7 +108,7 @@ export default {
       let _this = this;
       let data = new FormData();
       data.append("text", this.editText);
-      BaseRequest.get("comments/" + this.comment.id)
+      BaseRequest.get("comments/" + this.comment.id, data)
         .then(function () {
           _this.isEdit = !_this.isEdit;
         })
@@ -121,7 +121,7 @@ export default {
       let data = new FormData();
       data.append("id", this.comment.id);
       data.append("type", "comment");
-      BaseRequest.get("comments/" + this.comment.id, data)
+      BaseRequest.post("comment/destroy/" + this.comment.id, data)
         .then(function () {
           _this.isDelete = true;
         })

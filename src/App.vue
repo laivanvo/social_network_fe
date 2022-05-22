@@ -1,18 +1,18 @@
 <template>
   <div id="app" :is="layout">
-    <router-view></router-view>
+    <router-view style="background-color: #F8F8FF;" class="p-4 border rounded"></router-view>
   </div>
 </template>
 
 <script>
-import DefaultLayout from '@/views/layouts/DefaultLayout'
+import HeaderApp from '@/views/layouts/HeaderApp'
 export default {
   name: 'App',
   components: {
   },
   computed: {
     layout() {
-      return this.$route.meta.layout ?? DefaultLayout
+      return this.$route.meta.layout ?? HeaderApp
     }
   },
 }

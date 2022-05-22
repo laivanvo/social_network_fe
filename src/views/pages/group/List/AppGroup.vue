@@ -42,7 +42,7 @@ export default {
     };
   },
   created() {
-    this.type = this.typeP;
+    this.type = this.typeP === "join" ? "join" : "...";
   },
   methods: {
     joinGroup() {

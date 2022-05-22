@@ -53,6 +53,7 @@
                                 </select>
                             </div>
                         </div>
+                        <div class="row">Text:</div>
                         <div class="form-floating row">
                             <textarea
                                 v-model="post.text"
@@ -168,6 +169,9 @@ export default {
         user: {
             type: Object,
         },
+        group_id: {
+            type: Number,
+        }
     },
     data() {
         return {
@@ -228,6 +232,7 @@ export default {
             data.append("text", this.post.text);
             data.append("audience", this.post.audience);
             data.append("bg", this.post.bg ? this.post.bg : '');
+            data.append("group_id", this.group_id);
             BaseRequest.post("posts", data)
                 .then(function (res) {
                     console.log(res.data.post)

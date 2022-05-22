@@ -97,6 +97,9 @@ export default {
     ReactionApp,
   },
   props: {
+    commentP: {
+        type: Object
+    },
     comment: {
       type: Object,
     },
@@ -171,7 +174,7 @@ export default {
       let _this = this;
       let data = new FormData();
       data.append("text", this.editText);
-      BaseRequest.get("comments/" + this.comment.id)
+      BaseRequest.post("comments/" + this.comment.id, data)
         .then(function () {
           _this.isEdit = !_this.isEdit;
         })
@@ -182,9 +185,9 @@ export default {
     deleteComment() {
       let _this = this;
       let data = new FormData();
-      data.append("id", this.comment.id);
+      data.append("id", this.commentP.id);
       data.append("type", "comment");
-      BaseRequest.get("comments/" + this.comment.id, data)
+      BaseRequest.post("comment/destroy/" + this.comment.id, data)
         .then(function () {
           _this.isDelete = true;
         })
