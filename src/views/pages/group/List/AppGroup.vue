@@ -1,21 +1,21 @@
 <template>
-  <div class="row m-0 p-0">
-    <div v-show="!isDelete" class="row m-0 p-0">
+  <div class="row g-0 m-0 p-0">
+    <div v-show="!isDelete" class="row g-0 m-0 p-0">
       <img
         :src="'http://localhost:8080' + group.avatar"
-        class="row m-0 p-0"
+        class="row g-0 m-0 p-0"
         style="height: 8rem"
       />
-      <p class="row m-0 p-0">welcome to {{ group.name }}</p>
-      <p class="row m-0 p-0">
+      <p class="row g-0 m-0 p-0">welcome to {{ group.name }}</p>
+      <p class="row g-0 m-0 p-0">
         Author:
         {{ group.user.profile.last_name + " " + group.user.profile.first_name }}
       </p>
-      <p class="row m-0 p-0">Author's words: {{ group.word }}</p>
-      <button class="row m-0 p-0 btn btn-primary" @click="joinGroup()">
+      <p class="row g-0 m-0 p-0">Author's words: {{ group.word }}</p>
+      <button class="row g-0 m-0 p-0 btn btn-primary" @click="joinGroup()">
         {{ type }}
       </button>
-      <button class="row m-0 mt-2 mb-2 p-0 btn btn-primary" @click="view()">
+      <button class="row g-0 m-0 mt-2 mb-2 p-0 btn btn-primary" @click="view()">
         View
       </button>
     </div>

@@ -1,6 +1,6 @@
 <template>
-  <div class="row">
-    <div class="row m-0 p-0 border">
+  <div class="row g-0">
+    <div class="row g-0 m-0 p-0 border">
       <styledLink @click="info()" class="col-3">
         <h5>information</h5>
       </styledLink>
@@ -14,17 +14,17 @@
         <h5>member request</h5>
       </styledLink>
     </div>
-    <div class="row m-0 p-0" v-show="isInfo">
-      <group-info :group="group" class="row m-0 p-0" />
+    <div class="row g-0 m-0 p-0" v-show="isInfo">
+      <group-info :group="group" class="row g-0 m-0 p-0" />
     </div>
-    <div class="row m-0 p-0" v-show="isMember" v-if="group.id">
-      <group-member :id="group.id" class="row m-0 p-0" />
+    <div class="row g-0 m-0 p-0" v-show="isMember" v-if="group.id">
+      <group-member :id="group.id" class="row g-0 m-0 p-0" />
     </div>
-    <div class="row m-0 p-0" v-show="isPost" v-if="group.id">
-      <group-post :id="group.id" class="row m-0 p-0" />
+    <div class="row g-0 m-0 p-0" v-show="isPost" v-if="group.id">
+      <group-post :id="group.id" class="row g-0 m-0 p-0" />
     </div>
-    <div class="row m-0 p-0" v-show="isSearch" v-if="group.id">
-      <group-search :id="group.id" class="row m-0 p-0" />
+    <div class="row g-0 m-0 p-0" v-show="isSearch" v-if="group.id">
+      <group-search :id="group.id" class="row g-0 m-0 p-0" />
     </div>
   </div>
 </template>

@@ -1,13 +1,13 @@
 <template>
     <div>
-        <div class="row">
+        <div class="row g-0">
             <div class="mt-5"></div>
             <div class="col-3">
                 Chào mừng các bạn đến với website mạng xã hội của chúng tôi
             </div>
             <div class="col-6 border rounded p-4 bg-light">
                 <form @submit.prevent="login()">
-                    <div class="row">
+                    <div class="row g-0">
                         <input
                             class="form-control"
                             v-model="user.email"
@@ -15,7 +15,7 @@
                             placeholder="Email"
                         />
                     </div>
-                    <div class="row">
+                    <div class="row g-0">
                         <input
                             class="form-control"
                             v-model="user.password"
@@ -23,13 +23,13 @@
                             placeholder="Password"
                         />
                     </div>
-                    <div class="row">
+                    <div class="row g-0">
                         <button type="submit" class="btn btn-primary">
                             Login
                         </button>
                     </div>
                     <a href="#"><p class="text-center">forget password</p></a>
-                    <div class="row">
+                    <div class="row g-0">
                         <button class="btn btn-success">
                             create new
                         </button>

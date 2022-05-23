@@ -1,18 +1,18 @@
 <template>
-  <div class="row">
+  <div class="row g-0">
     <div class="col-2"></div>
     <div class="col-8">
       <h3 class="text-center">Register</h3>
       <form @submit.prevent="register()">
-        <div class="row">
+        <div class="row g-0">
           <p class="col-3">Last- name:</p>
           <input class="col-9" type="text" v-model="user.last_name" />
         </div>
-        <div class="row">
+        <div class="row g-0">
           <p class="col-3">first-name:</p>
           <input class="col-9" type="text" v-model="user.first_name" />
         </div>
-        <div class="row">
+        <div class="row g-0">
           <p class="col-3">Address:</p>
           <!-- Script by hscripts.com -->
           <select class="col-9" v-model="user.address">
@@ -83,7 +83,7 @@
           </select>
           <!-- Script by hscripts.com -->
         </div>
-        <div class="row">
+        <div class="row g-0">
           <p class="col-3">gender:</p>
           <select name="gender" class="col-9" v-model="user.gender">
             <option value="male">Male</option>
@@ -91,23 +91,23 @@
             <option value="other">other</option>
           </select>
         </div>
-        <div class="row">
+        <div class="row g-0">
           <p class="col-3">Birthday:</p>
           <input type="date" class="col-9" v-model="user.birthday" />
         </div>
-        <div class="row">
+        <div class="row g-0">
           <p class="col-3">Phone-number:</p>
           <input class="col-9" type="tel" v-model="user.phone_number" />
         </div>
-        <div class="row">
+        <div class="row g-0">
           <p class="col-3">email:</p>
           <input class="col-9" type="email" v-model="user.email" />
         </div>
-        <div class="row">
+        <div class="row g-0">
           <p class="col-3">password:</p>
           <input class="col-9" type="password" v-model="user.password" />
         </div>
-        <div class="row">
+        <div class="row g-0">
           <p class="col-3">re-type password:</p>
           <input class="col-9" type="password" v-model="user.retype_password" />
         </div>

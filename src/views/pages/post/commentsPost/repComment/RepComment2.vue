@@ -1,8 +1,8 @@
 <template>
   <div class="bg-light text-dark border row m-0 p-0" v-show="!isDelete">
-    <div class="row">
+    <div class="row g-0">
       <div class="col-10">
-        <div class="row">
+        <div class="row g-0">
           <div class="col-2">
             <!-- <img src="#"/> -->
           </div>
@@ -10,10 +10,10 @@
             {{ user.name }}
           </div>
         </div>
-        <div v-show="!isEdit" class="row">
+        <div v-show="!isEdit" class="row g-0">
           {{ editText }}
         </div>
-        <div v-show="isEdit" class="row">
+        <div v-show="isEdit" class="row g-0">
           <input
             type="text"
             v-on:keyup.enter="editComment"
@@ -45,7 +45,7 @@
         </div>
       </div>
     </div>
-    <div class="row">
+    <div class="row g-0">
       <div class="col-3">
         <reaction-app :id="comment.id" :type="'comment'" :user="user" />
       </div>

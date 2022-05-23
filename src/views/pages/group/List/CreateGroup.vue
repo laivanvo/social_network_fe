@@ -1,5 +1,5 @@
 <template>
-    <div class="row">
+    <div class="row g-0">
         <!-- Button trigger modal -->
         <button
             class="w-100 btn btn-primary"
@@ -31,8 +31,8 @@
                         ></button>
                     </div>
                     <div class="modal-body row">
-                        <div class="row mb-3">Create Group</div>
-                        <div class="row mb-3">
+                        <div class="row g-0 mb-3">Create Group</div>
+                        <div class="row g-0 mb-3">
                             <div class="col-2 p-2">
                                 <center>
                                     <img
@@ -50,7 +50,7 @@
                                 </center>
                             </div>
                             <div class="col-10 row">
-                                <div class="row">
+                                <div class="row g-0">
                                     {{
                                         profile.last_name +
                                         " " +
@@ -62,10 +62,10 @@
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Avatar: </label>
-                            <img id="avatar" class="row rounded mb-3" />
+                            <img id="avatar" class="row g-0 rounded mb-3" />
                             <input
                                 type="file"
-                                class="row"
+                                class="row g-0"
                                 v-on:change="onChange"
                             />
                         </div>

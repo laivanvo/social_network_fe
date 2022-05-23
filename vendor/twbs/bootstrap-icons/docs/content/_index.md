@@ -5,7 +5,7 @@
 
 Bootstrap Icons are published to npm, but they can also be manually downloaded if needed.
 
-<div class="row my-4">
+<div class="row g-0 my-4">
   <div class="col-md-4">
 {{< md >}}
 ### npm
@@ -44,7 +44,7 @@ Include the icon fonts stylesheet—in your website `<head>` or via `@import` in
 
 Bootstrap Icons are SVGs, so you can include them into your HTML in a few ways depending on how your project is setup. We recommend using a `width: 1em` (and optionally `height: 1em`) for easy resizing via `font-size`.
 
-<div class="row my-4">
+<div class="row g-0 my-4">
   <div class="col-md-4">
 {{< md >}}
 ### Embedded
@@ -56,7 +56,7 @@ Embed your icons within the HTML of your page (as opposed to an external image f
   </div>
 </div>
 
-<div class="row my-4">
+<div class="row g-0 my-4">
   <div class="col-md-4">
 {{< md >}}
 ### Sprite
@@ -80,7 +80,7 @@ Use the SVG sprite to insert any icon through the `<use>` element. Use the icon'
   </div>
 </div>
 
-<div class="row my-4">
+<div class="row g-0 my-4">
   <div class="col-md-4">
 {{< md >}}
 ### External image
@@ -92,7 +92,7 @@ Copy the Bootstrap Icons SVGs to your directory of choice and reference them lik
   </div>
 </div>
 
-<div class="row my-4">
+<div class="row g-0 my-4">
   <div class="col-md-4">
 {{< md >}}
 ### Icon font
@@ -107,7 +107,7 @@ Use `font-size` and `color` to change the icon appearance.
   </div>
 </div>
 
-<div class="row">
+<div class="row g-0">
   <div class="col-md-4">
 {{< md >}}
 ### CSS
@@ -131,7 +131,7 @@ The `viewBox` attribute is required if you wish to resize icons with `background
   </div>
 </div>
 
-<div class="row my-4">
+<div class="row g-0 my-4">
   <div class="col-md-4">
 {{< md >}}
 ## Styling
@@ -153,7 +153,7 @@ Color can be changed by setting a `.text-*` class or custom CSS:
   </div>
 </div>
 
-<div class="row my-4">
+<div class="row g-0 my-4">
   <div class="col-md-4">
 {{< md >}}
 ## Accessibility
@@ -200,7 +200,7 @@ For purely decorative icons, add `aria-hidden="true"`. Otherwise, provide an app
   </div>
 </div>
 
-<div class="row my-4">
+<div class="row g-0 my-4">
   <div class="col-md-4">
 {{< md >}}
 ## Working with SVGs

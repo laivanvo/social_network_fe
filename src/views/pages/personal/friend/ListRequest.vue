@@ -1,33 +1,38 @@
 <template>
-    <div class="row">
-        <div class="row" v-for="profile in profiles" :key="profile.id">
-            <app-friend :profileP="profile" />>
-        </div>
-    </div>
+  <div class="row g-0" :is="layout">
+    abc
+  </div>
 </template>
 
 <script>
 import AppFriend from "@/views/pages/personal/friend/AppFriend.vue";
 import BaseRequest from "@/helpers/BaseRequest";
+import ListRequestLayout from "@/views/layouts/ListRequestLayout.vue";
 export default {
-    components: {
-        AppFriend,
+  components: {
+    AppFriend,
+  },
+
+  computed: {
+    layout() {
+      return this.$route.meta.layout ?? ListRequestLayout;
     },
-    data() {
-        return {
-            profiles: [],
-        };
+  },
+  data() {
+    return {
+      profiles: [],
+    };
+  },
+  mounted() {
+    this.getProfile();
+  },
+  methods: {
+    getProfile() {
+      let _this = this;
+      BaseRequest.get("relation/listRequest").then((res) => {
+        _this.profiles = res.data.profiles.data;
+      });
     },
-    mounted() {
-        this.getProfile();
-    },
-    methods: {
-        getProfile() {
-            let _this = this;
-            BaseRequest.get("relation/listRequest").then((res) => {
-                _this.profiles = res.data.profiles.data;
-            });
-        },
-    },
+  },
 };
 </script>

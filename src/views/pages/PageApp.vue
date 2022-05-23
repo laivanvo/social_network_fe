@@ -1,5 +1,5 @@
 <template>
-    <div class="row">
+    <div class="row g-0">
         <home-index/>
     </div>
 </template>

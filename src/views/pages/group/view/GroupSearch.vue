@@ -1,5 +1,5 @@
 <template>
-    <div class="row">
+    <div class="row g-0">
         <div
             class="list-group dropdown row"
             v-for="profile in profiles"

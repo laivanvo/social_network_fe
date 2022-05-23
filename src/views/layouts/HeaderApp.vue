@@ -1,48 +1,84 @@
 <template>
-  <div class="row m-0 p-0">
-    <div class="row p-3 border mb-3" style="background-color: white">
-      <button class="btn col-3 bg-secondary p-0 border">
-        <i class="col-1 bi bi-search h-100 m-0"></i>
-        <input
-          type="text"
-          class="col-11 h-100 rounder-end"
-          placeholder="input in social-media"
-        />
-      </button>
-      <div class="col-1"></div>
-      <div class="col-4">
-        <styledLink @click="homePage()" class="col-3 m-0 p-0 h-100">
-          <i class="bi bi-house-door fs-5"></i>
+  <div class="row g-0 m-0">
+    <div class="row g-0 pt-3 pb-3 me-0 border" style="background-color: white">
+      <div class="col-4 row ">
+        <styledLink @click="homePage()" class="col-1 d-flex align-items-center">
+          <i style="color: blue" class="bi bi-house-door fs-2"></i>
         </styledLink>
-        <styledLink @click="personal()" class="col-3 m-0 p-0 h-100">
-          <i class="bi bi-person-workspace fs-5"></i>
+        <div class="col-7 d-flex align-items-center" style="position: relative">
+          <input
+            type="text"
+            id="search"
+            @focus="isSearch = true"
+            @blur="isSearch = false"
+            class="rounded-pill"
+            style="position: absolute"
+            placeholder="        input in social-media"
+          />
+          <i
+            v-show="!isSearch"
+            style="color: blue; position: absolute"
+            class="bi bi-search ms-2"
+          ></i>
+        </div>
+      </div>
+      <div class="col-4 ps-0  row">
+        <styledLink @click="homePage()" class="col-3  ps-0 d-flex align-items-center">
+          <i style="color: blue" class="bi bi-house-door fs-3"></i>
         </styledLink>
-        <styledLink @click="forYou()" class="col-3 m-0 p-0 h-100"
-          ><i class="bi bi-people fs-5"></i
+        <styledLink @click="personal()" class="col-3  ps-0 d-flex align-items-center">
+          <i style="color: blue" class="bi bi-person-workspace fs-3"></i>
+        </styledLink>
+        <styledLink @click="forYou()" class="col-3  ps-0 d-flex align-items-center"
+          ><i style="color: blue" class="bi bi-people fs-3"></i
         ></styledLink>
-        <styledLink @click="group()" class="col-3 m-0 p-0 h-100">
-          <i class="bi bi-collection fs-5"></i>
+        <styledLink @click="group()" class="col-3  ps-0 d-flex align-items-center">
+          <i style="color: blue" class="bi bi-collection fs-3"></i>
         </styledLink>
       </div>
-      <div class="col-4 row m-0 bg-light">
-        <img
-          class="col-2"
-          style="border-radius: 50% 50% 50% 50%"
-          :src="'http://localhost:8080' + profile.avatar"
-        />
-        <div class="col-5">
+      <div class="col-4 row ps-0  m-0 bg-light d-flex align-items-center">
+        <div class="col-2 ps-0 ">
+          <img
+            style="
+              border-radius: 50%;
+              height: 50px;
+              width: 50px;
+              overflow: hidden;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+            "
+            :src="'http://localhost:8080' + profile.avatar"
+            alt=""
+          />
+        </div>
+        <div class="col-3 ps-0  d-flex align-items-center">
           {{ profile.last_name + " " + profile.first_name }}
         </div>
-        <div class="col-1 border p-2" style="border-radius: 50% 50% 50% 50%">
-          <i class="bi bi-bell"></i>
+        <div class="col-5 ps-0 "></div>
+        <div
+          class="col-1 ps-0  border d-flex align-items-center justify-content-center"
+          style="border-radius: 50% 50% 50% 50%; width: 30px; height: 30px"
+        >
+          <i style="color: blue" class="bi bi-bell"></i>
         </div>
-        <div class="col-1 border p-2" style="border-radius: 50% 50% 50% 50%">
-          <i class="bi bi-card-list"></i>
+        <div
+          class="
+            col-1
+            ps-0
+            border
+            d-flex
+            align-items-center
+            justify-content-center
+          "
+          style="border-radius: 50% 50% 50% 50%; width: 30px; height: 30px"
+        >
+          <i style="color: blue" class="bi bi-card-list"></i>
         </div>
       </div>
     </div>
-    <div class="row">
-        <slot/>
+    <div class="row g-0 pt-3 pb-3 border me-0">
+      <slot />
     </div>
   </div>
 </template>
@@ -50,7 +86,6 @@
 <script>
 import BaseRequest from "@/helpers/BaseRequest";
 import styled, { css } from "vue-styled-components";
-
 const styledLink = styled.label`
   &:hover {
     ${() => css`
@@ -66,11 +101,12 @@ export default {
     return {
       profile: {},
       groups: [],
+      isSearch: false,
     };
   },
   mounted() {
     this.getProfile();
-    this.getGroup()
+    this.getGroup();
   },
   methods: {
     homePage() {
@@ -100,6 +136,9 @@ export default {
       BaseRequest.get("groups/mec").then((res) => {
         this.groups = res.data.groups;
       });
+    },
+    inputSearch() {
+      alert(1);
     },
   },
 };

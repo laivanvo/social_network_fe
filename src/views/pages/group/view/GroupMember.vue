@@ -1,5 +1,5 @@
 <template>
-    <div class="row">
+    <div class="row g-0">
         <div v-for="profile in profiles" :key="profile.id">
             {{ profile.first_name }}
         </div>

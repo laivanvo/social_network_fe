@@ -1,8 +1,8 @@
 <template>
   <div class="bg-light text-dark border row m-0 p-0" v-show="!isDelete">
-    <div class="row m-0 p-0">
+    <div class="row g-0 m-0 p-0">
       <div class="col-10">
-        <div class="row">
+        <div class="row g-0">
           <div class="col-2">
             <!-- <img src="#"/> -->
           </div>
@@ -10,10 +10,10 @@
             {{ user.name }}
           </div>
         </div>
-        <div v-show="!isEdit" class="row">
+        <div v-show="!isEdit" class="row g-0">
           {{ editText }}
         </div>
-        <div v-show="isEdit" class="row">
+        <div v-show="isEdit" class="row g-0">
           <input
             type="text"
             v-on:keyup.enter="editComment"
@@ -45,7 +45,7 @@
         </div>
       </div>
     </div>
-    <div class="row m-0 p-0">
+    <div class="row g-0 m-0 p-0">
       <div class="col-3">
         <reaction-app :id="comment.id" :type="'comment'" :user="user" />
       </div>
@@ -53,14 +53,14 @@
         <styledLink>comment</styledLink>
       </div>
     </div>
-    <div class="row m-0 p-0">
+    <div class="row g-0 m-0 p-0">
       <div class="col-2"></div>
       <div class="col-10 row m-0 p-0">
-        <div class="row m-0 p-0" v-show="commentShow">
-          <div class="row m-0 p-0" v-for="item in comments" :key="item.id">
-            <RepComment2 class="row m-0 p-0" :comment="item" :user="user" />
+        <div class="row g-0 m-0 p-0" v-show="commentShow">
+          <div class="row g-0 m-0 p-0" v-for="item in comments" :key="item.id">
+            <RepComment2 class="row g-0 m-0 p-0" :comment="item" :user="user" />
           </div>
-          <div class="row" @click="loadMoreComment">
+          <div class="row g-0" @click="loadMoreComment">
             <styledLink>load more</styledLink>
           </div>
           <input

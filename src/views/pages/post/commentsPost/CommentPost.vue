@@ -1,8 +1,8 @@
 <template>
-    <div class="row m-0 p-0" v-show="!isDelete">
-        <div class="row m-0 p-0">
+    <div class="row g-0 m-0 p-0" v-show="!isDelete">
+        <div class="row g-0 m-0 p-0">
             <div class="col-10">
-                <div class="row">
+                <div class="row g-0">
                     <div class="col-1">
                         <img
                             style="
@@ -22,10 +22,10 @@
                         {{ user.name }}
                     </div>
                 </div>
-                <div v-show="!isEdit" class="row">
+                <div v-show="!isEdit" class="row g-0">
                     <div class="p-3 mb-1 bg-body rounded">{{ editText }}</div>
                 </div>
-                <div v-show="isEdit" class="row">
+                <div v-show="isEdit" class="row g-0">
                     <input
                         type="text"
                         v-on:keyup.enter="editComment"
@@ -64,7 +64,7 @@
                 </div>
             </div>
         </div>
-        <div class="row">
+        <div class="row g-0">
             <div class="col-3">
                 <reaction-app :id="comment.id" :type="'comment'" :user="user" />
             </div>
@@ -72,12 +72,12 @@
                 <styledLink class="fs-6 fw-bold">rep</styledLink>
             </div>
         </div>
-        <div class="row m-0 p-0">
+        <div class="row g-0 m-0 p-0">
             <div class="col-2"></div>
             <div class="col-10 m-0 p-0">
-                <div class="row m-0 p-0" v-show="commentShow">
+                <div class="row g-0 m-0 p-0" v-show="commentShow">
                     <div
-                        class="row m-0 p-0"
+                        class="row g-0 m-0 p-0"
                         v-for="item in comments"
                         :key="item.id"
                     >
@@ -88,7 +88,7 @@
                             :user="user"
                         />
                     </div>
-                    <div class="row" @click="loadMoreComment">
+                    <div class="row g-0" @click="loadMoreComment">
                         <styledLink>load more</styledLink>
                     </div>
                     <input

@@ -1,8 +1,8 @@
 <template>
     <div class="home row p-0 m-0">
-        <div class="row p-0 m-0" v-for="post in posts" :key="post.id">
+        <div class="row g-0 p-0 m-0" v-for="post in posts" :key="post.id">
             <post-app
-                class="row border mt-5 bg-white"
+                class="row g-0 border mt-5 bg-white"
                 :postP="post"
                 :user="post.user"
             />

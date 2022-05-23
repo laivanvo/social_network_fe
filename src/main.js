@@ -12,6 +12,8 @@ import PersonalIndex from '@/views/pages/personal/PersonalIndex'
 import EditProfile from '@/views/pages/personal/profile/EditProfile'
 import GroupApp from '@/views/pages/group/GroupApp'
 import ViewGroup from '@/views/pages/group/List/ViewGroup'
+import FriendApp from "@/views/pages/personal/friend/FriendApp"
+import ListRequest from "@/views/pages/personal/friend/ListRequest"
 import "bootstrap/dist/css/bootstrap.min.css"
 import "bootstrap"
 import "bootstrap-icons/font/bootstrap-icons.css";
@@ -26,6 +28,8 @@ const routes = [
   { path: '/profile', component: EditProfile, name: 'profile' },
   { path: '/group', component: GroupApp, name: 'group' },
   { path: '/view', component: ViewGroup, name: 'view' },
+  { path: '/friend', component: FriendApp, name: 'friend' },
+  { path: '/friend/request', component: ListRequest, name: 'friend.request' },
 ]
 
 const router = new VueRouter({

@@ -2,10 +2,10 @@
     <div class="home row p-0 m-0 border">
         <create-post-modal
             @addPost="addPost($event)"
-            class="row"
+            class="row g-0"
             :user="user"
         />
-        <div class="row">
+        <div class="row g-0">
             <div class="col-4">
                 <i class="bi bi-person-plus fs-2"></i>
             </div>
@@ -16,14 +16,14 @@
             />
             <div class="col-4"></div>
         </div>
-        <div class="row">
+        <div class="row g-0">
             <div class="col-4"></div>
             <div class="col-4 text-center">
-                <edit-profile class="row" />
+                <edit-profile class="row g-0" />
             </div>
             <div class="col-4"></div>
         </div>
-        <div class="row m-0 p-0">
+        <div class="row g-0 m-0 p-0">
             <styledLink @click="showPost()" class="col-3">
                 <i class="bi bi-postcard fs-2"></i>
             </styledLink>
@@ -37,9 +37,9 @@
                 <i class="bi bi-card-image fs-2"></i>
             </styledLink>
         </div>
-        <div v-show="isPost" class="row m-0 p-0">
-            <div class="row">
-                <div class="row p-0 m-0">
+        <div v-show="isPost" class="row g-0 m-0 p-0">
+            <div class="row g-0">
+                <div class="row g-0 p-0 m-0">
                     <div class="col-1">
                         <img
                             style="
@@ -63,17 +63,17 @@
                         placeholder="how are you today"
                     />
                 </div>
-                <div class="row p-0 m-0" v-for="post in posts" :key="post.id">
+                <div class="row g-0 p-0 m-0" v-for="post in posts" :key="post.id">
                     <post-app
-                        class="row border mt-5 bg-white"
+                        class="row g-0 border mt-5 bg-white"
                         :postP="post"
                         :user="post.user"
                     />
                 </div>
             </div>
         </div>
-        <div class="row m-0 p-0" v-show="isInfo">
-            <div class="row">
+        <div class="row g-0 m-0 p-0" v-show="isInfo">
+            <div class="row g-0">
                 <p class="col-3">Last-name:</p>
                 <input
                     class="col-9"
@@ -82,7 +82,7 @@
                     v-model="profile.last_name"
                 />
             </div>
-            <div class="row">
+            <div class="row g-0">
                 <p class="col-3">first-name:</p>
                 <input
                     class="col-9"
@@ -91,7 +91,7 @@
                     v-model="profile.first_name"
                 />
             </div>
-            <div class="row">
+            <div class="row g-0">
                 <p class="col-3">Address:</p>
                 <input
                     class="col-9"
@@ -100,7 +100,7 @@
                     v-model="profile.address"
                 />
             </div>
-            <div class="row">
+            <div class="row g-0">
                 <p class="col-3">gender:</p>
                 <i v-show="isMale" class="bi bi-gender-male fs-2 col-2"></i>
                 <i v-show="!isMale" class="bi bi-gender-female fs-2 col-2"></i>
@@ -111,12 +111,12 @@
                     v-model="profile.gender"
                 />
             </div>
-            <div class="row">
+            <div class="row g-0">
                 <p class="col-3">Birthday:</p>
                 <i class="bi bi-egg-fried fs-2 col-2"></i>
                 <input type="text" class="col-7" disabled v-model="birth" />
             </div>
-            <div class="row">
+            <div class="row g-0">
                 <p class="col-3">Phone-number:</p>
                 <input
                     disabled
@@ -131,8 +131,8 @@
                 />
             </div>
         </div>
-        <div class="row m-0 p-0" v-show="isFirend">
-            <div class="row m-0 p-0">
+        <div class="row g-0 m-0 p-0" v-show="isFirend">
+            <div class="row g-0 m-0 p-0">
                 <styledLink @click="showList()" class="col-3">
                     list Friend
                 </styledLink>
@@ -147,7 +147,7 @@
                 </styledLink>
             </div>
 
-            <div class="row mt-2 p-0 ">
+            <div class="row g-0 mt-2 p-0 ">
                 <div class="col-2">Search</div>
                 <div class="col-3"></div>
                 <input type="text" class="col-4" v-model="searchFriend" />
@@ -157,7 +157,7 @@
             <list-request v-show="isRequest"/>
             <list-send v-show="isByBirthday"/>
         </div>
-        <div class="row m-0 p-0" v-show="isImage"></div>
+        <div class="row g-0 m-0 p-0" v-show="isImage"></div>
     </div>
 </template>
 <script>

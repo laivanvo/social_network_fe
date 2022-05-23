@@ -1,14 +1,14 @@
 <template>
-    <div class="row">
-        <div class="row">
-            <div class="col-6">
+    <div class="row g-0">
+        <div class="row g-0">
+            <div class="col-2 mb-1">
                 <i class="bi bi-star-half"></i>
             </div>
-            <div class="col-6">
+            <div class="col-2">
                 {{ countReaction }}
             </div>
         </div>
-        <div class="row">
+        <div class="row g-0">
             <i @click="addLike()" v-show="!isLike" class="bi bi-star"></i>
             <i @click="addLike()" v-show="isLike" class="bi bi-star-fill"></i>
         </div>

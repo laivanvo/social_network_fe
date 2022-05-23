@@ -1,7 +1,7 @@
 <template>
-  <div class="row m-0 p-0">
+  <div class="row g-0 m-0 p-0">
     <div class="col-4 m-0 p-0 row border" v-for="group in groups" :key="group.id">
-      <app-group class="row" :group="group" :typeP="'join'" />
+      <app-group class="row g-0" :group="group" :typeP="'join'" />
     </div>
   </div>
 </template>

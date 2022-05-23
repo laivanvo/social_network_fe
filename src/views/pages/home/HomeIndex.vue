@@ -1,12 +1,12 @@
 <template>
     <div class="home row p-0 m-0" :is="layout">
-        <div class="row p-0 m-0">
+        <div class="row g-0 p-0 m-0">
             <div class="col-1">
                 <img
                     style="
                         border-radius: 50%;
-                        height: 100%;
-                        width: 100%;
+                        height: 50px;
+                        width: 50px;
                         overflow: hidden;
                         display: flex;
                         justify-content: center;
@@ -17,7 +17,7 @@
                 />
             </div>
             <input
-                class="col-11"
+                class="col-11 rounded-pill"
                 type="text"
                 data-bs-toggle="modal"
                 data-bs-target="#exampleModal"
@@ -27,12 +27,12 @@
         <create-post-modal
             :group_id="-1"
             @addPost="addPost($event)"
-            class="row"
+            class="row g-0"
             :user="user"
         />
-        <div class="row p-0 m-0" v-for="post in posts" :key="post.id">
+        <div class="row g-0 p-0 m-0" v-for="post in posts" :key="post.id">
             <post-app
-                class="row border mt-5 bg-white"
+                class="row g-0 border mt-5 bg-white"
                 :postP="post"
                 :user="post.user"
             />

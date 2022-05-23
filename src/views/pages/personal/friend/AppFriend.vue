@@ -1,5 +1,5 @@
 <template>
-    <div class="row" v-show="!isDelete">
+    <div class="row g-0" v-show="!isDelete">
         <div
             class="list-group-item active mt-2 col-10"
             :id="'drop' + profile.id"
@@ -13,8 +13,8 @@
             delete
         </button>
         <ul class="dropdown-menu row" :aria-labelledby="'drop' + profile.id">
-            <li class="row">
-                <div class="row">
+            <li class="row g-0">
+                <div class="row g-0">
                     <p class="col-3">Last-name:</p>
                     <input
                         class="col-9"
@@ -23,7 +23,7 @@
                         v-model="profile.last_name"
                     />
                 </div>
-                <div class="row">
+                <div class="row g-0">
                     <p class="col-3">first-name:</p>
                     <input
                         class="col-9"
@@ -32,7 +32,7 @@
                         v-model="profile.first_name"
                     />
                 </div>
-                <div class="row">
+                <div class="row g-0">
                     <p class="col-3">Address:</p>
                     <input
                         class="col-9"
@@ -41,7 +41,7 @@
                         v-model="profile.address"
                     />
                 </div>
-                <!-- <div class="row">
+                <!-- <div class="row g-0">
                     <p class="col-3">gender:</p>
                     <i v-show="isMale" class="bi bi-gender-male fs-2 col-2"></i>
                     <i
@@ -55,12 +55,12 @@
                         v-model="profile.gender"
                     />
                 </div> -->
-                <!-- <div class="row">
+                <!-- <div class="row g-0">
                     <p class="col-3">Birthday:</p>
                     <i class="bi bi-egg-fried fs-2 col-2"></i>
                     <input type="text" class="col-7" disabled v-model="birth" />
                 </div> -->
-                <div class="row">
+                <div class="row g-0">
                     <p class="col-3">Phone-number:</p>
                     <input
                         disabled

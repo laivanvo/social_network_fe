@@ -15,7 +15,7 @@
         </ol>
       </nav>
 
-      <div class="row align-items-md-center">
+      <div class="row g-0 align-items-md-center">
         <div class="col-md-6 col-lg-8">
           <h1>{{ .Title }}</h1>
 
@@ -37,7 +37,7 @@
       {{- $svgPath := path.Join "/assets/" $localSvgPath -}}
       {{- $svgHtml := readFile $localSvgPath | chomp | safeHTML -}}
 
-      <div class="row gx-lg-5">
+      <div class="row g-0 gx-lg-5">
         <div class="col-lg-8 mb-4">
           <div class="icon-demo mb-4 border rounded-3 d-flex align-items-center justify-content-center p-3 py-6" style="font-size: 10em" role="img" aria-label="{{ .Title }} - large preview">
             {{ $svgHtml }}

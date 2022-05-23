@@ -1,9 +1,9 @@
 <template>
-    <div class="row">
+    <div class="row g-0">
         <!-- Button trigger modal -->
         <!-- Modal -->
         <div
-            class="row modal fade"
+            class="row g-0 modal fade"
             :id="id"
             tabindex="-1"
             aria-labelledby="exampleModalLabel"
@@ -12,7 +12,7 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header row">
-                        <div class="row">
+                        <div class="row g-0">
                             <h5 class="col-10 text-center">Edit Post</h5>
                             <button
                                 type="button"
@@ -23,7 +23,7 @@
                         </div>
                     </div>
                     <div class="modal-body row">
-                        <div class="row">
+                        <div class="row g-0">
                             <div class="col-2">
                                 <img
                                     src="@/assets/logo.png"
@@ -32,7 +32,7 @@
                                 />
                             </div>
                             <div class="col-4">
-                                <div class="row">
+                                <div class="row g-0">
                                     {{ user.name }}
                                 </div>
                                 <label>Choose option:</label>
@@ -61,11 +61,11 @@
                                 :class="'form-control'"
                             ></textarea>
                         </div>
-                        <div class="row">
+                        <div class="row g-0">
                             <img
                                 :id="'image' + post.id"
                                 v-show="image"
-                                class="row"
+                                class="row g-0"
                                 :src="'http://localhost:8080' + fileName"
                             />
                             <video
@@ -81,8 +81,8 @@
                                 Your browser does not support HTML video.
                             </video>
                         </div>
-                        <div v-show="isFile" class="row justify-content-center">
-                            <div class="row">
+                        <div v-show="isFile" class="row g-0 justify-content-center">
+                            <div class="row g-0">
                                 <div class="card">
                                     <div class="card-header">
                                         Choose file you want
@@ -103,7 +103,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
+                        <div class="row g-0">
                             <div
                                 class="col-2"
                                 v-for="bgImage in bgImages"
@@ -119,7 +119,7 @@
                                 />
                             </div>
                         </div>
-                        <div class="row">
+                        <div class="row g-0">
                             <div class="col-6">Thêm vào bài viết</div>
                             <div class="col-6 row">
                                 <i

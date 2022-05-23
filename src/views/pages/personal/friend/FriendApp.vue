@@ -1,20 +1,35 @@
 <template>
-  <div class="row border m-0 p-3" v-show="show">
-    <img
-      :src="'http://localhost:8080' + profile.avatar"
-      id="avatar"
-      class="m-0 col-2 rounded"
-    />
-    <div class="col-1"></div>
-    <h5 class="col-5">{{profile.last_name + " " + profile.first_name}}</h5>
-    <i @click="response('accept')" class="bi bi-check col-2"></i>
-    <i @click="response('refuse')" class="bi bi-x-lg col-2"></i>
+  <div class="row g-0">
+    <div class="row g-0" :is="layout">
+      <div class="row g-0 mt-2">
+        <div class="col-11"><h5>Request</h5></div>
+        <div class="col-1"><h5>View All</h5></div>
+      </div>
+      <div class="row g-0 mt-2 ms 2">
+        <div style="width: 12.5%;" v-for="request in requests" :key="request.id">
+          <request-card :profile="request"/>
+        </div>
+      </div>
+      <div class="row g-0">
+        <div class="col-11"><h5>Suggest</h5></div>
+        <div class="col-1"><h5>View All</h5></div>
+      </div>
+      <div class="row g-0">
+        <div class="col-2" v-for="suggest in suggests" :key="suggest.id">
+          <suggest-card :profile="suggest"/>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 <script>
 import BaseRequest from "@/helpers/BaseRequest";
+import FriendPageLayout from "@/views/layouts/FriendPageLayout.vue";
+import RequestCard from "@/views/pages/personal/friend/card/RequestCard.vue";
+import SuggestCard from "@/views/pages/personal/friend/card/SuggestCard.vue";
 
 export default {
+  components: { RequestCard, SuggestCard },
   props: {
     profile: {
       type: Object,
@@ -22,21 +37,29 @@ export default {
   },
   data() {
     return {
-      show: true,
+      requests: [],
+      suggests: [],
     };
   },
+  mounted() {
+    this.getRequest();
+    this.getSuggest();
+  },
   methods: {
-    response(type) {
-      let _this = this;
-      let data = new FormData();
-      data.append("type", type);
-      BaseRequest.post("relations/res/" + this.relation.user_from.id, data)
-        .then(function () {
-          _this.show = false;
-        })
-        .catch(function (err) {
-          console.log(err);
-        });
+    getRequest() {
+      BaseRequest.get("relations/listRequest").then((res) => {
+        this.requests = res.data.profiles;
+      });
+    },
+    getSuggest() {
+      BaseRequest.get("relations/listSuggest").then((res) => {
+        this.requests = res.data.profiles;
+      });
+    },
+  },
+  computed: {
+    layout() {
+      return this.$route.meta.layout ?? FriendPageLayout;
     },
   },
 };

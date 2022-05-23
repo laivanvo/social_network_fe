@@ -1,5 +1,5 @@
 <template>
-  <div class="row">
+  <div class="row g-0">
     <!-- Button trigger modal -->
     <button
       type="button"
@@ -30,10 +30,10 @@
             ></button>
           </div>
           <div class="modal-body">
-            <div class="row">
+            <div class="row g-0">
               <p class="text-center">Edit profile</p>
             </div>
-            <div class="row">
+            <div class="row g-0">
               <p class="col-3">Avatar</p>
               <img
                 :src="'http://localhost:8080' + profile.avatar"
@@ -48,25 +48,25 @@
             <input
               v-show="isUpload"
               type="file"
-              class="row"
+              class="row g-0"
               v-on:change="onChange"
             />
-            <div class="row">
+            <div class="row g-0">
               <p class="col-3">Personal information</p>
               <styledLink class="col-9 text-end" @click="editInfo()"
                 >Edit</styledLink
               >
             </div>
-            <div class="row" v-show="isEdit">
-              <div class="row">
+            <div class="row g-0" v-show="isEdit">
+              <div class="row g-0">
                 <p class="col-3">Last- name:</p>
                 <input class="col-9" type="text" v-model="profile.last_name" />
               </div>
-              <div class="row">
+              <div class="row g-0">
                 <p class="col-3">first-name:</p>
                 <input class="col-9" type="text" v-model="profile.first_name" />
               </div>
-              <div class="row">
+              <div class="row g-0">
                 <p class="col-3">Address:</p>
                 <!-- Script by hscripts.com -->
                 <select class="col-9" v-model="profile.address">
@@ -137,7 +137,7 @@
                 </select>
                 <!-- Script by hscripts.com -->
               </div>
-              <div class="row">
+              <div class="row g-0">
                 <p class="col-3">gender:</p>
                 <select name="gender" class="col-9" v-model="profile.gender">
                   <option value="male">Male</option>
@@ -145,11 +145,11 @@
                   <option value="other">other</option>
                 </select>
               </div>
-              <div class="row">
+              <div class="row g-0">
                 <p class="col-3">Birthday:</p>
                 <input type="date" class="col-9" v-model="profile.birthday" />
               </div>
-              <div class="row">
+              <div class="row g-0">
                 <p class="col-3">Phone-number:</p>
                 <input
                   class="col-9"

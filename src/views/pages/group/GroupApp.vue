@@ -1,5 +1,5 @@
 <template>
-    <div class="row" :is="layout">
+    <div class="row g-0" :is="layout">
         <post-group/>
         <group-discover v-show="false"/>
         <group-notification v-show="false"/>

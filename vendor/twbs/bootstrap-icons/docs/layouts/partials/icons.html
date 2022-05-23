@@ -6,7 +6,7 @@
       <input class="form-control search mb-0" id="search" placeholder="Start typing to filter..." autocomplete="off">
     </form>
   </div>
-  <ul class="row row-cols-3 row-cols-sm-4 row-cols-lg-6 row-cols-xl-8 list-unstyled list">
+  <ul class="row g-0 row-cols-3 row-cols-sm-4 row-cols-lg-6 row-cols-xl-8 list-unstyled list">
     {{ range (where .Site.RegularPages "Type" "icons") -}}
       {{- $filename := .File.TranslationBaseName -}}
       {{- with .Site.GetPage .File.Path }}

@@ -1,6 +1,6 @@
 <template>
-    <div class="row">
-        <div class="row" v-for="profile in profiles" :key="profile.id">
+    <div class="row g-0">
+        <div class="row g-0" v-for="profile in profiles" :key="profile.id">
             <app-friend :profileP="profile" />>
         </div>
     </div>

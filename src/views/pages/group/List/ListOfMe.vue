@@ -1,11 +1,11 @@
 <template>
-  <div class="row m-0 p-0">
+  <div class="row g-0 m-0 p-0">
     <div
       class="col-4 row border m-0 p-0"
       v-for="(group, index) in groups"
       :key="index"
     >
-      <app-group class="row m-0 p-0" :group="group" :typeP="'me'" />
+      <app-group class="row g-0 m-0 p-0" :group="group" :typeP="'me'" />
     </div>
   </div>
 </template>
