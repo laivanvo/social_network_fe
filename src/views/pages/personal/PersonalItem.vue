@@ -1,7 +1,7 @@
 <template>
   <div class="row g-0">
     <div class="row g-0 mb-2">
-      <div class="col-2">
+      <div class="col-2" @click="showProfile()">
         <img
           style="width: 50px; height: 50px; border-radius: 50% 50% 50% 50%"
           :src="'http://localhost:8080' + profile.avatar"
@@ -23,13 +23,25 @@
 </template>
 
 <script>
+import EventBus from '@/main';
 export default {
   props: {
-    profile: {
+    profileP: {
       type: Object,
     },
   },
-  mounted() {
+  data() {
+    return {
+      profile: {},
+    }
   },
+  mounted() {
+    this.profile = this.profileP
+  },
+  methods: {
+    showProfile() {
+      EventBus.$emit('showProfile', this.profile);
+    }
+  }
 };
 </script>

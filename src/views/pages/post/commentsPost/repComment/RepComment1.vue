@@ -1,28 +1,42 @@
 <template>
-  <div class="bg-light text-dark border row m-0 p-0" v-show="!isDelete">
+  <div class="row g-0 m-0 p-0" v-show="!isDelete">
     <div class="row g-0 m-0 p-0">
-      <div class="col-10">
-        <div class="row g-0">
-          <div class="col-2">
-            <!-- <img src="#"/> -->
-          </div>
-          <div class="col-3">
-            {{ user.name }}
-          </div>
-        </div>
-        <div v-show="!isEdit" class="row g-0">
-          {{ editText }}
-        </div>
-        <div v-show="isEdit" class="row g-0">
-          <input
-            type="text"
-            v-on:keyup.enter="editComment"
-            v-model="editText"
+      <div class="col-auto d-flex align-items-center">
+        <center>
+          <img
+            style="
+              border-radius: 50%;
+              height: 30px;
+              width: 30px;
+              overflow: hidden;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+            "
+            :src="'http://localhost:8080' + user.profile.avatar"
+            alt=""
           />
-        </div>
+        </center>
       </div>
-      <div class="col-2">
-        <div class="dropdown col-1">
+      <div class="col-auto ms-1 row border rounded-pill ps-2 bg-light">
+        <div class="col-auto">
+          <div class="row g-0">
+            <h6 class="col-5" style="white-space: nowrap">
+              {{ user.profile.last_name + " " + user.profile.first_name }}
+            </h6>
+          </div>
+          <div v-show="!isEdit" class="row g-0">
+            <div>{{ editText }}</div>
+          </div>
+          <div v-show="isEdit" class="row g-0">
+            <input
+              type="text"
+              v-on:keyup.enter="editComment"
+              v-model="editText"
+            />
+          </div>
+        </div>
+        <div class="col-auto">
           <i
             class="bi bi-card-list"
             type="button"
@@ -38,27 +52,29 @@
             <li>
               <a @click="deleteComment" class="dropdown-item">Delete</a>
             </li>
-            <li>
-              <a class="dropdown-item" href="#">Something else here</a>
-            </li>
           </ul>
         </div>
       </div>
     </div>
-    <div class="row g-0 m-0 p-0">
+    <div class="row g-0">
       <div class="col-3">
         <reaction-app :id="comment.id" :type="'comment'" :user="user" />
       </div>
       <div class="col-3" @click="showComment">
-        <styledLink>comment</styledLink>
+        <styledLink class="fs-6 fw-bold">rep</styledLink>
       </div>
     </div>
     <div class="row g-0 m-0 p-0">
       <div class="col-2"></div>
-      <div class="col-10 row m-0 p-0">
+      <div class="col-10 m-0 p-0">
         <div class="row g-0 m-0 p-0" v-show="commentShow">
           <div class="row g-0 m-0 p-0" v-for="item in comments" :key="item.id">
-            <RepComment2 class="row g-0 m-0 p-0" :comment="item" :user="user" />
+            <RepComment2
+              class="m-0 p-0"
+              :commentP="comment"
+              :comment="item"
+              :user="user"
+            />
           </div>
           <div class="row g-0" @click="loadMoreComment">
             <styledLink>load more</styledLink>
@@ -97,9 +113,6 @@ export default {
     ReactionApp,
   },
   props: {
-    commentP: {
-        type: Object
-    },
     comment: {
       type: Object,
     },
@@ -141,7 +154,7 @@ export default {
         });
     },
     showComment() {
-      this.getComment(++this.page)
+      this.getComment(++this.page);
       this.commentShow = !this.commentShow;
     },
     loadMoreComment() {
@@ -155,16 +168,6 @@ export default {
         this.image = true;
       } else if (this.post.type === "video") {
         this.video = true;
-      }
-    },
-    EditPost() {
-      this.edit = true;
-    },
-    addLike(isLike) {
-      if (isLike) {
-        this.countReaction++;
-      } else {
-        this.countReaction--;
       }
     },
     edit() {
@@ -185,11 +188,12 @@ export default {
     deleteComment() {
       let _this = this;
       let data = new FormData();
-      data.append("id", this.commentP.id);
-      data.append("type", "comment");
+      data.append("id", this.post.id);
+      data.append("type", "post");
       BaseRequest.post("comment/destroy/" + this.comment.id, data)
         .then(function () {
           _this.isDelete = true;
+          _this.$emit("deleteComment");
         })
         .catch(function (err) {
           console.log(err);

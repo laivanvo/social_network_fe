@@ -26,22 +26,7 @@
       <div class="col-10">
         <div class="row g-0">
           <div class="col-4">
-            <div class="row g-0 no-gutters">
-              <styledLink @click="personal" class="col-6">
-                {{ user.profile.last_name + " " + user.profile.first_name }}
-              </styledLink>
-              <i
-                @click="request('add')"
-                v-show="isNone"
-                class="bi bi-person-plus col-2"
-              ></i>
-              <i
-                @click="request('undo')"
-                v-show="isRequest"
-                class="bi bi-person-x col-2"
-              ></i>
-              <i v-show="isFriend" class="bi bi-person-check col-2"></i>
-            </div>
+            <div class="row g-0 no-gutters"></div>
             <div class="row g-0">
               {{ new Date(post.created_at).toDateString() }}
             </div>
@@ -76,10 +61,7 @@
         </ul>
       </div>
     </div>
-    <div
-      class="bg-white m-0 p-0 row ms-2 mt-3 mb-3"
-      :style="post.bg_image"
-    >
+    <div class="bg-white m-0 p-0 row ms-2 mt-3 mb-3" :style="post.bg_image">
       {{ post.text }}
     </div>
     <div class="row g-0 m-0 p-0">
@@ -93,23 +75,26 @@
         Your browser does not support HTML video.
       </video>
     </div>
+
+    <div class="d-flex align-items-center row g-0">
+      <div class="col-2">
+        <i class="ms-3 mt-3 mb-3 bi bi-star-fill fs-3"> 0</i>
+      </div>
+      <div class="col-8"></div>
+      <div class="col-2">{{ post.count_comment }} comment</div>
+    </div>
+    <div class="border row"></div>
+
     <div class="row g-0 m-0 p-0 mb-3">
-      <div class="col-3">
+      <div class="col-5">
         <reaction-app :id="post.id" :type="'post'" />
       </div>
-      <div class="col-9" @click="showComment">
-        <div class="row g-0">
-          <div class="col-8"></div>
-          <div class="col-4">{{ post.count_comment }} comment</div>
-        </div>
-        <styledLink class="row g-0">
-          <div class="col-2"></div>
-          <div class="col-10 fw-bold fs-6">comment</div>
-        </styledLink>
+      <div class="col-7 mt-3 mb-3 d-flex align-items-center" @click="showComment">
+        <styledLink>comment</styledLink>
       </div>
     </div>
     <div class="row g-0 m-0 mb-2">
-      <div class="col-1">
+      <div class="col-auto ms-1">
         <img
           style="
             border-radius: 50% 50% 50% 50%;
@@ -124,20 +109,27 @@
           alt=""
         />
       </div>
-      <div class="col-11 d-flex align-items-center">
+      <div class="col-11 row g-0 ms-1 d-flex align-items-center" style="position: relative;">
         <input
           v-on:keyup.enter="addComment"
           type="text"
-          class="form-control rounded-pill"
+          class="form-control ms-1 me-1 rounded-pill"
           placeholder="comment in this"
           v-model="addText"
+          style="position: absolute;"
         />
+        <div class="col-11"></div>
+        <div class="col-1 d-flex align-items-center"><i class="bi bi-camera fs-4 opacity-50" style="position: absolute;"></i></div>
       </div>
     </div>
     <div class="row g-0 m-0 p-0" v-show="commentShow">
-      <div class="row g-0 m-0 p-0" v-for="comment in comments" :key="comment.id">
+      <div
+        class="row g-0 m-0 p-0"
+        v-for="comment in comments"
+        :key="comment.id"
+      >
         <comment-post
-          class="bg-light text-dark"
+          class="bg-white text-dark"
           :comment="comment"
           :user="user"
           @deleteComment="deleteComment()"
@@ -216,7 +208,6 @@ export default {
         ")";
     }
     this.getFile();
-    this.getRelation();
   },
   methods: {
     getComment(page) {
@@ -299,17 +290,6 @@ export default {
           ")";
       }
       this.getFile();
-    },
-    getRelation() {
-      let _this = this;
-      BaseRequest.get("relations/index/" + this.post.user.id)
-        .then(function (res) {
-          console.log(res);
-          _this.getType(res.data.type);
-        })
-        .catch(function (err) {
-          console.log(err);
-        });
     },
     request(type) {
       let _this = this;

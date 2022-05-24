@@ -2,16 +2,16 @@
   <div class="row g-0">
     <div class="row g-0">
       <div
-        class="col-2"
-        :style="'overflow: auto; height: ' + height / 3 + 'px;'"
+        class="col-2 border"
+        :style="'overflow: auto; height: ' + height + 'px;'"
       >
         <div class="row g-0 mb-2">Request</div>
-        <div class="row g-0 mb-2" v-for="profile in profiles" :key="profile.id">
-          <personal-item :profile="profile" />
+        <div class="row g-0 mb-2" v-for="item in profiles" :key="item.id">
+          <personal-item :profileP="item"/>
         </div>
       </div>
       <div class="col-10 row g-0">
-          <slot class="row g-0"/>
+          <slot :profile="profile" class="row g-0"/>
       </div>
     </div>
   </div>
@@ -28,11 +28,11 @@ export default {
     return {
       profiles: [],
       height: null,
+      profile: {},
     };
   },
   mounted() {
     this.getRequest();
-    this.getSuggest();
     this.height = $(window).height();
   },
   methods: {
@@ -41,6 +41,9 @@ export default {
         this.profiles = res.data.profiles;
       });
     },
+    showProfile(profile) {
+      this.profile = profile;
+    }
   },
 };
 </script>

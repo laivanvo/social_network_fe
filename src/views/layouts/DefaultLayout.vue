@@ -148,7 +148,7 @@ export default {
       });
     },
     getRequestFriend() {
-      BaseRequest.get("relation/listRequest").then((res) => {
+      BaseRequest.get("relations/listRequest").then((res) => {
         this.requests = res.data.profiles;
       });
     },

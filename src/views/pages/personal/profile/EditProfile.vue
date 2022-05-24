@@ -195,6 +195,11 @@ import styled, { css } from "vue-styled-components";
 import BaseRequest from "@/helpers/BaseRequest";
 
 export default {
+  props: {
+    profileP: {
+      type: Object,
+    },
+  },
   components: {
     styledLink,
   },
@@ -207,20 +212,9 @@ export default {
     };
   },
   mounted() {
-    this.getProfile();
+    this.profile = this.profileP;
   },
   methods: {
-    getProfile() {
-      let _this = this;
-      BaseRequest.get("profiles")
-        .then((response) => {
-          console.log(response);
-          _this.profile = response.data.profile;
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    },
     onChange(e) {
       this.file = e.target.files[0];
       document.getElementById("avatar").src = URL.createObjectURL(

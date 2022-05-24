@@ -53,7 +53,7 @@ export default {
     },
     getSuggest() {
       BaseRequest.get("relations/listSuggest").then((res) => {
-        this.requests = res.data.profiles;
+        this.suggests = res.data.profiles;
       });
     },
   },

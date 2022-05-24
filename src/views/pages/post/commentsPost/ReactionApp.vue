@@ -1,74 +1,78 @@
 <template>
-    <div class="row g-0">
-        <div class="row g-0">
-            <div class="col-2 mb-1">
-                <i class="bi bi-star-half"></i>
-            </div>
-            <div class="col-2">
-                {{ countReaction }}
-            </div>
-        </div>
-        <div class="row g-0">
-            <i @click="addLike()" v-show="!isLike" class="bi bi-star"></i>
-            <i @click="addLike()" v-show="isLike" class="bi bi-star-fill"></i>
-        </div>
+  <div class="">
+    <div class="row ms-2 g-0" v-show="isPost">
+      <i @click="addLike()" v-show="!isLike" class="bi bi-star fs-4 opacity-50">
+        like</i
+      >
+      <i @click="addLike()" v-show="isLike" class="bi bi-star-fill fs-4">
+        Like</i
+      >
     </div>
+    <div class="row ms-2 g-0" v-show="!isPost">
+      <i @click="addLike()" v-show="!isLike" class="bi bi-star fs-10 opacity-50">
+        like</i
+      >
+      <i @click="addLike()" v-show="isLike" class="bi bi-star-fill fs-10">
+        Like</i
+      >
+    </div>
+  </div>
 </template>
 
 <script>
 import BaseRequest from "@/helpers/BaseRequest";
 
 export default {
-    props: {
-        id: {
-            type: Number,
-        },
-        type: {
-            type: String,
-        },
+  props: {
+    id: {
+      type: Number,
     },
-    data() {
-        return {
-            isLike: false,
-            countReaction: 0,
-        };
+    type: {
+      type: String,
     },
-    mounted() {
-        this.getReaction();
+  },
+  data() {
+    return {
+      isLike: false,
+      isPost: false,
+    };
+  },
+  mounted() {
+    this.getReaction();
+    this.isPost = this.type === "post" ? true : false;
+  },
+  methods: {
+    getReaction() {
+      let _this = this;
+      let data = new FormData();
+      data.append("id", this.id);
+      data.append("type", this.type);
+      BaseRequest.post("reactions", data)
+        .then((response) => {
+          _this.isLike = response.data.isLike;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
-    methods: {
-        getReaction() {
-            let _this = this;
-            let data = new FormData();
-            data.append("id", this.id);
-            data.append("type", this.type);
-            BaseRequest.post("reactions", data)
-                .then((response) => {
-                    _this.isLike = response.data.isLike;
-                    _this.countReaction = response.data.count;
-                })
-                .catch((error) => {
-                    console.log(error);
-                });
-        },
-        addLike() {
-            let data = new FormData();
-            let _this = this;
-            data.append("id", this.id);
-            data.append("type", this.type);
-            BaseRequest.post("reaction", data)
-                .then(function () {
-                    if (_this.isLike) {
-                        _this.countReaction--;
-                    } else {
-                        _this.countReaction++;
-                    }
-                    _this.isLike = !_this.isLike;
-                })
-                .catch(function (err) {
-                    console.log(err);
-                });
-        },
+    addLike() {
+      let data = new FormData();
+      let _this = this;
+      data.append("id", this.id);
+      data.append("type", this.type);
+      BaseRequest.post("reaction", data)
+        .then(function () {
+          _this.isLike = !_this.isLike;
+          if (!_this.isLike) {
+            this.$emit("addLike", "unlike");
+          } else {
+            this.$emit("addLike", "like");
+          }
+        })
+        .catch(function (err) {
+          console.log(err);
+        });
     },
+  },
 };
 </script>

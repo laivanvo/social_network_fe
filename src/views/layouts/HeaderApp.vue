@@ -37,7 +37,8 @@
         </styledLink>
       </div>
       <div class="col-4 row ps-0  m-0 bg-light d-flex align-items-center">
-        <div class="col-2 ps-0 ">
+        <div class="col-5 row g-0" @click="ViewPersonal()">
+          <div class="col-4">
           <img
             style="
               border-radius: 50%;
@@ -52,8 +53,9 @@
             alt=""
           />
         </div>
-        <div class="col-3 ps-0  d-flex align-items-center">
+        <div class="col-8 d-flex align-items-center">
           {{ profile.last_name + " " + profile.first_name }}
+        </div>
         </div>
         <div class="col-5 ps-0 "></div>
         <div
@@ -140,6 +142,9 @@ export default {
     inputSearch() {
       alert(1);
     },
+    ViewPersonal() {
+      this.$router.push({ name: 'personal', params: {profile: this.profile}})
+    }
   },
 };
 </script>
