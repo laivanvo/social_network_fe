@@ -9,10 +9,10 @@
       >
     </div>
     <div class="row ms-2 g-0" v-show="!isPost">
-      <i @click="addLike()" v-show="!isLike" class="bi bi-star fs-10 opacity-50">
+      <i @click="addLike()" v-show="!isLike" class="bi bi-star fs-20 opacity-50">
         like</i
       >
-      <i @click="addLike()" v-show="isLike" class="bi bi-star-fill fs-10">
+      <i @click="addLike()" v-show="isLike" class="bi bi-star-fill fs-20">
         Like</i
       >
     </div>
@@ -64,9 +64,9 @@ export default {
         .then(function () {
           _this.isLike = !_this.isLike;
           if (!_this.isLike) {
-            this.$emit("addLike", "unlike");
+            _this.$emit("addLike", "unlike");
           } else {
-            this.$emit("addLike", "like");
+            _this.$emit("addLike", "like");
           }
         })
         .catch(function (err) {

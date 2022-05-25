@@ -8,7 +8,7 @@
       @updatePost="updatePost($event)"
     />
     <div class="row g-0 m-0 p-0">
-      <div class="col-1">
+      <div class="col-auto ms-1">
         <img
           style="
             border-radius: 50% 50% 50% 50%;
@@ -23,42 +23,46 @@
           alt=""
         />
       </div>
-      <div class="col-10">
+      <div class="col-auto ms-1 g-0">
         <div class="row g-0">
-          <div class="col-4">
-            <div class="row g-0 no-gutters"></div>
-            <div class="row g-0">
-              {{ new Date(post.created_at).toDateString() }}
+          <div class="row g-0">
+            <div class="col-auto ms-1">
+              {{ user.profile.last_name + " " + user.profile.first_name }}
             </div>
+          </div>
+          <div class="row g-0 ms-1">
+            {{ new Date(post.created_at).toDateString() }}
           </div>
         </div>
       </div>
-      <div class="dropdown col-1">
-        <i
-          class="bi bi-card-list"
-          type="button"
-          id="dropdownMenuButton1"
-          data-bs-toggle="dropdown"
-          aria-expanded="false"
-        >
-        </i>
-        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-          <li>
-            <a
-              class="dropdown-item"
-              data-bs-toggle="modal"
-              :data-bs-target="'#postEdit' + post.id"
-            >
-              Edit
-            </a>
-          </li>
-          <li>
-            <a class="dropdown-item" @click="deletePost">Delete</a>
-          </li>
-          <li>
-            <a class="dropdown-item" href="#">Something else here</a>
-          </li>
-        </ul>
+      <div class="col-auto ms-auto">
+        <div class="dropdown col-auto ms-auto me-3">
+          <i
+            class="bi bi-card-list"
+            type="button"
+            id="dropdownMenuButton1"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+          </i>
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+            <li>
+              <a
+                class="dropdown-item"
+                data-bs-toggle="modal"
+                :data-bs-target="'#postEdit' + post.id"
+              >
+                Edit
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item" @click="deletePost">Delete</a>
+            </li>
+            <li>
+              <a class="dropdown-item" href="#">Something else here</a>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
     <div class="bg-white m-0 p-0 row ms-2 mt-3 mb-3" :style="post.bg_image">
@@ -77,8 +81,8 @@
     </div>
 
     <div class="d-flex align-items-center row g-0">
-      <div class="col-2">
-        <i class="ms-3 mt-3 mb-3 bi bi-star-fill fs-3"> 0</i>
+      <div class="col-2 mt-3 mb-0">
+        <i class="ms-5 bi bi-star-fill fs-3"> {{ post.count_reaction }}</i>
       </div>
       <div class="col-8"></div>
       <div class="col-2">{{ post.count_comment }} comment</div>
@@ -87,13 +91,16 @@
 
     <div class="row g-0 m-0 p-0 mb-3">
       <div class="col-5">
-        <reaction-app :id="post.id" :type="'post'" />
+        <reaction-app @addLike="addLike($event)" :id="post.id" :type="'post'" />
       </div>
-      <div class="col-7 mt-3 mb-3 d-flex align-items-center" @click="showComment">
+      <div
+        class="col-7 mt-3 mb-3 d-flex align-items-center"
+        @click="showComment"
+      >
         <styledLink>comment</styledLink>
       </div>
     </div>
-    <div class="row g-0 m-0 mb-2">
+    <div class="row g-0 m-0 mb-1">
       <div class="col-auto ms-1">
         <img
           style="
@@ -109,18 +116,39 @@
           alt=""
         />
       </div>
-      <div class="col-11 row g-0 ms-1 d-flex align-items-center" style="position: relative;">
+      <div
+        class="col-11 row g-0 ms-1 d-flex align-items-center"
+        style="position: relative"
+      >
         <input
           v-on:keyup.enter="addComment"
           type="text"
           class="form-control ms-1 me-1 rounded-pill"
           placeholder="comment in this"
           v-model="addText"
-          style="position: absolute;"
+          style="position: absolute"
         />
-        <div class="col-11"></div>
-        <div class="col-1 d-flex align-items-center"><i class="bi bi-camera fs-4 opacity-50" style="position: absolute;"></i></div>
+        <div class="col-11">
+          <input type="file" :id="'file' + post.id" @change="onChange" v-show="false" />
+        </div>
+        <div class="col-1 d-flex align-items-center">
+          <label :for="'file' + post.id">
+            <i class="bi bi-camera fs-4 opacity-50"></i>
+          </label>
+        </div>
       </div>
+    </div>
+    <div class="row g-0">
+      <img
+        :id="'imageCMT' + post.id"
+        v-show="imageCmt"
+        class="w-25 g-0 "
+        :src="'http://localhost:8080' + fileName"
+      />
+      <video :id="'videoCMT' + post.id" v-show="videoCmt" width="row" controls>
+        <source :src="'http://localhost:8080' + fileName" type="video/mp4" />
+        Your browser does not support HTML video.
+      </video>
     </div>
     <div class="row g-0 m-0 p-0" v-show="commentShow">
       <div
@@ -129,8 +157,8 @@
         :key="comment.id"
       >
         <comment-post
-          class="bg-white text-dark"
-          :comment="comment"
+          class="bg-white text-dark row g-0"
+          :commentP="comment"
           :user="user"
           @deleteComment="deleteComment()"
           :post="post"
@@ -180,7 +208,6 @@ export default {
       image: false,
       video: false,
       edit: false,
-      file: this.postP.file,
       text: "",
       bg_image: "",
       addText: "",
@@ -194,6 +221,10 @@ export default {
       isNone: false,
       isRequest: false,
       isFriend: false,
+      file: "",
+      imageCmt: false,
+      videoCmt: false,
+      fileName: null,
     };
   },
   created() {
@@ -257,12 +288,14 @@ export default {
       data.append("id", this.post.id);
       data.append("type", "post");
       data.append("text", this.addText);
+      data.append("file", this.file);
       BaseRequest.post("comment", data)
         .then(function (res) {
           _this.addText = "";
           _this.comments.unshift(res.data.comment);
           _this.post.count_comment++;
           _this.commentShow = true;
+          this.getType("text");
         })
         .catch(function (err) {
           console.log(err);
@@ -304,27 +337,27 @@ export default {
         });
     },
     getType(type) {
-      if (type === "res request") {
-        this.isNone = false;
-        this.isRequest = true;
-        this.isFriend = false;
-      } else if (type === "res friend") {
-        this.isNone = false;
-        this.isRequest = true;
-        this.isFriend = false;
-      } else if (type === "request") {
-        this.isNone = false;
-        this.isRequest = true;
-        this.isFriend = false;
-      } else if (type === "friend") {
-        this.isNone = false;
-        this.isRequest = false;
-        this.isFriend = true;
+      if (type === "image") {
+        this.imageCmt = true;
+        this.videoCmt = false;
+      } else if (type === "video") {
+        this.imageCmt = false;
+        this.videoCmt = true;
       } else {
-        this.isNone = true;
-        this.isRequest = false;
-        this.isFriend = false;
+        this.imageCmt = false;
+        this.videoCmt = false;
       }
+    },
+    addLike(type) {
+      this.post.count_reaction += type === "like" ? 1 : -1;
+    },
+    onChange(e) {
+      this.file = e.target.files[0];
+      let type = this.file.type.substr(0, 5);
+      document.getElementById(type + "CMT" + this.post.id).src = URL.createObjectURL(
+        e.target.files[0]
+      );
+      this.getType(type);
     },
   },
 };

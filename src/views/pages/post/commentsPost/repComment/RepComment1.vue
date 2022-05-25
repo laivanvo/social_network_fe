@@ -1,91 +1,88 @@
 <template>
   <div class="row g-0 m-0 p-0" v-show="!isDelete">
     <div class="row g-0 m-0 p-0">
-      <div class="col-auto d-flex align-items-center">
-        <center>
-          <img
-            style="
-              border-radius: 50%;
-              height: 30px;
-              width: 30px;
-              overflow: hidden;
-              display: flex;
-              justify-content: center;
-              align-items: center;
-            "
-            :src="'http://localhost:8080' + user.profile.avatar"
-            alt=""
-          />
-        </center>
+      <div class="col-auto">
+        <img
+          class="mt-2"
+          style="
+            border-radius: 50%;
+            height: 30px;
+            width: 30px;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+          "
+          :src="'http://localhost:8080' + user.profile.avatar"
+          alt=""
+        />
       </div>
-      <div class="col-auto ms-1 row border rounded-pill ps-2 bg-light">
-        <div class="col-auto">
-          <div class="row g-0">
-            <h6 class="col-5" style="white-space: nowrap">
-              {{ user.profile.last_name + " " + user.profile.first_name }}
-            </h6>
-          </div>
-          <div v-show="!isEdit" class="row g-0">
-            <div>{{ editText }}</div>
-          </div>
-          <div v-show="isEdit" class="row g-0">
-            <input
-              type="text"
-              v-on:keyup.enter="editComment"
-              v-model="editText"
-            />
-          </div>
-        </div>
-        <div class="col-auto">
-          <i
-            class="bi bi-card-list"
-            type="button"
-            id="dropdownMenuButton1"
-            data-bs-toggle="dropdown"
-            aria-expanded="false"
+      <div class="col-auto" style="white-space: nowrap">
+        <div class="col-auto row g-0">
+          <div
+            class="col-auto ms-1 row border rounded-pill ps-2 bg-light"
+            style="white-space: nowrap"
           >
-          </i>
-          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-            <li>
-              <a @click="edit" class="dropdown-item"> Edit </a>
-            </li>
-            <li>
-              <a @click="deleteComment" class="dropdown-item">Delete</a>
-            </li>
-          </ul>
+            <div class="col-auto">
+              <div class="row g-0">
+                <h6 class="col-auto" style="white-space: nowrap">
+                  {{ user.profile.last_name + " " + user.profile.first_name }}
+                </h6>
+              </div>
+              <div v-show="!isEdit" class="row g-0">
+                <div>{{ editText }}</div>
+              </div>
+              <div v-show="isEdit" class="row g-0">
+                <input
+                  type="text"
+                  v-on:keyup.enter="editComment"
+                  v-model="editText"
+                />
+              </div>
+            </div>
+            <div class="col-auto row g-0">
+              <div class="row g-0">
+                <i
+                  class="bi bi-card-list row"
+                  type="button"
+                  id="dropdownMenuButton1"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                </i>
+                <ul
+                  class="dropdown-menu row"
+                  style="max-width: 100px"
+                  aria-labelledby="dropdownMenuButton1"
+                >
+                  <li>
+                    <a @click="edit" class="dropdown-item"> Edit </a>
+                  </li>
+                  <li>
+                    <a @click="deleteComment" class="dropdown-item">Delete</a>
+                  </li>
+                </ul>
+              </div>
+              <div class="row g-0">
+                <i class="bi bi-star-fill"> {{ comment.count_reaction }}</i>
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
-    <div class="row g-0">
-      <div class="col-3">
-        <reaction-app :id="comment.id" :type="'comment'" :user="user" />
-      </div>
-      <div class="col-3" @click="showComment">
-        <styledLink class="fs-6 fw-bold">rep</styledLink>
-      </div>
-    </div>
-    <div class="row g-0 m-0 p-0">
-      <div class="col-2"></div>
-      <div class="col-10 m-0 p-0">
-        <div class="row g-0 m-0 p-0" v-show="commentShow">
-          <div class="row g-0 m-0 p-0" v-for="item in comments" :key="item.id">
-            <RepComment2
-              class="m-0 p-0"
-              :commentP="comment"
-              :comment="item"
+
+        <div class="col-auto ms-0 row g-0 mb-1" style="min-width: 300px">
+          <div class="col-auto">
+            <reaction-app
+              @addLike="addLike($event)"
+              :id="comment.id"
+              :type="'comment'"
               :user="user"
             />
           </div>
-          <div class="row g-0" @click="loadMoreComment">
-            <styledLink>load more</styledLink>
+          <div class="col-auto ms-3" @click="showComment">rep</div>
+          <div class="col-auto ms-3">
+            {{ date }}
           </div>
-          <input
-            v-on:keyup.enter="addComment"
-            type="text"
-            class="form-control"
-            placeholder="comment in this"
-            v-model="addText"
-          />
         </div>
       </div>
     </div>
@@ -93,27 +90,16 @@
 </template>
 
 <script>
-import styled, { css } from "vue-styled-components";
-const styledLink = styled.p`
-  &:hover {
-    ${() => css`
-      text-decoration: underline;
-      color: blue;
-    `}
-  }
-`;
-import RepComment2 from "@/views/pages//post/commentsPost/repComment/RepComment2.vue";
 import ReactionApp from "@/views/pages//post/commentsPost/ReactionApp.vue";
 import BaseRequest from "@/helpers/BaseRequest";
+import moment from "moment";
 
 export default {
   components: {
-    styledLink,
-    RepComment2,
     ReactionApp,
   },
   props: {
-    comment: {
+    commentP: {
       type: Object,
     },
     user: {
@@ -133,10 +119,14 @@ export default {
       editText: "",
       isEdit: false,
       isDelete: false,
+      date: "",
+      comment: {},
     };
   },
   mounted() {
+    this.comment = this.commentP;
     this.editText = this.comment.text;
+    this.date = moment(this.comment.created_at, "YYYYMMDD").fromNow();
   },
   methods: {
     getComment(page) {
@@ -162,13 +152,6 @@ export default {
     },
     personal() {
       this.$router.push({ name: "personal" });
-    },
-    getFile() {
-      if (this.post.type === "image") {
-        this.image = true;
-      } else if (this.post.type === "video") {
-        this.video = true;
-      }
     },
     edit() {
       this.isEdit = !this.isEdit;
@@ -215,6 +198,9 @@ export default {
         .catch(function (err) {
           console.log(err);
         });
+    },
+    addLike(type) {
+      this.comment.count_reaction += type === "like" ? 1 : -1;
     },
   },
 };
