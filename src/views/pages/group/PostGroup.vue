@@ -13,10 +13,16 @@
 import BaseRequest from "@/helpers/BaseRequest";
 import PostApp from "@/views/pages//post/PostApp.vue";
 import $ from "jquery";
+import DefaultLayout from "@/views/layouts/DefaultLayout";
 
 export default {
     components: {
         PostApp,
+    },
+    computed: {
+        layout() {
+            return this.$route.meta.layout ?? DefaultLayout;
+        },
     },
     created() {
         window.addEventListener("scroll", this.handleScroll);
@@ -37,18 +43,24 @@ export default {
             images: [],
             videos: [],
             posts: [],
+            page: 1,
             profile: {},
         };
     },
     mounted() {
-        this.getPost();
+        this.getPost(this.page);
     },
     methods: {
         getPost() {
+            let _this = this;
             BaseRequest.get("posts/group")
                 .then((response) => {
-                    this.posts = response.data.posts;
-                    this.profile = response.data.profile;
+                    response.data.posts.forEach((e) => {
+                        _this.posts.map((x) => x.id).indexOf(e.id) === -1
+                            ? _this.posts.push(e)
+                            : console.log("This item already exists");
+                    });
+                    _this.profile = response.data.profile;
                 })
                 .catch((error) => {
                     console.log(error);

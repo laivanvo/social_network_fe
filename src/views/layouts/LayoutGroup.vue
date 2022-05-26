@@ -24,7 +24,7 @@
               >
               </i>
             </div>
-            <div class="col-10">My feed</div>
+            <div class="col-10" @click="showPostGroup()">My feed</div>
           </div>
           <div class="row g-0 mb-3">
             <div class="col-2 text-center">
@@ -34,7 +34,7 @@
               >
               </i>
             </div>
-            <div class="col-10">discover</div>
+            <div @click="showDiscover()" class="col-10">discover</div>
           </div>
           <div class="row g-0 mb-3">
             <div class="col-2 text-center">
@@ -75,6 +75,7 @@
 <script>
 import BaseRequest from "@/helpers/BaseRequest";
 import CreateGroup from "@/views/pages/group/List/CreateGroup.vue";
+import EventBus from '@/main';
 export default {
   components: {
     CreateGroup,
@@ -83,6 +84,7 @@ export default {
     return {
       profile: {},
       groups: [],
+      isDiscover: false,
     };
   },
   mounted() {
@@ -99,6 +101,12 @@ export default {
       BaseRequest.get("groups/mec").then((res) => {
         this.groups = res.data.groups;
       });
+    },
+    showDiscover() {
+      EventBus.$emit("showDiscoverGroup");
+    },
+    showPostGroup() {
+      EventBus.$emit("showPostGroup");
     },
   },
 };

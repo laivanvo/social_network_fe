@@ -26,7 +26,7 @@ const routes = [
   { path: '/register', component: RegisterApp, name: 'register' },
   { path: '/profile', component: EditProfile, name: 'profile' },
   { path: '/group', component: GroupApp, name: 'group' },
-  { path: '/view', component: ViewGroup, name: 'view' },
+  { path: '/groupView', component: ViewGroup, name: 'groupView' },
   { path: '/friend', component: FriendApp, name: 'friend' },
   { path: '/friend/request', component: ListRequest, name: 'friend.request' },
   { path: '/Personal', component: PersonalAuth, name: 'personal' },

@@ -102,8 +102,8 @@
         </div>
         <div class="row g-0 d-flex align-items-start" :style="'background-color: white; overflow: auto;min-height: 10px; height: ' + height / 3 + 'px;'">
           <div class="row g-0">
-            <div class="row g-0" v-for="request in requests" :key="request.id">
-            <profile-app class="mb-2" :profile="request" />
+            <div class="row g-0" v-for="group in groups" :key="group.id">
+            <group-item class="mb-2 row g-0" :group="group" />
           </div>
           </div>
         </div>
@@ -117,17 +117,19 @@
 import BaseRequest from "@/helpers/BaseRequest";
 import $ from "jquery";
 import ProfileApp from "@/views/profile/ProfileApp.vue";
+import GroupItem from "@/views/pages/group/GroupItem.vue"
 
 export default {
   components: {
     ProfileApp,
+    GroupItem,
   },
   data() {
     return {
       profile: {},
-      groups: [],
       height: null,
       requests: [],
+      groups: [],
     };
   },
   mounted() {
@@ -143,7 +145,7 @@ export default {
       });
     },
     getGroup() {
-      BaseRequest.get("groups/mec").then((res) => {
+      BaseRequest.get("groups/join").then((res) => {
         this.groups = res.data.groups;
       });
     },

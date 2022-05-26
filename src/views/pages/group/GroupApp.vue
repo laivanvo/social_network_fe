@@ -1,8 +1,8 @@
 <template>
     <div class="row g-0" :is="layout">
-        <post-group/>
-        <group-discover v-show="false"/>
-        <group-notification v-show="false"/>
+        <post-group v-show="isPostGroup"/>
+        <group-discover v-show="isDiscover"/>
+        <!-- <group-notification v-show="false"/> -->
     </div>
 </template>
 
@@ -13,6 +13,8 @@ import ListGroup from "@/views/pages/group/List/ListGroup.vue";
 import styled, { css } from "vue-styled-components";
 import LayoutGroup from "@/views/layouts/LayoutGroup.vue"
 import PostGroup from "@/views/pages/group/PostGroup.vue"
+import EventBus from '@/main';
+import GroupDiscover from "@/views/pages/group/GroupDiscover.vue"
 
 const styledLink = styled.button`
     &:hover {
@@ -30,6 +32,11 @@ export default {
         styledLink,
         LayoutGroup,
         PostGroup,
+        GroupDiscover,
+    },
+    created() {
+        EventBus.$on("showDiscoverGroup", this.showDiscoverGroup);
+        EventBus.$on("showPostGroup", this.showPostGroup);
     },
     computed: {
         layout() {
@@ -41,6 +48,8 @@ export default {
             isOfMe: true,
             isSend: false,
             isList: false,
+            isDiscover: false,
+            isPostGroup: false,
         };
     },
     methods: {
@@ -59,6 +68,15 @@ export default {
             this.isSend = false;
             this.isList = true;
         },
+        showDiscoverGroup() {
+
+           this.isDiscover = true;
+           this.isPostGroup = false;
+        },
+        showPostGroup() {
+            this.isPostGroup = true;
+            this.isDiscover = false;
+        }
     },
 };
 </script>

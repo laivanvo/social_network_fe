@@ -61,9 +61,15 @@
                             </div>
                         </div>
                         <div class="mb-3">
-                            <label class="form-label">Avatar: </label>
-                            <img id="avatar" class="row g-0 rounded mb-3" />
+                            <label class="form-label row">Avatar: </label>
+                            <label for="avatar-group" class="row">
+                                <div class="bg-secondary row g-0" style="height: 300px">
+                                    <img id="avatar" class="w-100 h-100 mb-3" />
+                                </div>
+                            </label>
                             <input
+                                id="avatar-group"
+                                v-show="false"
                                 type="file"
                                 class="row g-0"
                                 v-on:change="onChange"
@@ -110,12 +116,12 @@
                         <div class="mb-3">
                             <label class="form-label">Bonus: </label>
                             <div class="form-control row">
-                                <label class="col-3 border">trade</label>
-                                <label class="col-3 border">knowledge</label>
-                                <label class="col-3 border">entertain</label>
-                                <label class="col-3 border">sociable</label>
-                                <label class="col-3 border">help new</label>
-                                <label class="col-3 border">singing</label>
+                                <label class="col-3 border" id="trade" @click="setBonus('trade')">trade</label>
+                                <label class="col-3 border" id="knowledge" @click="setBonus('knowledge')">knowledge</label>
+                                <label class="col-3 border" id="entertain" @click="setBonus('entertain')">entertain</label>
+                                <label class="col-3 border" id="sociable" @click="setBonus('sociable')">sociable</label>
+                                <label class="col-3 border" id="help" @click="setBonus('help')">help new</label>
+                                <label class="col-3 border" id="singing" @click="setBonus('singing')">singing</label>
                             </div>
                         </div>
                     </div>
@@ -143,7 +149,7 @@
 </template>
 <script>
 import BaseRequest from "@/helpers/BaseRequest";
-import EventBus from "@/main";
+import $ from "jquery";
 
 export default {
     props: {
@@ -154,10 +160,12 @@ export default {
     data() {
         return {
             group: {
+                bonus: "",
                 audience: "select option",
             },
             file: "",
             options: ["public", "private"],
+            bonus: [],
         };
     },
     methods: {
@@ -169,13 +177,29 @@ export default {
         },
         createGroup() {
             let data = new FormData();
+            this.bonus.forEach((e) => {
+                this.group.bonus += e + " ";
+            });
             data.append("name", this.group.name);
             data.append("audience", this.group.audience);
             data.append("file", this.file);
+            data.append("content", this.group.content);
+            data.append("bonus", this.group.bonus);
             BaseRequest.post("groups", data).then((res) => {
-                EventBus.$emit("createGroup", res.data.group);
+                this.$router.push({ name: 'groupView', params: {group: res.data.group}})
             });
         },
+        setBonus(item) {
+            if (!this.bonus.includes(item)) {
+                this.bonus.push(item);
+                console.log(this.bonus)
+                $('#' + item).addClass("bg-primary");
+            } else {
+                this.bonus.splice(this.bonus.indexOf(item), 1);
+                console.log(this.bonus)
+                $('#' + item).removeClass("bg-primary");
+            }
+        }
     },
 };
 </script>
