@@ -1,18 +1,18 @@
 <template>
-  <div class="">
-    <div class="row ms-2 g-0" v-show="isPost">
-      <i @click="addLike()" v-show="!isLike" class="bi bi-star fs-4 opacity-50">
+  <div class="row g-0">
+    <div class="row g-0" v-show="isPost">
+      <i type="button" @click="addLike()" v-show="!isLike" class="fa fa-thumbs-o-up opacity-50">
         like</i
       >
-      <i @click="addLike()" v-show="isLike" class="bi bi-star-fill fs-4">
+      <i type="button" @click="addLike()" v-show="isLike" class="fa fa-thumbs-up">
         Like</i
       >
     </div>
     <div class="row ms-2 g-0" v-show="!isPost">
-      <i @click="addLike()" v-show="!isLike" class="bi bi-star fs-20 opacity-50">
+      <i type="button" @click="addLike()" v-show="!isLike" class="fa fa-thumbs-o-up opacity-50">
         like</i
       >
-      <i @click="addLike()" v-show="isLike" class="bi bi-star-fill fs-20">
+      <i type="button" @click="addLike()" v-show="isLike" class="fa fa-thumbs-up">
         Like</i
       >
     </div>

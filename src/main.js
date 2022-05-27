@@ -14,9 +14,13 @@ import ViewGroup from '@/views/pages/group/List/ViewGroup'
 import FriendApp from "@/views/pages/personal/friend/FriendApp"
 import ListRequest from "@/views/pages/personal/friend/ListRequest"
 import PersonalAuth from "@/views/pages/personal/PersonalAuth"
+import PersonalApp from "@/views/pages/personal/PersonalApp"
+
 import "bootstrap/dist/css/bootstrap.min.css"
 import "bootstrap"
 import "bootstrap-icons/font/bootstrap-icons.css";
+import "font-awesome/css/font-awesome.min.css";
+
 const EventBus = new Vue()
 export default EventBus
 const routes = [
@@ -30,6 +34,7 @@ const routes = [
   { path: '/friend', component: FriendApp, name: 'friend' },
   { path: '/friend/request', component: ListRequest, name: 'friend.request' },
   { path: '/Personal', component: PersonalAuth, name: 'personal' },
+  { path: '/personalApp', component: PersonalApp, name: 'personalApp' },
 ]
 
 const router = new VueRouter({

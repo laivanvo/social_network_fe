@@ -1,7 +1,7 @@
 <template>
   <div class="row g-0 m-0 p-0">
     <div class="row g-0 m-0 p-0">
-      <div class="col-3">
+      <div class="col-3 border">
         <div class="row g-0 mb-3" style="overflow: auto; height: 200px">
           <div class="row g-0 mb-3">
             <div class="col-2">Group</div>
@@ -48,25 +48,19 @@
           </div>
         </div>
         <create-group :profile="profile"/>
-        <div class="row g-0 border mb-3"></div>
+        <div class="row g-0 border mt-3 ms-3 me-3 mb-3"></div>
         <div class="row g-0 mb-3">My groups</div>
-        <div class="row g-0" style="overflow: auto; height: 200px">
-          <div class="row g-0 mb-3" v-for="group in groups" :key="group.id">
-            <div class="col-2 text-center">
-              <i
-                class="w-100 ms-1 bi bi-star-fill"
-                style="border-radius: 50% 50% 50% 50%"
-              >
-              </i>
+        <div class="row g-0" style="overflow: auto; height: 400px">
+          <div @click="viewGroup(group)" class="row g-0 mb-3" v-for="group in groups" :key="group.id">
+            <div class="col-10">
+              <group-item :group="group"/>
             </div>
-            <div class="col-10">favourite</div>
           </div>
         </div>
       </div>
-      <div class="col-7" style="overflow: auto; height: 1000px">
+      <div class="col-9 ps-3 pe-5" style="overflow: auto; height: 1000px">
         <slot />
       </div>
-      <div class="col-2"></div>
     </div>
     <div class="row g-0"></div>
   </div>
@@ -75,10 +69,12 @@
 <script>
 import BaseRequest from "@/helpers/BaseRequest";
 import CreateGroup from "@/views/pages/group/List/CreateGroup.vue";
+import GroupItem from "@/views/pages/group/GroupItem.vue"
 import EventBus from '@/main';
 export default {
   components: {
     CreateGroup,
+    GroupItem,
   },
   data() {
     return {
@@ -108,6 +104,9 @@ export default {
     showPostGroup() {
       EventBus.$emit("showPostGroup");
     },
+    viewGroup(group) {
+      this.$router.push({ name: 'groupView', params: {group: group}})
+    }
   },
 };
 </script>

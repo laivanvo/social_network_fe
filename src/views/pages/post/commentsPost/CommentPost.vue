@@ -18,7 +18,7 @@
         />
       </div>
       <div class="col-10">
-        <div class="row g-0">
+        <div class="row g-0" @mouseover="isIcon = false" @mouseleave="isIcon = true">
           <div
             v-show="!isEdit"
             class="col-auto ms-1 row border rounded-pill bg-light"
@@ -33,27 +33,13 @@
               <div class="row g-0">
                 <div>{{ editText }}</div>
               </div>
-              <div v-show="isEdit" class="row g-0">
-                <input
-                  type="text"
-                  v-on:keyup.enter="editComment"
-                  v-model="editText"
-                />
-              </div>
             </div>
           </div>
-          <div class="col-auto row g-0 d-flex align-items-center">
-            <div class="col-auto g-0">
-              <i v-show="!isEdit" class="bi bi-star-fill">
-                {{ comment.count_reaction }}</i
-              >
-            </div>
-          </div>
-          <div class="col-auto row g-0 d-flex align-items-center ms-4">
+          <div class="col-auto row g-0 ms-4 d-flex align-items-center bg-light">
             <div class="col-auto g-0">
               <i
-                v-show="!isEdit"
-                class="bi bi-card-list row"
+                v-show="!(isEdit || isIcon)"
+                class="fa fa-ellipsis-h row"
                 type="button"
                 id="dropdownMenuButton1"
                 data-bs-toggle="dropdown"
@@ -89,23 +75,38 @@
             Your browser does not support HTML video.
           </video>
         </div>
-        <div class="row g-0 mb-1" style="min-width: 300px">
-          <div class="col-auto">
-            <reaction-app
-              @addLike="addLike($event)"
-              :id="comment.id"
-              :type="'comment'"
-              :user="user"
-            />
-          </div>
-          <div class="col-auto ms-3" @click="showComment">rep</div>
-          <div class="col-auto ms-3">
-            {{ date }}
-          </div>
+        <div
+          class="row g-0 mb-3 mt-1 d-flex align-items-center"
+          style="min-width: 300px; font-size: 0.7em"
+        >
+          <center class="row g-0">
+            <div class="col-auto row g-0 ms-2 d-flex align-items-center">
+              <div class="col-auto g-0">
+                <reaction-app
+                  @addLike="addLike($event)"
+                  :id="comment.id"
+                  :type="'comment'"
+                  :user="user"
+                  class="col-auto"
+                />
+              </div>
+            </div>
+            <div class="col-auto ms-2" @click="showComment">rep</div>
+            <div class="col-auto ms-2">
+              {{ date }}
+            </div>
+            <div class="col-auto row g-0 ms-2 d-flex align-items-center">
+              <div class="col-auto g-0">
+                <i v-show="!isEdit" class="fa fa-thumbs-o-up">
+                  {{ comment.count_reaction }}</i
+                >
+              </div>
+            </div>
+          </center>
         </div>
       </div>
     </div>
-    <div v-else class="row g-0">
+    <div v-else class="row g-0 mt-3 mb-3">
       <div class="col-auto ms-1">
         <img
           style="
@@ -248,12 +249,15 @@ export default {
       comment: {},
       image: false,
       video: false,
+      isIcon: true,
     };
   },
   mounted() {
     this.comment = this.commentP;
     this.editText = this.comment.text;
-    this.date = moment(this.comment.created_at, "YYYYMMDD").fromNow();
+    this.date = moment(this.comment.created_at, "YYYYMMDD h:mm:ss")
+      .add(7, "hour")
+      .fromNow();
     this.getFile();
   },
   methods: {
@@ -291,7 +295,7 @@ export default {
       BaseRequest.post("comments/" + this.comment.id, data)
         .then(function () {
           _this.isEdit = !_this.isEdit;
-          console.log(1)
+          console.log(1);
         })
         .catch(function (err) {
           console.log(err);

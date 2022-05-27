@@ -1,12 +1,12 @@
 <template>
-    <div class="home row p-0 m-0" :is="layout">
-        <div class="row g-0 p-0 m-0">
-            <div class="col-1">
+    <div class="home row ps-2 pe-2" :is="layout">
+        <div class="row g-0 ms-5 me-5 mb-3">
+            <div class="col-auto ms-2">
                 <img
                     style="
                         border-radius: 50%;
-                        height: 50px;
-                        width: 50px;
+                        height: 30px;
+                        width: 30px;
                         overflow: hidden;
                         display: flex;
                         justify-content: center;
@@ -17,11 +17,11 @@
                 />
             </div>
             <input
-                class="col-11 rounded-pill"
+                class="col-10 ms-2 border border-1 bg-light rounded-pill"
                 type="text"
                 data-bs-toggle="modal"
                 data-bs-target="#exampleModal"
-                placeholder="how are you today"
+                placeholder="  how are you today"
             />
         </div>
         <create-post-modal
@@ -30,9 +30,9 @@
             class="row g-0"
             :user="user"
         />
-        <div class="row g-0 p-0 m-0" v-for="post in posts" :key="post.id">
+        <div class="row g-0 border border-3 rounded ms-5 me-5 pt-2 mb-3" v-for="post in posts" :key="post.id">
             <post-app
-                class="row g-0 border mt-5 bg-white"
+                class="row g-0 bg-white"
                 :postP="post"
                 :user="post.user"
             />

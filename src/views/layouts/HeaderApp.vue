@@ -1,19 +1,26 @@
 <template>
-  <div class="row g-0 m-0">
-    <div class="row g-0 pt-3 pb-3 me-0 border" style="background-color: white">
-      <div class="col-4 row ">
-        <styledLink @click="homePage()" class="col-1 d-flex align-items-center">
-          <i style="color: blue" class="bi bi-house-door fs-2"></i>
-        </styledLink>
-        <div class="col-7 d-flex align-items-center" style="position: relative">
+  <div class="row g-0">
+    <div class="row g-0 pt-3 pb-3 border" style="background-color: white">
+      <div class="col-4 row g-0">
+        <div
+          type="button"
+          @click="homePage()"
+          class="col-auto ms-2 d-flex align-items-center"
+        >
+          <i class="fa fa-home fs-1" aria-hidden="true"></i>
+        </div>
+        <div
+          class="col-auto ms-2 d-flex align-items-center"
+          style="position: relative"
+        >
           <input
             type="text"
             id="search"
             @focus="isSearch = true"
             @blur="isSearch = false"
-            class="rounded-pill"
+            class="border border-1 fs-5 rounded-pill"
             style="position: absolute"
-            placeholder="        input in social-media"
+            placeholder="      input in social-media"
           />
           <i
             v-show="!isSearch"
@@ -22,60 +29,82 @@
           ></i>
         </div>
       </div>
-      <div class="col-4 ps-0  row">
-        <styledLink @click="homePage()" class="col-3  ps-0 d-flex align-items-center">
-          <i style="color: blue" class="bi bi-house-door fs-3"></i>
-        </styledLink>
-        <styledLink @click="personal()" class="col-3  ps-0 d-flex align-items-center">
-          <i style="color: blue" class="bi bi-person-workspace fs-3"></i>
-        </styledLink>
-        <styledLink @click="forYou()" class="col-3  ps-0 d-flex align-items-center"
-          ><i style="color: blue" class="bi bi-people fs-3"></i
-        ></styledLink>
-        <styledLink @click="group()" class="col-3  ps-0 d-flex align-items-center">
-          <i style="color: blue" class="bi bi-collection fs-3"></i>
-        </styledLink>
+      <div class="col-4 row g-0">
+        <div type="button" @click="homePage()" class="col-3 text-center">
+          <div class="row g-0 dropdown-item">
+            <i class="bi bi-house-door fs-3"></i>
+          </div>
+        </div>
+        <div type="button" @click="personal()" class="col-3 text-center">
+          <div class="row g-0 dropdown-item">
+            <i class="bi bi-person-workspace fs-3"></i>
+          </div>
+        </div>
+        <div type="button" @click="forYou()" class="col-3 text-center">
+          <div class="row g-0 dropdown-item">
+            <i class="bi bi-people fs-3"></i>
+          </div>
+        </div>
+        <div type="button" @click="group()" class="col-3 text-center">
+          <div class="row g-0 dropdown-item">
+            <i class="fa fa-users fs-3 mt-2"></i>
+          </div>
+        </div>
       </div>
-      <div class="col-4 row ps-0  m-0 bg-light d-flex align-items-center">
-        <div class="col-5 row g-0" @click="ViewPersonal()">
-          <div class="col-4">
-          <img
-            style="
-              border-radius: 50%;
-              height: 50px;
-              width: 50px;
-              overflow: hidden;
-              display: flex;
-              justify-content: center;
-              align-items: center;
-            "
-            :src="'http://localhost:8080' + profile.avatar"
-            alt=""
-          />
-        </div>
-        <div class="col-8 d-flex align-items-center">
-          {{ profile.last_name + " " + profile.first_name }}
-        </div>
-        </div>
-        <div class="col-5 ps-0 "></div>
-        <div
-          class="col-1 ps-0  border d-flex align-items-center justify-content-center"
-          style="border-radius: 50% 50% 50% 50%; width: 30px; height: 30px"
-        >
-          <i style="color: blue" class="bi bi-bell"></i>
+      <div
+        class="
+          col-4
+          row
+          ps-0
+          m-0
+          bg-light
+          d-flex
+          align-items-center
+          text-center
+        "
+      >
+        <div class="col-auto row g-0" @click="ViewPersonal()">
+          <div class="col-auto">
+            <img
+              style="
+                border-radius: 50%;
+                height: 30px;
+                width: 30px;
+                overflow: hidden;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+              "
+              :src="'http://localhost:8080' + profile.avatar"
+              alt=""
+            />
+          </div>
+          <div class="col-auto ms-2 d-flex align-items-center text-center">
+            {{ profile.last_name + " " + profile.first_name }}
+          </div>
         </div>
         <div
           class="
-            col-1
+            col-auto
+            ms-auto
+            me-1
             ps-0
             border
             d-flex
             align-items-center
-            justify-content-center
+            text-center
           "
           style="border-radius: 50% 50% 50% 50%; width: 30px; height: 30px"
         >
-          <i style="color: blue" class="bi bi-card-list"></i>
+          <center><i class="bi bi-bell ms-2"></i></center>
+        </div>
+        <div
+          class="col-auto me-1 ps-0 border d-flex align-items-center"
+          style="border-radius: 50% 50% 50% 50%; width: 30px; height: 30px"
+        >
+          <center>
+            <i class="fa fa-ellipsis-h ms-2"></i>
+          </center>
         </div>
       </div>
     </div>
@@ -87,18 +116,8 @@
 
 <script>
 import BaseRequest from "@/helpers/BaseRequest";
-import styled, { css } from "vue-styled-components";
-const styledLink = styled.label`
-  &:hover {
-    ${() => css`
-      color: blue;
-    `}
-  }
-`;
 export default {
-  components: {
-    styledLink,
-  },
+  components: {},
   data() {
     return {
       profile: {},
@@ -143,8 +162,11 @@ export default {
       alert(1);
     },
     ViewPersonal() {
-      this.$router.push({ name: 'personal', params: {profile: this.profile}})
-    }
+      this.$router.push({
+        name: "personal",
+        params: { profile: this.profile },
+      });
+    },
   },
 };
 </script>

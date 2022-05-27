@@ -1,19 +1,19 @@
 <template>
-  <div name="post" v-show="!isDelete" class="row g-0 m-0 p-0">
+  <div name="post" v-show="!isDelete" class="row g-0">
     <edit-post-modal
       :id="'postEdit' + post.id"
       :user="user"
       :postPre="post"
-      class="row g-0 m-0 p-0"
+      class="row g-0"
       @updatePost="updatePost($event)"
     />
-    <div class="row g-0 m-0 p-0">
-      <div class="col-auto ms-1">
+    <div class="row g-0">
+      <div class="col-auto ms-1" type="button">
         <img
           style="
             border-radius: 50% 50% 50% 50%;
-            height: 50px;
-            width: 50px;
+            height: 30px;
+            width: 30px;
             overflow: hidden;
             display: flex;
             justify-content: center;
@@ -25,10 +25,13 @@
       </div>
       <div class="col-auto ms-1 g-0">
         <div class="row g-0">
-          <div class="row g-0">
-            <div class="col-auto ms-1">
-              {{ user.profile.last_name + " " + user.profile.first_name }}
-            </div>
+          <div class="row g-0 d-flex align-items-center">
+            <center class="row g-0">
+              <h7 type="button" class="col-auto ms-1" style="font-weight: bold;">
+                {{ user.profile.last_name + " " + user.profile.first_name }}
+              </h7>
+              <div class="col-auto ms-2 opacity-50">added a new post.</div>
+            </center>
           </div>
           <div class="row g-0 ms-1">
             {{ new Date(post.created_at).toDateString() }}
@@ -38,7 +41,7 @@
       <div class="col-auto ms-auto">
         <div class="dropdown col-auto ms-auto me-3">
           <i
-            class="bi bi-card-list"
+            class="fa fa-ellipsis-h"
             type="button"
             id="dropdownMenuButton1"
             data-bs-toggle="dropdown"
@@ -65,31 +68,32 @@
         </div>
       </div>
     </div>
-    <div class="bg-white m-0 p-0 row ms-2 mt-3 mb-3" :style="post.bg_image">
+    <div class="bg-white row g-0 ps-2 mt-3 mb-3" :style="post.bg_image">
       {{ post.text }}
     </div>
-    <div class="row g-0 m-0 p-0">
+    <div class="row g-0 ps-2 pe-2">
       <img
         v-show="image"
         class="row g-0 m-0"
         :src="'http://localhost:8080' + post.file"
       />
-      <video v-show="video" class="row g-0 m-0 p-0" controls>
+      <video v-show="video" class="row g-0" controls>
         <source :src="'http://localhost:8080' + post.file" type="video/mp4" />
         Your browser does not support HTML video.
       </video>
     </div>
 
     <div class="d-flex align-items-center row g-0">
-      <div class="col-2 mt-3 mb-0">
-        <i class="ms-5 bi bi-star-fill fs-3"> {{ post.count_reaction }}</i>
+      <div class="col-auto mt-3 mb-2 ms-2">
+        <i type="button" class="fa fa-thumbs-o-up" aria-hidden="true"> {{ post.count_reaction }}</i>
       </div>
-      <div class="col-8"></div>
-      <div class="col-2">{{ post.count_comment }} comment</div>
+      <div class="col-auto ms-auto me-1">{{ post.count_comment }} comment</div>
     </div>
-    <div class="border row"></div>
+    <div class="row g-0">
+      <div class="col-10 g-0 ms-5 mb-2 me-5 border"></div>
+    </div>
 
-    <div class="row g-0 m-0 p-0 mb-3">
+    <div class="row g-0 mb-3">
       <div class="col-5">
         <reaction-app @addLike="addLike($event)" :id="post.id" :type="'post'" />
       </div>
@@ -105,8 +109,8 @@
         <img
           style="
             border-radius: 50% 50% 50% 50%;
-            height: 40px;
-            width: 40px;
+            height: 30px;
+            width: 30px;
             overflow: hidden;
             display: flex;
             justify-content: center;
@@ -117,7 +121,7 @@
         />
       </div>
       <div
-        class="col-11 row g-0 ms-1 d-flex align-items-center"
+        class="col-10 row g-0 ms-1 d-flex align-items-center"
         style="position: relative"
       >
         <input
@@ -129,7 +133,12 @@
           style="position: absolute"
         />
         <div class="col-11">
-          <input type="file" :id="'file' + post.id" @change="onChange" v-show="false" />
+          <input
+            type="file"
+            :id="'file' + post.id"
+            @change="onChange"
+            v-show="false"
+          />
         </div>
         <div class="col-1 d-flex align-items-center">
           <label :for="'file' + post.id">
@@ -138,11 +147,11 @@
         </div>
       </div>
     </div>
-    <div class="row g-0">
+    <div class="row g-0 mb-2">
       <img
         :id="'imageCMT' + post.id"
         v-show="imageCmt"
-        class="w-25 g-0 "
+        class="w-25 g-0"
         :src="'http://localhost:8080' + fileName"
       />
       <video :id="'videoCMT' + post.id" v-show="videoCmt" width="row" controls>
@@ -150,12 +159,8 @@
         Your browser does not support HTML video.
       </video>
     </div>
-    <div class="row g-0 m-0 p-0" v-show="commentShow">
-      <div
-        class="row g-0 m-0 p-0"
-        v-for="comment in comments"
-        :key="comment.id"
-      >
+    <div class="row g-0" v-show="commentShow">
+      <div class="row g-0" v-for="comment in comments" :key="comment.id">
         <comment-post
           class="bg-white text-dark row g-0"
           :commentP="comment"
@@ -354,9 +359,8 @@ export default {
     onChange(e) {
       this.file = e.target.files[0];
       let type = this.file.type.substr(0, 5);
-      document.getElementById(type + "CMT" + this.post.id).src = URL.createObjectURL(
-        e.target.files[0]
-      );
+      document.getElementById(type + "CMT" + this.post.id).src =
+        URL.createObjectURL(e.target.files[0]);
       this.getType(type);
     },
   },

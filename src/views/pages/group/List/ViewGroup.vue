@@ -1,6 +1,6 @@
 <template>
   <div class="row g-0">
-    <div class="col-2 border" style="height: 1000px">
+    <div class="col-3 border" style="height: 1000px">
       <div class="row g-0 mt-3 mb-3">
         <h6 class="col-auto">Manager Group</h6>
         <div class="col-3"></div>
@@ -29,33 +29,41 @@
           </div>
         </div>
       </div>
-      <div @click="showPage()" class="row g-0 mb-3">
-        <div class="col-auto ms-2">
-          <i class="bi bi-house"></i>
+      <div @click="showPost()" class="dropdown-item">
+        <div class="row g-0 mb-3">
+          <div class="col-auto">
+            <i class="bi bi-house"></i>
+          </div>
+          <div class="col-auto ms-3">Group Page</div>
         </div>
-        <div class="col-auto ms-2">Group Page</div>
       </div>
-      <div class="row g-0 mb-3">
-        <div class="col-auto ms-2">
-          <i class="bi bi-book"></i>
+      <div @click="showInfo()" class="dropdown-item">
+        <div class="row g-0 mb-3">
+          <div class="col-auto">
+            <i class="bi bi-book"></i>
+          </div>
+          <div class="col-auto ms-3">Overview</div>
         </div>
-        <div class="col-auto ms-2">Overview</div>
       </div>
       <div class="row g-0 mb-3 d-flex align-items-center">
         <center><div class="row g-0 mb-3 border w-75"></div></center>
       </div>
       <h6 class="row g-0 opacity-50 mb-3">Administration Tools</h6>
-      <div class="row g-0 mb-3">
-        <div class="col-auto ms-2">
-          <i style="color: blue" class="bi bi-person-plus"></i>
+      <div @click="showRequest()" class="dropdown-item">
+        <div class="row g-0 mb-3">
+          <div class="col-auto">
+            <i style="color: blue" class="bi bi-person-plus"></i>
+          </div>
+          <div class="col-auto ms-3">Request Membership</div>
         </div>
-        <div class="col-auto ms-2">Request Membership</div>
       </div>
-      <div class="row g-0 mb-3">
-        <div class="col-auto ms-2">
-          <i style="color: blue" class="bi bi-people"></i>
+      <div @click="showMember()" class="dropdown-item">
+        <div class="row g-0 mb-3">
+          <div class="col-auto">
+            <i style="color: blue" class="bi bi-people"></i>
+          </div>
+          <div class="col-auto ms-3">Membership</div>
         </div>
-        <div class="col-auto ms-2">Membership</div>
       </div>
       <div class="row g-0 mb-3">
         <div class="col-auto ms-2">
@@ -88,12 +96,14 @@
         <div class="col-auto ms-2">Setting</div>
       </div>
     </div>
-    <div class="col-10 row g-0">
+    <div class="col-9 row g-0">
       <div class="col-2"></div>
       <div class="col-8 row g-0">
         <div>
           <group-info :group="group" v-show="isInfo" />
-          <post-group-view :group="group"/>
+          <post-group-view :group="group" v-show="isPost" />
+          <request-member :group="group" v-show="isRequest" />
+          <member-ship :group="group" v-show="isMember" />
         </div>
       </div>
       <div class="col-2"></div>
@@ -104,11 +114,15 @@
 <script>
 import GroupInfo from "@/views/pages/group/view/GroupInfo.vue";
 import PostGroupView from "@/views/pages/group/view/PostGroupView.vue";
+import RequestMember from "@/views/pages/group/member/request/RequestMember.vue";
+import MemberShip from '../member/MemberShip.vue';
 
 export default {
   components: {
     GroupInfo,
     PostGroupView,
+    RequestMember,
+    MemberShip,
   },
   created() {
     this.group = this.$route.params.group ? this.$route.params.group : null;
@@ -124,8 +138,36 @@ export default {
     return {
       group: {},
       isInfo: false,
+      isPost: false,
+      isRequest: false,
+      isMember: false,
     };
   },
-  methods: {},
+  methods: {
+    showInfo() {
+      this.isInfo = true;
+      this.isPost = false;
+      this.isRequest = false;
+      this.isMember = false;
+    },
+    showPost() {
+      this.isInfo = false;
+      this.isPost = true;
+      this.isRequest = false;
+      this.isMember = false;
+    },
+    showRequest() {
+      this.isInfo = false;
+      this.isPost = false;
+      this.isRequest = true;
+      this.isMember = false;
+    },
+    showMember() {
+      this.isInfo = false;
+      this.isPost = false;
+      this.isRequest = false;
+      this.isMember = true;
+    },
+  },
 };
 </script>

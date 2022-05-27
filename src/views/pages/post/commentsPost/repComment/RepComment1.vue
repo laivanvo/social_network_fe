@@ -43,7 +43,7 @@
             <div class="col-auto row g-0">
               <div class="row g-0">
                 <i
-                  class="bi bi-card-list row"
+                  class="fa fa-ellipsis-h row"
                   type="button"
                   id="dropdownMenuButton1"
                   data-bs-toggle="dropdown"
