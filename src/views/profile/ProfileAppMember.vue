@@ -1,15 +1,15 @@
 <template>
-  <div class="row g-0" v-if="profile">
-    <div class="row g-0 mb-2 dropdown-item" @click="viewPersonal()">
+  <div class="row g-0 ps-0" v-if="profile">
+    <div class="row g-0 mb-2 dropdown-item">
       <div class="row g-0">
-        <div class="col-auto ps-2 pe-2">
+        <div class="col-auto" @click="viewPersonal()" type="button">
           <img
-            style="width: 50px; height: 50px; border-radius: 50% 50% 50% 50%"
+            style="width: 30px; height: 30px; border-radius: 50% 50% 50% 50%"
             :src="'http://localhost:8080' + profile.avatar"
           />
         </div>
-        <div class="col-auto row g-0 ms-2 d-flex align-items-center">
-          <h5 class="row g-0 ms-2">
+        <div class="col-auto row ms-1 g-0 d-flex align-items-center">
+          <h5 class="row g-0">
             <center>
               <div class="row g-0">
                 {{ profile.last_name + " " + profile.first_name }}

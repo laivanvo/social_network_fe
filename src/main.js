@@ -32,7 +32,7 @@ const routes = [
   { path: '/group', component: GroupApp, name: 'group' },
   { path: '/groupView', component: ViewGroup, name: 'groupView' },
   { path: '/friend', component: FriendApp, name: 'friend' },
-  { path: '/friend/request', component: ListRequest, name: 'friend.request' },
+  { path: '/request', component: ListRequest, name: 'request' },
   { path: '/Personal', component: PersonalAuth, name: 'personal' },
   { path: '/personalApp', component: PersonalApp, name: 'personalApp' },
 ]

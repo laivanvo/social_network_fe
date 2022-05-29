@@ -1,7 +1,7 @@
 <template>
   <div class="row g-0 border border-3 rounded">
     <div class="row g-0 mt-3 mb-3 ms-2">
-      <h5 class="col-auto">Request membership</h5>
+      <h5 class="col-auto">Membership</h5>
       <div class="col-auto ms-auto me-4">
         <i class="bi bi-sliders"></i>
       </div>

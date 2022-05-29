@@ -63,7 +63,7 @@
           text-center
         "
       >
-        <div class="col-auto row g-0" @click="ViewPersonal()">
+        <div class="col-auto row g-0" type="button" @click="ViewPersonal()">
           <div class="col-auto">
             <img
               style="

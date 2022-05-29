@@ -57,7 +57,7 @@
                                         profile.first_name
                                     }}
                                 </div>
-                                <div class="opacity-50 row">Admin</div>
+                                <div class="opacity-50 row">Author</div>
                             </div>
                         </div>
                         <div class="mb-3">

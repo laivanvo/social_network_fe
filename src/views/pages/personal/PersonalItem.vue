@@ -1,13 +1,13 @@
 <template>
   <div class="row g-0">
     <div class="row g-0 mb-2">
-      <div class="col-2" @click="showProfile()">
+      <div class="col-auto" @click="showProfile()">
         <img
           style="width: 50px; height: 50px; border-radius: 50% 50% 50% 50%"
           :src="'http://localhost:8080' + profile.avatar"
         />
       </div>
-      <div class="col-10 row g-0 d-flex align-items-center mb-2">
+      <div class="col-auto ms-2 row g-0 d-flex align-items-center mb-2">
         <div class="row g-0 mb-2">
             {{ profile.last_name + " " + profile.first_name }}
         </div>

@@ -49,7 +49,7 @@ export default {
             isSend: false,
             isList: false,
             isDiscover: false,
-            isPostGroup: false,
+            isPostGroup: true,
         };
     },
     methods: {

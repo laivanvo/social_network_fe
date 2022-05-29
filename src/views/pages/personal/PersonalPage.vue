@@ -1,8 +1,7 @@
 <template>
   <div class="row g-0">
     <div class="row g-0 bg-light" v-if="profile.id">
-      <div class="col-1"></div>
-      <div class="col-10 row g-0 bg-white">
+      <div class=" row g-0 bg-white">
         <div class="row g-0 d-flex align-items-start">
           <div class="row g-0">
             <div class="row g-0 border" v-if="profile.id">
@@ -33,9 +32,9 @@
                 </div>
                 <div class="col-7 row g-0 mt-5">
                   <div class="row g-0">
-                    <div class="col-3">
+                    <h5 mt-3 class="col-3">
                       {{ profile.last_name + " " + profile.first_name }}
-                    </div>
+                    </h5>
                   </div>
                   <div class="row g-0">
                     <div class="col-3">33 same Friend</div>
@@ -92,45 +91,44 @@
         <div class="row g-0 d-flex align-items-start">
           <div class="row g-0 col-4 border">
             <div class="row g-0 border" style="overflow: auto, height: 300px">
-              <div class="row g-0">Introduce</div>
-              <div class="row g-0"><center>hello</center></div>
-              <div class="row g-0">
-                <div class="col-2">
+              <div class="row g-0 mb-3">welcome to profile of me!!!!</div>
+              <div class="row g-0 mb-3">
+                <div class="col-auto ms-2">
                   <center><i class="bi bi-briefcase-fill fs-3"></i></center>
                 </div>
-                <div class="col-10">hs noi</div>
+                <div class="col-auto ms-5 mt-2">zinza technology</div>
               </div>
-              <div class="row g-0">
-                <div class="col-2">
+              <div class="row g-0 mb-3">
+                <div class="col-auto ms-2">
                   <center><i class="bi bi-mortarboard-fill fs-3"></i></center>
                 </div>
-                <div class="col-10">hoc van</div>
+                <div class="col-auto ms-5 mt-2">12/12</div>
               </div>
-              <div class="row g-0">
-                <div class="col-2">
+              <div class="row g-0 mb-3">
+                <div class="col-auto ms-2">
                   <center><i class="bi bi-suit-heart-fill fs-3"></i></center>
                 </div>
-                <div class="col-10">hon nhan</div>
+                <div class="col-auto ms-5 mt-2">Single</div>
               </div>
-              <div class="row g-0">
-                <div class="col-2">
+              <div class="row g-0 mb-3">
+                <div class="col-auto ms-2">
                   <center><i class="bi bi-telephone-fill fs-3"></i></center>
                 </div>
-                <div class="col-10">Phone</div>
+                <div class="col-auto ms-5 mt-2">{{ profile.phone_number }}</div>
               </div>
-              <div class="row g-0">
-                <div class="col-2">
+              <div class="row g-0 mb-3">
+                <div class="col-auto ms-2">
                   <center><i class="bi bi-geo-alt fs-3"></i></center>
                 </div>
-                <div class="col-10">map</div>
+                <div class="col-auto ms-5 mt-2">{{ profile.address }}</div>
               </div>
-              <div class="row g-0">
-                <div class="col-2">
+              <div class="row g-0 mb-3">
+                <div class="col-auto ms-2">
                   <center>
                     <i class="bi bi-calendar-heart-fill fs-3"></i>
                   </center>
                 </div>
-                <div class="col-10">birth day</div>
+                <div class="col-auto ms-5 mt-2">{{ profile.birthday }}</div>
               </div>
             </div>
             <div class="row g-0 border">
@@ -171,7 +169,6 @@
           </div>
         </div>
       </div>
-      <div class="col-1"></div>
     </div>
     <div
       class="row g-0 d-flex align-items-center"

@@ -2,11 +2,11 @@
   <div class="row g-0">
     <div class="row g-0 bg-light" v-if="profile.id">
       <div class="col-1"></div>
-      <div class="col-10 row g-0 bg-white">
+      <div class="col-auto ps-2 mt-2 row g-0 bg-white">
         <div class="row g-0 d-flex align-items-start">
           <div class="row g-0">
-            <div class="row g-0 border" v-if="profile.id">
-              <div class="row g-0">
+            <div class="row g-0" v-if="profile.id">
+              <div class="row g-0 ps-5 ps-5 pe-5">
                 <img
                   :style="
                     'width: 83%; height: ' +
@@ -33,13 +33,13 @@
                 </div>
                 <div class="col-7 row g-0 mt-5">
                   <div class="row g-0">
-                    <div class="col-3">
+                    <h5 class="col-auto ms-2 mt-3 " style="font-weight: bold;">
                       {{ profile.last_name + " " + profile.first_name }}
-                    </div>
+                    </h5>
                   </div>
                   <div class="row g-0">
                     <div class="col-9"></div>
-                    <edit-profile :profileP="profile" class="col-3" />
+                    <edit-profile :profileP="profile" @editProfile="editProfile($event)" class="col-3" />
                   </div>
                 </div>
               </div>
@@ -49,45 +49,44 @@
         <div class="row g-0 d-flex align-items-start">
           <div class="row g-0 col-4 border">
             <div class="row g-0 border" style="overflow: auto, height: 300px">
-              <div class="row g-0">Introduce</div>
-              <div class="row g-0"><center>hello</center></div>
-              <div class="row g-0">
-                <div class="col-2">
+              <div class="row g-0 mb-3">welcome to profile of me!!!!</div>
+              <div class="row g-0 mb-3">
+                <div class="col-auto ms-2">
                   <center><i class="bi bi-briefcase-fill fs-3"></i></center>
                 </div>
-                <div class="col-10">hs noi</div>
+                <div class="col-auto ms-5 mt-2">zinza technology</div>
               </div>
-              <div class="row g-0">
-                <div class="col-2">
+              <div class="row g-0 mb-3">
+                <div class="col-auto ms-2">
                   <center><i class="bi bi-mortarboard-fill fs-3"></i></center>
                 </div>
-                <div class="col-10">hoc van</div>
+                <div class="col-auto ms-5 mt-2">12/12</div>
               </div>
-              <div class="row g-0">
-                <div class="col-2">
+              <div class="row g-0 mb-3">
+                <div class="col-auto ms-2">
                   <center><i class="bi bi-suit-heart-fill fs-3"></i></center>
                 </div>
-                <div class="col-10">hon nhan</div>
+                <div class="col-auto ms-5 mt-2">Single</div>
               </div>
-              <div class="row g-0">
-                <div class="col-2">
+              <div class="row g-0 mb-3">
+                <div class="col-auto ms-2">
                   <center><i class="bi bi-telephone-fill fs-3"></i></center>
                 </div>
-                <div class="col-10">Phone</div>
+                <div class="col-auto ms-5 mt-2">{{ profile.phone_number }}</div>
               </div>
-              <div class="row g-0">
-                <div class="col-2">
+              <div class="row g-0 mb-3">
+                <div class="col-auto ms-2">
                   <center><i class="bi bi-geo-alt fs-3"></i></center>
                 </div>
-                <div class="col-10">map</div>
+                <div class="col-auto ms-5 mt-2">{{ profile.address }}</div>
               </div>
-              <div class="row g-0">
-                <div class="col-2">
+              <div class="row g-0 mb-3">
+                <div class="col-auto ms-2">
                   <center>
                     <i class="bi bi-calendar-heart-fill fs-3"></i>
                   </center>
                 </div>
-                <div class="col-10">birth day</div>
+                <div class="col-auto ms-5 mt-2">{{ profile.birthday }}</div>
               </div>
             </div>
             <div class="row g-0 border">
@@ -97,7 +96,7 @@
                   class="col-3 ms-2"
                   v-for="(image, index) in images"
                   :key="index"
-                  style="height: 200px"
+                  style="height: 100px"
                 >
                   <img class="w-100" :src="'http://localhost:8080' + image" />
                 </div>
@@ -122,26 +121,11 @@
             style="overflow: auto; height: 1000px"
             v-if="posts"
           >
-            <div class="row g-0" v-for="post in posts" :key="post.id">
+            <div class="row g-0 border border-5 rounded mb-3" v-for="post in posts" :key="post.id">
               <post-app :postP="post" :user="post.user" />
             </div>
           </div>
         </div>
-      </div>
-      <div class="col-1"></div>
-    </div>
-    <div
-      class="row g-0 d-flex align-items-center"
-      v-if="!profile.id"
-      style="height: 1000px"
-    >
-      <div class="row g-0">
-        <center>
-          <i class="bi bi-incognito fs-1"></i>
-        </center>
-        <center>
-          <div>Choose person you want preview information</div>
-        </center>
       </div>
     </div>
   </div>
@@ -183,6 +167,12 @@ export default {
         this.videos = res.data.videos;
       });
     },
+    editProfile(profile) {
+        this.profile = profile;
+        BaseRequest.get("posts/byPerson/" + this.profile.user_id).then((res) => {
+        this.posts = res.data.posts;
+      });
+    }
   },
 };
 </script>

@@ -1,7 +1,7 @@
 <template>
   <div class="home row p-0 m-0">
     <div class="row g-0 p-0 m-0">
-      <div class="col-1">
+      <div class="col-auto ms-2">
         <img
           style="
             border-radius: 50%;
@@ -17,11 +17,11 @@
         />
       </div>
       <input
-        class="col-11 rounded-pill"
+        class="col-10 ms-2 rounded-pill"
         type="text"
         data-bs-toggle="modal"
         data-bs-target="#exampleModal"
-        placeholder="how are you today"
+        placeholder="   how are you today"
       />
     </div>
     <create-post-modal
@@ -98,6 +98,7 @@ export default {
               : console.log("This item already exists");
           });
           _this.profile = response.data.profile;
+          _this.user = response.data.user
         })
         .catch((error) => {
           console.log(error);

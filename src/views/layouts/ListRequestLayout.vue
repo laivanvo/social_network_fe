@@ -2,7 +2,7 @@
   <div class="row g-0">
     <div class="row g-0">
       <div
-        class="col-2 border"
+        class="col-3 border"
         :style="'overflow: auto; height: ' + height + 'px;'"
       >
         <div class="row g-0 mb-2">Request</div>
@@ -10,7 +10,7 @@
           <personal-item :profileP="item"/>
         </div>
       </div>
-      <div class="col-10 row g-0">
+      <div class="col-9 row g-0">
           <slot :profile="profile" class="row g-0"/>
       </div>
     </div>

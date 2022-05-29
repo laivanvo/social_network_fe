@@ -138,7 +138,7 @@ export default {
     return {
       group: {},
       isInfo: false,
-      isPost: false,
+      isPost: true,
       isRequest: false,
       isMember: false,
     };

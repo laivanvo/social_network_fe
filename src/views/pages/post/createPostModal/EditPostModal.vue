@@ -23,35 +23,52 @@
                         </div>
                     </div>
                     <div class="modal-body row">
-                        <div class="row g-0">
-                            <div class="col-2">
-                                <img
-                                    src="@/assets/logo.png"
-                                    class="card-img-top"
-                                    alt="..."
-                                />
+                        <div class="row g-0 mb-3">
+                            <div class="col-2 p-2">
+                                <center>
+                                    <img
+                                        class="ms-1"
+                                        style="
+                                            width: 30px;
+                                            height: 30px;
+                                            border-radius: 50% 50% 50% 50%;
+                                        "
+                                        :src="
+                                            'http://localhost:8080' +
+                                            user.profile.avatar
+                                        "
+                                    />
+                                </center>
                             </div>
-                            <div class="col-4">
+                            <div class="col-10 row">
                                 <div class="row g-0">
-                                    {{ user.name }}
+                                    {{
+                                        user.profile.last_name +
+                                        " " +
+                                        user.profile.first_name
+                                    }}
                                 </div>
-                                <label>Choose option:</label>
-
-                                <select
-                                    class="form-control"
-                                    name="template"
-                                    v-model="post.audience"
-                                >
-                                    <option :value="''">---</option>
-                                    <option
-                                        v-for="(item, index) in options"
-                                        :value="item"
-                                        :key="index"
-                                    >
-                                        {{ item }}
-                                    </option>
-                                </select>
+                                <div class="opacity-50 row">Admin</div>
                             </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Audience: </label>
+                            <select
+                                class="form-control"
+                                name="template"
+                                v-model="post.audience"
+                            >
+                                <option :value="'select option'">
+                                    select option
+                                </option>
+                                <option
+                                    v-for="(item, index) in options"
+                                    :value="item"
+                                    :key="index"
+                                >
+                                    {{ item }}
+                                </option>
+                            </select>
                         </div>
                         <div class="form-floating row">
                             <textarea

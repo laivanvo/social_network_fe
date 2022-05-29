@@ -48,19 +48,19 @@ export default {
         };
     },
     mounted() {
-        this.getPost(this.page);
+        this.getPost();
     },
     methods: {
         getPost() {
             let _this = this;
-            BaseRequest.get("posts/group")
+            BaseRequest.get("posts?page=1")
                 .then((response) => {
                     response.data.posts.forEach((e) => {
                         _this.posts.map((x) => x.id).indexOf(e.id) === -1
                             ? _this.posts.push(e)
                             : console.log("This item already exists");
                     });
-                    _this.profile = response.data.profile;
+                    _this.profile = response.data.profile.data;
                 })
                 .catch((error) => {
                     console.log(error);

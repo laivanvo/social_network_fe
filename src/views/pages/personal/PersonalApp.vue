@@ -6,10 +6,10 @@
         <div class="row g-0 d-flex align-items-start">
           <div class="row g-0">
             <div class="row g-0 border" v-if="profile.id">
-              <div class="row g-0">
+              <div class="row g-0 ps-5 ps-5 pe-5">
                 <img
                   :style="
-                    'width: 69.4%; height: ' +
+                    'width: 76%; height: ' +
                     height / 2 +
                     'px; position: absolute;'
                   "
@@ -33,9 +33,9 @@
                 </div>
                 <div class="col-7 row g-0 mt-5">
                   <div class="row g-0">
-                    <div class="col-3">
+                    <h5 class="col-auto ms-2 mt-3 " style="font-weight: bold;">
                       {{ profile.last_name + " " + profile.first_name }}
-                    </div>
+                    </h5>
                   </div>
                   <div class="row g-0">
                     <div class="col-3">33 same Friend</div>
@@ -92,45 +92,44 @@
         <div class="row g-0 d-flex align-items-start">
           <div class="row g-0 col-4 border">
             <div class="row g-0 border" style="overflow: auto, height: 300px">
-              <div class="row g-0">Introduce</div>
-              <div class="row g-0"><center>hello</center></div>
-              <div class="row g-0">
-                <div class="col-2">
+              <div class="row g-0 mb-3">welcome to profile of me!!!!</div>
+              <div class="row g-0 mb-3">
+                <div class="col-auto ms-2">
                   <center><i class="bi bi-briefcase-fill fs-3"></i></center>
                 </div>
-                <div class="col-10">hs noi</div>
+                <div class="col-auto ms-5 mt-2">zinza technology</div>
               </div>
-              <div class="row g-0">
-                <div class="col-2">
+              <div class="row g-0 mb-3">
+                <div class="col-auto ms-2">
                   <center><i class="bi bi-mortarboard-fill fs-3"></i></center>
                 </div>
-                <div class="col-10">hoc van</div>
+                <div class="col-auto ms-5 mt-2">12/12</div>
               </div>
-              <div class="row g-0">
-                <div class="col-2">
+              <div class="row g-0 mb-3">
+                <div class="col-auto ms-2">
                   <center><i class="bi bi-suit-heart-fill fs-3"></i></center>
                 </div>
-                <div class="col-10">hon nhan</div>
+                <div class="col-auto ms-5 mt-2">Single</div>
               </div>
-              <div class="row g-0">
-                <div class="col-2">
+              <div class="row g-0 mb-3">
+                <div class="col-auto ms-2">
                   <center><i class="bi bi-telephone-fill fs-3"></i></center>
                 </div>
-                <div class="col-10">Phone</div>
+                <div class="col-auto ms-5 mt-2">{{ profile.phone_number }}</div>
               </div>
-              <div class="row g-0">
-                <div class="col-2">
+              <div class="row g-0 mb-3">
+                <div class="col-auto ms-2">
                   <center><i class="bi bi-geo-alt fs-3"></i></center>
                 </div>
-                <div class="col-10">map</div>
+                <div class="col-auto ms-5 mt-2">{{ profile.address }}</div>
               </div>
-              <div class="row g-0">
-                <div class="col-2">
+              <div class="row g-0 mb-3">
+                <div class="col-auto ms-2">
                   <center>
                     <i class="bi bi-calendar-heart-fill fs-3"></i>
                   </center>
                 </div>
-                <div class="col-10">birth day</div>
+                <div class="col-auto ms-5 mt-2">{{ profile.birthday }}</div>
               </div>
             </div>
             <div class="row g-0 border">
@@ -140,7 +139,7 @@
                   class="col-3 ms-2"
                   v-for="(image, index) in images"
                   :key="index"
-                  style="height: 200px"
+                  style="height: 100px"
                 >
                   <img class="w-100" :src="'http://localhost:8080' + image" />
                 </div>
@@ -165,7 +164,7 @@
             style="overflow: auto; height: 1000px"
             v-if="posts"
           >
-            <div class="row g-0" v-for="post in posts" :key="post.id">
+            <div class="row g-0 border border-5 rounded mb-3" v-for="post in posts" :key="post.id">
               <post-app :postP="post" :user="post.user" />
             </div>
           </div>

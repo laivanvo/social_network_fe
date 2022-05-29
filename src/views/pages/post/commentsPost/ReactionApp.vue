@@ -1,5 +1,5 @@
 <template>
-  <div class="row g-0">
+  <div class="row g-0 ms-2">
     <div class="row g-0" v-show="isPost">
       <i type="button" @click="addLike()" v-show="!isLike" class="fa fa-thumbs-o-up opacity-50">
         like</i

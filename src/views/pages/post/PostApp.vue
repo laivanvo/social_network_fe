@@ -27,9 +27,9 @@
         <div class="row g-0">
           <div class="row g-0 d-flex align-items-center">
             <center class="row g-0">
-              <h7 type="button" class="col-auto ms-1" style="font-weight: bold;">
+              <div type="button" class="col-auto ms-1" style="font-weight: bold;">
                 {{ user.profile.last_name + " " + user.profile.first_name }}
-              </h7>
+              </div>
               <div class="col-auto ms-2 opacity-50">added a new post.</div>
             </center>
           </div>
@@ -98,10 +98,10 @@
         <reaction-app @addLike="addLike($event)" :id="post.id" :type="'post'" />
       </div>
       <div
-        class="col-7 mt-3 mb-3 d-flex align-items-center"
+        class="col-auto mt-3 mb-3 d-flex align-items-center"
         @click="showComment"
       >
-        <styledLink>comment</styledLink>
+        <div @mouseover="over('showComment' + post.id)" @mouseleave="leave('showComment' + post.id)" :id="'showComment' + post.id" type="button">comment</div>
       </div>
     </div>
     <div class="row g-0 m-0 mb-1">
@@ -170,7 +170,7 @@
         />
       </div>
       <div class="row g-0" @click="loadMoreComment">
-        <styledLink>load more</styledLink>
+        <div @mouseover="over('load' + post.id)" @mouseleave="leave('load' + post.id)" :id="'load' + post.id" type="button">load more</div>
       </div>
     </div>
   </div>
@@ -179,22 +179,13 @@
 <script>
 import BaseRequest from "@/helpers/BaseRequest";
 import CommentPost from "./commentsPost/CommentPost.vue";
-import styled, { css } from "vue-styled-components";
 import EditPostModal from "@/views/pages//post/createPostModal/EditPostModal.vue";
 import ReactionApp from "./commentsPost/ReactionApp.vue";
+import $ from "jquery";
 
-const styledLink = styled.h6`
-  &:hover {
-    ${() => css`
-      text-decoration: underline;
-      color: blue;
-    `}
-  }
-`;
 export default {
   components: {
     CommentPost,
-    styledLink,
     EditPostModal,
     ReactionApp,
   },
@@ -300,6 +291,8 @@ export default {
           _this.comments.unshift(res.data.comment);
           _this.post.count_comment++;
           _this.commentShow = true;
+          _this.imageCmt = false;
+          _this.videoCmt = false;
           this.getType("text");
         })
         .catch(function (err) {
@@ -362,6 +355,12 @@ export default {
       document.getElementById(type + "CMT" + this.post.id).src =
         URL.createObjectURL(e.target.files[0]);
       this.getType(type);
+    },
+    over(id) {
+        $('#' + id).css({"text-decoration": "underline", "color": "blue"});
+    },
+    leave(id) {
+        $('#' + id).css({"text-decoration": "none", "color": "black"});
     },
   },
 };

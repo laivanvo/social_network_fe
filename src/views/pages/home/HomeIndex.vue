@@ -1,6 +1,6 @@
 <template>
     <div class="home row ps-2 pe-2" :is="layout">
-        <div class="row g-0 ms-5 me-5 mb-3">
+        <div class="row g-0 ms-1 me-1 mb-3">
             <div class="col-auto ms-2">
                 <img
                     style="
@@ -17,7 +17,7 @@
                 />
             </div>
             <input
-                class="col-10 ms-2 border border-1 bg-light rounded-pill"
+                class="col-11 ms-2 border border-1 bg-light rounded-pill"
                 type="text"
                 data-bs-toggle="modal"
                 data-bs-target="#exampleModal"
@@ -30,7 +30,7 @@
             class="row g-0"
             :user="user"
         />
-        <div class="row g-0 border border-3 rounded ms-5 me-5 pt-2 mb-3" v-for="post in posts" :key="post.id">
+        <div class="row g-0 border border-3 rounded ms-1 me-1 pt-2 mb-3" v-for="post in posts" :key="post.id">
             <post-app
                 class="row g-0 bg-white"
                 :postP="post"
@@ -93,6 +93,7 @@ export default {
                             : console.log("This item already exists");
                     });
                     _this.profile = response.data.profile;
+                    _this.user = response.data.user;
                 })
                 .catch((error) => {
                     console.log(error);
