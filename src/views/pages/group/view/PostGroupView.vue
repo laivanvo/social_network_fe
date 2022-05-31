@@ -29,12 +29,13 @@
       @addPost="addPost($event)"
       class="row g-0"
       :user="user"
+      :in_queue="!(this.user.id === group.user.id)"
     />
     <div class="row g-0 p-0 m-0" v-for="post in posts" :key="post.id">
       <post-app
         class="row g-0 border mt-5 bg-white"
         :postP="post"
-        :user="post.user"
+        :user="user"
       />
     </div>
   </div>

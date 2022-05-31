@@ -34,7 +34,8 @@
             <post-app
                 class="row g-0 border mt-5 bg-white"
                 :postP="post"
-                :user="post.user"
+                :user="user"
+                v-if="(user && post)"
             />
         </div>
     </div>
@@ -91,6 +92,7 @@ export default {
                             : console.log("This item already exists");
                     });
                     _this.profile = response.data.profile;
+                    _this.user = response.data.user;
                 })
                 .catch((error) => {
                     console.log(error);

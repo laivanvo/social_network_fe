@@ -1,8 +1,8 @@
 <template>
-  <div name="post" v-show="!isDelete" class="row g-0">
+  <div name="post" v-show="!isDelete" class="row g-0" v-if="user && post">
     <edit-post-modal
       :id="'postEdit' + post.id"
-      :user="user"
+      :user="post.user"
       :postPre="post"
       class="row g-0"
       @updatePost="updatePost($event)"
@@ -19,7 +19,7 @@
             justify-content: center;
             align-items: center;
           "
-          :src="'http://localhost:8080' + user.profile.avatar"
+          :src="'http://localhost:8080' + post.user.profile.avatar"
           alt=""
         />
       </div>
@@ -27,8 +27,16 @@
         <div class="row g-0">
           <div class="row g-0 d-flex align-items-center">
             <center class="row g-0">
-              <div type="button" class="col-auto ms-1" style="font-weight: bold;">
-                {{ user.profile.last_name + " " + user.profile.first_name }}
+              <div
+                type="button"
+                class="col-auto ms-1"
+                style="font-weight: bold"
+              >
+                {{
+                  post.user.profile.last_name +
+                  " " +
+                  post.user.profile.first_name
+                }}
               </div>
               <div class="col-auto ms-2 opacity-50">added a new post.</div>
             </center>
@@ -49,7 +57,7 @@
           >
           </i>
           <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-            <li>
+            <li v-show="isAuthor">
               <a
                 class="dropdown-item"
                 data-bs-toggle="modal"
@@ -58,11 +66,26 @@
                 Edit
               </a>
             </li>
-            <li>
+            <li v-show="isAuthor">
               <a class="dropdown-item" @click="deletePost">Delete</a>
             </li>
             <li>
-              <a class="dropdown-item" href="#">Something else here</a>
+              <a
+                class="dropdown-item"
+                type="button"
+                @click="offComment"
+                v-show="isAuthor && !isOffComment"
+                >turn off comments</a
+              >
+            </li>
+            <li>
+              <a
+                class="dropdown-item"
+                type="button"
+                @click="onComment"
+                v-show="isAuthor && isOffComment"
+                >turn on comments</a
+              >
             </li>
           </ul>
         </div>
@@ -85,7 +108,9 @@
 
     <div class="d-flex align-items-center row g-0">
       <div class="col-auto mt-3 mb-2 ms-2">
-        <i type="button" class="fa fa-thumbs-o-up" aria-hidden="true"> {{ post.count_reaction }}</i>
+        <i type="button" class="fa fa-thumbs-o-up" aria-hidden="true">
+          {{ post.count_reaction }}</i
+        >
       </div>
       <div class="col-auto ms-auto me-1">{{ post.count_comment }} comment</div>
     </div>
@@ -101,76 +126,151 @@
         class="col-auto mt-3 mb-3 d-flex align-items-center"
         @click="showComment"
       >
-        <div @mouseover="over('showComment' + post.id)" @mouseleave="leave('showComment' + post.id)" :id="'showComment' + post.id" type="button">comment</div>
+        <div
+          @mouseover="over('showComment' + post.id)"
+          @mouseleave="leave('showComment' + post.id)"
+          :id="'showComment' + post.id"
+          type="button"
+        >
+          comment
+        </div>
       </div>
     </div>
-    <div class="row g-0 m-0 mb-1">
-      <div class="col-auto ms-1">
-        <img
-          style="
-            border-radius: 50% 50% 50% 50%;
-            height: 30px;
-            width: 30px;
-            overflow: hidden;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-          "
-          :src="'http://localhost:8080' + user.profile.avatar"
-          alt=""
-        />
-      </div>
-      <div
-        class="col-10 row g-0 ms-1 d-flex align-items-center"
-        style="position: relative"
-      >
-        <input
-          v-on:keyup.enter="addComment"
-          type="text"
-          class="form-control ms-1 me-1 rounded-pill"
-          placeholder="comment in this"
-          v-model="addText"
-          style="position: absolute"
-        />
-        <div class="col-11">
-          <input
-            type="file"
-            :id="'file' + post.id"
-            @change="onChange"
-            v-show="false"
+    <div class="row g-0" v-show="!isBlock">
+      <div class="row g-0 m-0 mb-1">
+        <div class="col-auto ms-1">
+          <img
+            style="
+              border-radius: 50% 50% 50% 50%;
+              height: 30px;
+              width: 30px;
+              overflow: hidden;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+            "
+            :src="'http://localhost:8080' + user.profile.avatar"
+            alt=""
           />
         </div>
-        <div class="col-1 d-flex align-items-center">
-          <label :for="'file' + post.id">
+        <div
+          class="col-10 row g-0 ms-1"
+          style="position: relative"
+          v-show="!isOffComment"
+        >
+          <input
+            v-on:keyup.enter="addComment"
+            type="text"
+            class="form-control ms-1 me-1 rounded-pill"
+            placeholder="comment in this"
+            v-model="addText"
+            style="position: absolute"
+          />
+          <div class="col-11">
+            <input
+              type="file"
+              :id="'file' + post.id"
+              @change="onChange"
+              v-show="false"
+            />
+          </div>
+          <div class="col-1 d-flex align-items-center">
+            <label :for="'file' + post.id">
+              <i class="bi bi-camera fs-4 opacity-50"></i>
+            </label>
+          </div>
+        </div>
+        <div
+          class="col-10 row g-0 ms-1"
+          style="position: relative"
+          v-show="isOffComment"
+        >
+          <input
+            v-on:keyup.enter="addComment"
+            type="text"
+            class="form-control ms-1 me-1 rounded-pill opacity-50"
+            value="Comments have been turned off"
+            style="position: absolute"
+            disabled
+          />
+          <div class="col-11"></div>
+          <div class="col-1 d-flex align-items-center">
             <i class="bi bi-camera fs-4 opacity-50"></i>
-          </label>
+          </div>
+        </div>
+      </div>
+      <div class="row g-0 mb-2">
+        <img
+          :id="'imageCMT' + post.id"
+          v-show="imageCmt"
+          class="w-25 g-0"
+          :src="'http://localhost:8080' + fileName"
+        />
+        <video
+          :id="'videoCMT' + post.id"
+          v-show="videoCmt"
+          width="row"
+          controls
+        >
+          <source :src="'http://localhost:8080' + fileName" type="video/mp4" />
+          Your browser does not support HTML video.
+        </video>
+      </div>
+      <div class="row g-0" v-show="commentShow">
+        <div class="row g-0" v-for="comment in comments" :key="comment.id">
+          <comment-post
+            class="bg-white text-dark row g-0"
+            :commentP="comment"
+            :user="user"
+            @deleteComment="deleteComment()"
+            :post="post"
+            :isPostAuthor="isAuthor"
+            :blocks="blocks"
+          />
+        </div>
+        <div class="row g-0" @click="loadMoreComment">
+          <div
+            @mouseover="over('load' + post.id)"
+            @mouseleave="leave('load' + post.id)"
+            :id="'load' + post.id"
+            type="button"
+          >
+            load more
+          </div>
         </div>
       </div>
     </div>
-    <div class="row g-0 mb-2">
-      <img
-        :id="'imageCMT' + post.id"
-        v-show="imageCmt"
-        class="w-25 g-0"
-        :src="'http://localhost:8080' + fileName"
-      />
-      <video :id="'videoCMT' + post.id" v-show="videoCmt" width="row" controls>
-        <source :src="'http://localhost:8080' + fileName" type="video/mp4" />
-        Your browser does not support HTML video.
-      </video>
-    </div>
-    <div class="row g-0" v-show="commentShow">
-      <div class="row g-0" v-for="comment in comments" :key="comment.id">
-        <comment-post
-          class="bg-white text-dark row g-0"
-          :commentP="comment"
-          :user="user"
-          @deleteComment="deleteComment()"
-          :post="post"
-        />
-      </div>
-      <div class="row g-0" @click="loadMoreComment">
-        <div @mouseover="over('load' + post.id)" @mouseleave="leave('load' + post.id)" :id="'load' + post.id" type="button">load more</div>
+    <div class="row g-0" v-show="isBlock">
+      <div class="row g-0 m-0 mb-1">
+        <div class="col-auto ms-1">
+          <img
+            style="
+              border-radius: 50% 50% 50% 50%;
+              height: 30px;
+              width: 30px;
+              overflow: hidden;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+            "
+            :src="'http://localhost:8080' + post.user.profile.avatar"
+            alt=""
+          />
+        </div>
+        <div
+          class="col-10 row g-0 ms-1 d-flex align-items-center"
+          style="position: relative"
+        >
+          <input
+            disabled
+            v-on:keyup.enter="addComment"
+            type="text"
+            class="form-control ms-1 me-1 rounded-pill"
+            placeholder="you are block by author"
+            v-model="addText"
+            style="position: absolute"
+          />
+        </div>
       </div>
     </div>
   </div>
@@ -221,12 +321,15 @@ export default {
       imageCmt: false,
       videoCmt: false,
       fileName: null,
+      isBlock: false,
+      isAuthor: false,
+      blocks: [],
+      isOffComment: false,
     };
   },
   created() {
     this.post = this.postP;
-  },
-  mounted() {
+    console.log(this.post.user.profile);
     this.text = this.post.text;
     if (this.post.bg_image) {
       this.post.bg_image =
@@ -235,7 +338,11 @@ export default {
         ")";
     }
     this.getFile();
+    this.blocks = this.post.blocks ? this.post.blocks.map((i) => i["user_id"]) : [];
+
+    this.checkAuthor();
   },
+  mounted() {},
   methods: {
     getComment(page) {
       let data = new FormData();
@@ -357,10 +464,25 @@ export default {
       this.getType(type);
     },
     over(id) {
-        $('#' + id).css({"text-decoration": "underline", "color": "blue"});
+      $("#" + id).css({ "text-decoration": "underline", color: "blue" });
     },
     leave(id) {
-        $('#' + id).css({"text-decoration": "none", "color": "black"});
+      $("#" + id).css({ "text-decoration": "none", color: "black" });
+    },
+    checkAuthor() {
+      if (this.user.id === this.post.user.id) {
+        this.isAuthor = true;
+      }
+      if (this.blocks.indexOf(this.user.id) != -1) {
+        this.isBlock = true;
+      }
+      this.isOffComment = this.post.off_comment === 0 ? false : true;
+    },
+    offComment() {
+      this.isOffComment = true;
+    },
+    onComment() {
+      this.isOffComment = false;
     },
   },
 };
