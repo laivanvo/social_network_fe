@@ -103,7 +103,21 @@
           style="border-radius: 50% 50% 50% 50%; width: 30px; height: 30px"
         >
           <center>
-            <i class="fa fa-ellipsis-h ms-2"></i>
+            <div class="dropdown">
+              <div
+                style="width: 30px; height: 30px; border-radius: 50%"
+                class="btn btn-secondary dropdown-toggle"
+                type="button"
+                id="dropdownMenuButton1"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+
+              </div>
+              <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                <li><a class="dropdown-item" type="button"><i class="fa fa-sign-out" aria-hidden="true">  Logout</i></a></li>
+              </ul>
+            </div>
           </center>
         </div>
       </div>

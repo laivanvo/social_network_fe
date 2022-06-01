@@ -1,21 +1,36 @@
 <template>
-  <div class="row g-0">
+  <div class="row g-0" :is="layout">
     <div class="col-2"></div>
     <div class="col-8">
-      <h3 class="text-center">Register</h3>
+      <h3 class="text-center opacity-25">Register</h3>
       <form @submit.prevent="register()">
-        <div class="row g-0">
-          <p class="col-3">Last- name:</p>
-          <input class="col-9" type="text" v-model="user.last_name" />
+        <div class="row g-0 mb-3">
+          <input
+            class="form-control"
+            v-model="user.last_name"
+            type="text"
+            placeholder="last name"
+          />
         </div>
-        <div class="row g-0">
-          <p class="col-3">first-name:</p>
-          <input class="col-9" type="text" v-model="user.first_name" />
+        <div class="row g-0 mb-3">
+          <input
+            class="form-control"
+            v-model="user.first_name"
+            type="text"
+            placeholder="first name"
+          />
         </div>
-        <div class="row g-0">
-          <p class="col-3">Address:</p>
-          <!-- Script by hscripts.com -->
-          <select class="col-9" v-model="user.address">
+        <div class="row g-0 mb-3">
+          <select name="gender" class="form-select" v-model="user.gender">
+            <option value="gender"><p class="opacity-25">gender</p></option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+            <option value="other">other</option>
+          </select>
+        </div>
+        <div class="row g-0 mb-3">
+          <select class="form-select" v-model="user.address">
+            <option value="address">address</option>
             <option value="An Giang">An Giang</option>
             <option value="Bac Giang">Bac Giang</option>
             <option value="Bac Kan">Bac Kan</option>
@@ -83,33 +98,41 @@
           </select>
           <!-- Script by hscripts.com -->
         </div>
-        <div class="row g-0">
-          <p class="col-3">gender:</p>
-          <select name="gender" class="col-9" v-model="user.gender">
-            <option value="male">Male</option>
-            <option value="female">Female</option>
-            <option value="other">other</option>
-          </select>
+        <div class="row g-0 mb-3">
+          <div class="row g-0 mb-2">birthday</div>
+          <input type="date" class="form-control" v-model="user.birthday" />
         </div>
-        <div class="row g-0">
-          <p class="col-3">Birthday:</p>
-          <input type="date" class="col-9" v-model="user.birthday" />
+        <div class="row g-0 mb-3">
+          <input
+            class="form-control"
+            v-model="user.phone_number"
+            type="text"
+            placeholder="phone number"
+          />
         </div>
-        <div class="row g-0">
-          <p class="col-3">Phone-number:</p>
-          <input class="col-9" type="tel" v-model="user.phone_number" />
+        <div class="row g-0 mb-3">
+          <input
+            class="form-control"
+            v-model="user.email"
+            type="email"
+            placeholder="email"
+          />
         </div>
-        <div class="row g-0">
-          <p class="col-3">email:</p>
-          <input class="col-9" type="email" v-model="user.email" />
+        <div class="row g-0 mb-3">
+          <input
+            class="form-control"
+            v-model="user.password"
+            type="password"
+            placeholder="password"
+          />
         </div>
-        <div class="row g-0">
-          <p class="col-3">password:</p>
-          <input class="col-9" type="password" v-model="user.password" />
-        </div>
-        <div class="row g-0">
-          <p class="col-3">re-type password:</p>
-          <input class="col-9" type="password" v-model="user.retype_password" />
+        <div class="row g-0 mb-3">
+          <input
+            class="form-control"
+            v-model="user.retype_password"
+            type="password"
+            placeholder="retype_password"
+          />
         </div>
         <button type="submit" class="btn btn-primary">register</button>
       </form>
@@ -120,6 +143,7 @@
 
 <script>
 import BaseRequest from "@/helpers/BaseRequest";
+import AuthLayout from "@/views/layouts/AuthLayout.vue";
 
 export default {
   data() {
@@ -127,15 +151,20 @@ export default {
       user: {
         first_name: "",
         last_name: "",
-        gender: "",
+        gender: "gender",
         phone_number: "",
-        address: "",
+        address: "address",
         email: "",
         password: "",
         retype_password: "",
         birthday: "",
       },
     };
+  },
+  computed: {
+    layout() {
+      return this.$route.meta.layout ?? AuthLayout;
+    },
   },
   methods: {
     register() {

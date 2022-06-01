@@ -72,19 +72,23 @@
               />
             </div>
             <div class="row g-0">
-              <img
-                :id="'image'"
-                v-show="image"
-                class="row g-0"
-                :src="'http://localhost:8080' + fileName"
-              />
-              <video :id="'video'" v-show="video" width="row" controls>
-                <source
-                  :src="'http://localhost:8080' + fileName"
-                  type="video/mp4"
+              <div
+                class="col-4 row g-0"
+                v-for="(src, index) in srcs"
+                :key="index"
+              >
+                <img
+                  v-if="src.type === 'image'"
+                  style="width: 200px"
+                  :src="src.path"
                 />
-                Your browser does not support HTML video.
-              </video>
+                <video v-else controls>
+                  <source
+                    :src="src.path"
+                    type="video/mp4"
+                  />
+                </video>
+              </div>
             </div>
             <div v-show="isFile" class="row g-0 justify-content-center">
               <div class="col-md-8">
@@ -96,6 +100,7 @@
                     </div>
                     <input
                       v-show="false"
+                      multiple
                       id="file-upload"
                       type="file"
                       class="form-control"
@@ -183,13 +188,13 @@ export default {
       bg_image: "",
       image: "",
       video: "",
-      file: "",
+      files: [],
       fileName: null,
+      srcs: [],
     };
   },
   mounted() {
     this.getBgImage();
-    this.getFile();
   },
   methods: {
     upload() {
@@ -214,42 +219,29 @@ export default {
         "background-image: url(http://localhost:8080" + name + ")";
     },
     onChange(e) {
-      this.file = e.target.files[0];
-      this.post.type = this.file.type.substr(0, 5);
-      this.getFile();
-      document.getElementById(this.post.type).src = URL.createObjectURL(
-        e.target.files[0]
-      );
+      for (let i = 0; i < e.target.files.length; i++) {
+        this.srcs.push({'path': URL.createObjectURL(e.target.files[i]), 'type': e.target.files[i].type.substr(0, 5)});
+        this.files.push(e.target.files[i]);
+      }
     },
     createPost() {
       let data = new FormData();
       let _this = this;
-      data.append("file", this.file);
-      console.log(this.file);
+      for (let i = 0; i < this.files.length; i++) {
+        data.append("file" + i, this.files[i]);
+      }
+      data.append("count", this.files.length);
       data.append("text", this.post.text);
       data.append("audience", this.post.audience);
-      data.append("bg", this.post.bg ? this.post.bg : "");
       data.append("group_id", this.group_id);
       data.append("in_queue", this.in_queue);
       BaseRequest.post("posts", data)
         .then(function (res) {
-          console.log(res.data.post);
           _this.$emit("addPost", res.data.post);
         })
         .catch(function (err) {
           console.log(err);
         });
-    },
-    getFile() {
-      if (this.post.type === "image") {
-        this.image = true;
-        this.video = false;
-      } else if (this.post.type === "video") {
-        this.image = false;
-        this.video = true;
-      } else {
-        this.isFile = false;
-      }
     },
   },
 };

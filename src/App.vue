@@ -1,19 +1,21 @@
 <template>
-  <div id="app" :is="layout">
-    <router-view style="background-color: #F8F8FF;"></router-view>
-  </div>
+ <div id="app">
+      <div class="row" :is="layout" v-if="this.$router.currentRoute.name !== 'login' && this.$router.currentRoute.name !== 'register'">
+        <router-view style="background-color: #f8f8ff"></router-view>
+      </div>
+      <router-view v-else></router-view>
+    </div>
 </template>
 
 <script>
-import HeaderApp from '@/views/layouts/HeaderApp'
+import HeaderApp from "@/views/layouts/HeaderApp";
 export default {
-  name: 'App',
-  components: {
-  },
+  name: "App",
+  components: {},
   computed: {
     layout() {
-      return this.$route.meta.layout ?? HeaderApp
-    }
+      return this.$route.meta.layout ?? HeaderApp;
+    },
   },
-}
+};
 </script>

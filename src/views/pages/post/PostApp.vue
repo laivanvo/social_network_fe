@@ -94,16 +94,16 @@
     <div class="bg-white row g-0 ps-2 mt-3 mb-3" :style="post.bg_image">
       {{ post.text }}
     </div>
-    <div class="row g-0 ps-2 pe-2">
+    <div class="row g-0">
+      <div class="col-4 row g-0 ps-2 pe-2" v-for="file in post.files" :key="file.id">
       <img
-        v-show="image"
-        class="row g-0 m-0"
-        :src="'http://localhost:8080' + post.file"
+      v-if="file.type === 'image'"
+        :src="'http://localhost:8080' + file.path"
       />
-      <video v-show="video" class="row g-0" controls>
-        <source :src="'http://localhost:8080' + post.file" type="video/mp4" />
-        Your browser does not support HTML video.
+      <video v-else controls>
+        <source :src="'http://localhost:8080' + file.path" type="video/mp4" />
       </video>
+    </div>
     </div>
 
     <div class="d-flex align-items-center row g-0">
@@ -325,6 +325,7 @@ export default {
       isAuthor: false,
       blocks: [],
       isOffComment: false,
+      listImage: [],
     };
   },
   created() {
@@ -337,10 +338,10 @@ export default {
         this.post.bg_image +
         ")";
     }
-    this.getFile();
     this.blocks = this.post.blocks ? this.post.blocks.map((i) => i["user_id"]) : [];
 
     this.checkAuthor();
+    this.listImage = this.post.file.split("-");
   },
   mounted() {},
   methods: {
@@ -372,15 +373,6 @@ export default {
     },
     personal() {
       this.$router.push({ name: "personal" });
-    },
-    getFile() {
-      if (this.post.type === "image") {
-        this.image = true;
-        this.video = false;
-      } else if (this.post.type === "video") {
-        this.video = true;
-        this.image = false;
-      }
     },
     EditPost() {
       this.edit = true;
@@ -427,7 +419,6 @@ export default {
           this.post.bg_image +
           ")";
       }
-      this.getFile();
     },
     request(type) {
       let _this = this;
