@@ -470,10 +470,12 @@ export default {
       this.isOffComment = this.post.off_comment === 0 ? false : true;
     },
     offComment() {
-      this.isOffComment = true;
+      this.isOffComment = !this.isOffComment;
+      BaseRequest.get("posts/off_comment/", this.post.id)
     },
     onComment() {
       this.isOffComment = false;
+      
     },
   },
 };

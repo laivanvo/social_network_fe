@@ -110,6 +110,7 @@ export default {
         },
         addPost(post) {
             this.posts.unshift(post);
+            console.log(this.posts)
         },
     },
 };

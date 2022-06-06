@@ -115,7 +115,7 @@
 
               </div>
               <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                <li><a class="dropdown-item" type="button"><i class="fa fa-sign-out" aria-hidden="true">  Logout</i></a></li>
+                <li @click="logout()"><a class="dropdown-item" type="button"><i class="fa fa-sign-out" aria-hidden="true">  Logout</i></a></li>
               </ul>
             </div>
           </center>
@@ -181,6 +181,10 @@ export default {
         params: { profile: this.profile },
       });
     },
+    logout() {
+      alert(1)
+      this.$router.push({name: "login"})
+    }
   },
 };
 </script>
