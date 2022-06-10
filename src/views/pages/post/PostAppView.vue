@@ -38,7 +38,7 @@
                   post.user.profile.first_name
                 }}
               </div>
-              <div class="col-auto ms-2 opacity-50">added a new post.</div>
+              <div class="col-auto ms-2 opacity-50"></div>
             </center>
           </div>
           <div class="row g-0 ms-1">
@@ -99,27 +99,6 @@
     </div>
     <div class="bg-white row g-0 ps-2 mt-3 mb-3" :style="post.bg_image">
       {{ post.text }}
-    </div>
-    <div
-      class="row g-0"
-      v-if="post.files"
-      data-bs-toggle="modal"
-      data-bs-target="#post"
-      @click="showPost()"
-    >
-      <div
-        class="col-4 row g-0 ps-2 pe-2"
-        v-for="file in post.files"
-        :key="file.id"
-      >
-        <img
-          v-if="file.type === 'image'"
-          :src="'http://localhost:8080' + file.path"
-        />
-        <video v-else controls>
-          <source :src="'http://localhost:8080' + file.path" type="video/mp4" />
-        </video>
-      </div>
     </div>
 
     <div class="d-flex align-items-center row g-0">
@@ -232,26 +211,32 @@
           Your browser does not support HTML video.
         </video>
       </div>
-      <div class="row g-0" v-show="commentShow">
-        <div class="row g-0" v-for="comment in comments" :key="comment.id">
-          <comment-post
-            class="bg-white text-dark row g-0"
-            :commentP="comment"
-            :user="user"
-            @deleteComment="deleteComment()"
-            :post="post"
-            :isPostAuthor="isAuthor"
-            :blocks="blocks"
-          />
-        </div>
-        <div class="row g-0" @click="loadMoreComment">
-          <div
-            @mouseover="over('load' + post.id)"
-            @mouseleave="leave('load' + post.id)"
-            :id="'load' + post.id"
-            type="button"
-          >
-            load more
+      <div
+        class="row g-0 d-flex align-items-start"
+        v-show="commentShow"
+        style="overflow:auto ; height: 400px"
+      >
+        <div class="row g-0">
+          <div class="row g-0" v-for="comment in comments" :key="comment.id">
+            <comment-post
+              class="bg-white text-dark row g-0"
+              :commentP="comment"
+              :user="user"
+              @deleteComment="deleteComment()"
+              :post="post"
+              :isPostAuthor="isAuthor"
+              :blocks="blocks"
+            />
+          </div>
+          <div class="row g-0" @click="loadMoreComment">
+            <div
+              @mouseover="over('load' + post.id)"
+              @mouseleave="leave('load' + post.id)"
+              :id="'load' + post.id"
+              type="button"
+            >
+              load more
+            </div>
           </div>
         </div>
       </div>
@@ -312,6 +297,9 @@ export default {
     user: {
       type: Object,
     },
+    height: {
+      type: Number,
+    },
   },
   data() {
     return {
@@ -347,6 +335,7 @@ export default {
   },
   created() {
     this.post = this.postP;
+    console.log(this.post.user.profile);
     this.text = this.post.text;
     this.blocks = this.post.blocks
       ? this.post.blocks.map((i) => i.user_id)
@@ -468,8 +457,11 @@ export default {
       );
     },
     showPost() {
-      this.$router.push({name: "postShow", params: {post: this.post, user: this.user}})
-    }
+      this.$router.push({
+        name: "postShow",
+        params: { post: this.post, user: this.user },
+      });
+    },
   },
 };
 </script>

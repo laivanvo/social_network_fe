@@ -1,7 +1,7 @@
 <template>
   <div class="row g-0">
     <div class="row g-0 bg-light" v-if="profile.id">
-      <div class=" row g-0 bg-white">
+      <div class="row g-0 bg-white">
         <div class="row g-0 d-flex align-items-start">
           <div class="row g-0">
             <div class="row g-0 border" v-if="profile.id">
@@ -159,12 +159,14 @@
             </div>
           </div>
           <div
-            class="col-8 row g-0"
+            class="col-8 row g-0 d-flex align-items-start"
             style="overflow: auto; height: 1000px"
             v-if="posts"
           >
-            <div class="row g-0" v-for="post in posts" :key="post.id">
-              <post-app :postP="post" :user="post.user" />
+            <div class="row g-0">
+              <div class="row g-0" v-for="post in posts" :key="post.id">
+                <post-app :postP="post" :user="post.user" />
+              </div>
             </div>
           </div>
         </div>

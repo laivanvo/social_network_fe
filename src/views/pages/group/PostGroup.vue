@@ -55,12 +55,12 @@ export default {
             let _this = this;
             BaseRequest.get("posts?page=1")
                 .then((response) => {
-                    response.data.posts.forEach((e) => {
+                    response.data.posts.data.forEach((e) => {
                         _this.posts.map((x) => x.id).indexOf(e.id) === -1
                             ? _this.posts.push(e)
                             : console.log("This item already exists");
                     });
-                    _this.profile = response.data.profile.data;
+                    _this.profile = response.data.profile;
                 })
                 .catch((error) => {
                     console.log(error);

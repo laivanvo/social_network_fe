@@ -1,6 +1,6 @@
 <template>
   <div class="row g-0">
-    <div class="row g-0 pt-3 pb-3 border" style="background-color: white">
+    <div class="row g-0 border" style="background-color: white">
       <div class="col-4 row g-0">
         <div
           type="button"
@@ -10,7 +10,7 @@
           <i class="fa fa-home fs-1" aria-hidden="true"></i>
         </div>
         <div
-          class="col-auto ms-2 d-flex align-items-center"
+          class="col-10 ms-2 d-flex align-items-center"
           style="position: relative"
         >
           <input
@@ -18,7 +18,7 @@
             id="search"
             @focus="isSearch = true"
             @blur="isSearch = false"
-            class="border border-1 fs-5 rounded-pill"
+            class="form-control ms-1 me-1 rounded-pill opacity-50"
             style="position: absolute"
             placeholder="      input in social-media"
           />
@@ -96,7 +96,54 @@
           "
           style="border-radius: 50% 50% 50% 50%; width: 30px; height: 30px"
         >
-          <center><i class="bi bi-bell ms-2"></i></center>
+          <center>
+            <div class="dropdown">
+              <div
+                style="width: 30px; height: 30px; border-radius: 50%"
+                class="btn btn-secondary bi bi-bell"
+                type="button"
+                id="dropdownMenuButton1"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              ></div>
+              <div
+                class="dropdown-menu row g-0"
+                style="width: 300px"
+                aria-labelledby="dropdownMenuButton1"
+              >
+                <div
+                  class="row g-0 dropdown-item"
+                  type="button"
+                  v-for="noti in noties"
+                  :key="noti.id"
+                >
+                  <div class="row g-0" @click="notification(noti)">
+                    <div class="col-3 ps-1">
+                      <img
+                        style="width: 50px; height: 50px; border-radius: 50%"
+                        :src="
+                          'http://localhost:8080' +
+                          noti.user_from.profile.avatar
+                        "
+                      />
+                    </div>
+                    <textarea
+                      class="col-9 ps-1 pe-1"
+                      type="button"
+                      style="
+                        border: none;
+                        background-color: transparent;
+                        resize: none;
+                        outline: none;
+                      "
+                      v-model="noti.content"
+                    >
+                    </textarea>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </center>
         </div>
         <div
           class="col-auto me-1 ps-0 border d-flex align-items-center"
@@ -111,18 +158,20 @@
                 id="dropdownMenuButton1"
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
-              >
-
-              </div>
+              ></div>
               <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                <li @click="logout()"><a class="dropdown-item" type="button"><i class="fa fa-sign-out" aria-hidden="true">  Logout</i></a></li>
+                <li @click="logout()">
+                  <a class="dropdown-item" type="button"
+                    ><i class="fa fa-sign-out" aria-hidden="true"> Logout</i></a
+                  >
+                </li>
               </ul>
             </div>
           </center>
         </div>
       </div>
     </div>
-    <div class="row g-0 pt-3 pb-3 border me-0">
+    <div class="row g-0 pt-3 border me-0">
       <slot />
     </div>
   </div>
@@ -137,11 +186,13 @@ export default {
       profile: {},
       groups: [],
       isSearch: false,
+      noties: [],
     };
   },
   mounted() {
     this.getProfile();
     this.getGroup();
+    this.getNotification();
   },
   methods: {
     homePage() {
@@ -158,9 +209,6 @@ export default {
     },
     register() {
       this.$router.push("/register");
-    },
-    login() {
-      this.$router.push("/login");
     },
     getProfile() {
       BaseRequest.get("posts/profile").then((res) => {
@@ -182,9 +230,19 @@ export default {
       });
     },
     logout() {
-      alert(1)
-      this.$router.push({name: "login"})
-    }
+      this.$router.push({ name: "login" });
+    },
+    getNotification() {
+      BaseRequest.get("noties").then((res) => {
+        this.noties = res.data.noties;
+      });
+    },
+    notification(noti) {
+      this.$router.push({
+        name: "postView",
+        params: { post: noti.post, user: noti.user_to }
+      });
+    },
   },
 };
 </script>

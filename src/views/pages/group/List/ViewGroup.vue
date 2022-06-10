@@ -29,7 +29,7 @@
           </div>
         </div>
       </div>
-      <div @click="showPost()" class="dropdown-item">
+      <div type="button" @click="showPost()" class="dropdown-item">
         <div class="row g-0 mb-3">
           <div class="col-auto">
             <i class="bi bi-house"></i>
@@ -37,7 +37,7 @@
           <div class="col-auto ms-3">Group Page</div>
         </div>
       </div>
-      <div @click="showInfo()" class="dropdown-item">
+      <div type="button" @click="showInfo()" class="dropdown-item">
         <div class="row g-0 mb-3">
           <div class="col-auto">
             <i class="bi bi-book"></i>
@@ -49,7 +49,7 @@
         <center><div class="row g-0 mb-3 border w-75"></div></center>
       </div>
       <h6 class="row g-0 opacity-50 mb-3">Administration Tools</h6>
-      <div @click="showRequest()" class="dropdown-item">
+      <div type="button" @click="showRequest()" class="dropdown-item">
         <div class="row g-0 mb-3">
           <div class="col-auto">
             <i style="color: blue" class="bi bi-person-plus"></i>
@@ -57,7 +57,7 @@
           <div class="col-auto ms-3">Request Membership</div>
         </div>
       </div>
-      <div @click="showMember()" class="dropdown-item">
+      <div type="button" @click="showMember()" class="dropdown-item">
         <div class="row g-0 mb-3">
           <div class="col-auto">
             <i style="color: blue" class="bi bi-people"></i>
@@ -65,11 +65,13 @@
           <div class="col-auto ms-3">Membership</div>
         </div>
       </div>
-      <div class="row g-0 mb-3">
-        <div class="col-auto ms-2">
-          <i style="color: blue" class="bi bi-archive"></i>
+      <div type="button" @click="showQueue()" class="dropdown-item">
+        <div class="row g-0 mb-3">
+          <div class="col-auto">
+            <i style="color: blue" class="bi bi-archive"></i>
+          </div>
+          <div class="col-auto ms-3">Post In The Queue</div>
         </div>
-        <div class="col-auto ms-2">Post In The Queue</div>
       </div>
       <div class="row g-0 mb-3">
         <div class="col-auto ms-2">
@@ -104,6 +106,7 @@
           <post-group-view :group="group" v-show="isPost" />
           <request-member :group="group" v-show="isRequest" />
           <member-ship :group="group" v-show="isMember" />
+          <post-queue :group="group" v-show="isQueue"/>
         </div>
       </div>
       <div class="col-2"></div>
@@ -116,6 +119,7 @@ import GroupInfo from "@/views/pages/group/view/GroupInfo.vue";
 import PostGroupView from "@/views/pages/group/view/PostGroupView.vue";
 import RequestMember from "@/views/pages/group/member/request/RequestMember.vue";
 import MemberShip from '../member/MemberShip.vue';
+import PostQueue from "@/views/pages/group/view/PostQueue.vue"
 
 export default {
   components: {
@@ -123,6 +127,7 @@ export default {
     PostGroupView,
     RequestMember,
     MemberShip,
+    PostQueue,
   },
   created() {
     this.group = this.$route.params.group ? this.$route.params.group : null;
@@ -141,6 +146,7 @@ export default {
       isPost: true,
       isRequest: false,
       isMember: false,
+      isQueue: false,
     };
   },
   methods: {
@@ -149,24 +155,35 @@ export default {
       this.isPost = false;
       this.isRequest = false;
       this.isMember = false;
+      this.isQueue = false;
     },
     showPost() {
       this.isInfo = false;
       this.isPost = true;
       this.isRequest = false;
       this.isMember = false;
+      this.isQueue = false;
     },
     showRequest() {
       this.isInfo = false;
       this.isPost = false;
       this.isRequest = true;
       this.isMember = false;
+      this.isQueue = false;
     },
     showMember() {
       this.isInfo = false;
       this.isPost = false;
       this.isRequest = false;
       this.isMember = true;
+      this.isQueue = false;
+    },
+    showQueue() {
+      this.isInfo = false;
+      this.isPost = false;
+      this.isRequest = false;
+      this.isMember = false;
+      this.isQueue = true;
     },
   },
 };

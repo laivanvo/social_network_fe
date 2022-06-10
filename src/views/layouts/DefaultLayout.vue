@@ -8,7 +8,7 @@
         >
           <div class="row g-0 mb-3 mt-3">
             <div class="row g-0 dropdown-item" type="button">
-              <div class="row g-0">
+              <div class="row g-0" v-if="profile.id">
                 <div class="col-auto ms-2 text-center">
                   <img
                     style="
@@ -46,7 +46,7 @@
             </div>
           </div>
           <div class="row g-0 mb-3">
-            <div class="row g-0 dropdown-item" type="button">
+            <div class="row g-0 dropdown-item" @click="group" type="button">
               <div class="row g-0">
                 <div class="col-auto ms-2 text-center">
                   <i
@@ -109,16 +109,14 @@
         <div class="row g-0 mb-3"></div>
         <div class="row g-0 border mt-3 ms-3 me-3 mb-3"></div>
         <div class="row g-0 mb-3">My groups</div>
-        <div class="row g-0" style="overflow: auto; height: 400px">
+        <div class="row g-0 d-flex align-items-start" style="overflow: auto; height: 400px">
           <div
             @click="viewGroup(group)"
             class="row g-0 mb-3"
             v-for="group in groups"
             :key="group.id"
           >
-            <div class="col-10" v-if="group.id">
-              <group-item :group="group" />
-            </div>
+            <group-item :group="group" v-if="group.id"/>
           </div>
         </div>
       </div>
@@ -136,7 +134,7 @@
         <div class="row g-0">
           <h5 @click="viewToRequest()" type="button" class="row g-0 mb-3">List request</h5>
           <div
-            class="row g-0"
+            class="row g-0 d-flex align-items-start"
             :style="
               'background-color: white; overflow: auto;min-height: 10px; height: ' +
               height / 3 +
@@ -201,11 +199,11 @@ export default {
     };
   },
   mounted() {
-    this.getProfile();
     this.getGroup();
+    this.getProfile();
     this.height = $(window).height();
     this.getRequestFriend();
-    this.getFriend()
+    this.getFriend();
   },
   methods: {
     getProfile() {
@@ -236,7 +234,10 @@ export default {
     },
     viewToRequest() {
       this.$router.push({ name: "request" });
-    }
+    },
+    group() {
+      this.$router.push("/group");
+    },
   },
 };
 </script>

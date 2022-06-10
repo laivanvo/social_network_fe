@@ -194,7 +194,7 @@ export default {
     };
   },
   mounted() {
-    this.getBgImage();
+    this.getBgImage;
   },
   methods: {
     upload() {
@@ -233,8 +233,11 @@ export default {
       data.append("count", this.files.length);
       data.append("text", this.post.text);
       data.append("audience", this.post.audience);
+      console.log(this.post.audience)
       data.append("group_id", this.group_id);
+      console.log(this.group_id)
       data.append("in_queue", this.in_queue);
+      console.log(this.in_queue)
       BaseRequest.post("posts", data)
         .then(function (res) {
           _this.$emit("addPost", res.data.post);

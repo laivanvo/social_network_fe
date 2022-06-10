@@ -1,5 +1,5 @@
 <template>
-  <div class="row g-0 m-0 p-0" v-show="!isDelete">
+  <div class="row g-0 m-0 p-0" v-show="!isDelete" v-if="comment.user">
     <div v-if="!isEdit" class="row g-0 m-0 p-0">
       <div class="col-auto">
         <img
@@ -65,7 +65,10 @@
                 <li type="button" v-show="isAuthor">
                   <a @click="deleteComment" class="dropdown-item">Delete</a>
                 </li>
-                <li type="button" v-show="!isAuthor && isPostAuthor && !isBlock">
+                <li
+                  type="button"
+                  v-show="!isAuthor && isPostAuthor && !isBlock"
+                >
                   <a @click="block" class="dropdown-item">block</a>
                 </li>
                 <li type="button" v-show="!isAuthor && isPostAuthor && isBlock">
@@ -199,8 +202,8 @@
               />
             </div>
             <div
-              class="col-auto row g-0 ms-1 d-flex align-items-center"
-              style="position: relative; min-width: 400px"
+              class="col-8 row g-0 ms-1 d-flex align-items-center"
+              style="position: relative;"
             >
               <input
                 v-on:keyup.enter="addComment"
@@ -350,9 +353,11 @@ export default {
     addComment() {
       let _this = this;
       let data = new FormData();
-      data.append("id", this.comment.id);
-      data.append("type", "comment");
+      data.append("comment_id", this.comment.id);
       data.append("text", this.addText);
+      data.append("type", "comment");
+      data.append("post", this.post.id);
+      data.append("user_id", this.post.user.id);
       BaseRequest.post("comment", data)
         .then(function (res) {
           _this.addText = "";
@@ -393,13 +398,15 @@ export default {
       let data = new FormData();
       data.append("post_id", this.post.id);
       data.append("user_id", this.comment.user.id);
-      BaseRequest.post("blocks", data).then(() => this.isBlock = true);
+      BaseRequest.post("blocks", data).then(() => (this.isBlock = true));
     },
     unBlock() {
       let data = new FormData();
       data.append("post_id", this.post.id);
       data.append("user_id", this.comment.user.id);
-      BaseRequest.post("blocks/destroy", data).then(() => this.isBlock = false);
+      BaseRequest.post("blocks/destroy", data).then(
+        () => (this.isBlock = false)
+      );
     },
   },
 };

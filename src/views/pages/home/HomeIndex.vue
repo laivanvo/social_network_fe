@@ -1,5 +1,5 @@
 <template>
-    <div class="home row ps-2 pe-2" :is="layout">
+    <div class="home row ps-2 pe-2" :is="layout" v-if="posts">
         <div class="row g-0 ms-1 me-1 mb-3">
             <div class="col-auto ms-2">
                 <img

@@ -16,44 +16,67 @@
               placeholder="search group"
             />
           </div>
-          <div class="row g-0 mb-3">
-            <div class="col-2 text-center">
-              <i
-                class="w-100 ms-1 bi bi-card-checklist"
-                style="border-radius: 50% 50% 50% 50%"
-              >
-              </i>
+          <div class="row g-0 mb-3 dropdown-item" type="button">
+            <div class="row g-0">
+              <div class="col-2 text-center">
+                <i
+                  class="w-100 ms-1 bi bi-card-checklist"
+                  style="border-radius: 50% 50% 50% 50%"
+                >
+                </i>
+              </div>
+              <div class="col-10" @click="showPostGroup()">My feed</div>
             </div>
-            <div class="col-10" @click="showPostGroup()">My feed</div>
           </div>
-          <div class="row g-0 mb-3">
-            <div class="col-2 text-center">
-              <i
-                class="w-100 ms-1 bi bi-globe"
-                style="border-radius: 50% 50% 50% 50%"
-              >
-              </i>
+          <div class="row g-0 mb-3 dropdown-item" type="button">
+            <div class="row g-0">
+              <div class="col-2 text-center">
+                <i
+                  class="w-100 ms-1 bi bi-globe"
+                  style="border-radius: 50% 50% 50% 50%"
+                >
+                </i>
+              </div>
+              <div @click="showDiscover()" class="col-10">discover</div>
             </div>
-            <div @click="showDiscover()" class="col-10">discover</div>
           </div>
-          <div class="row g-0 mb-3">
-            <div class="col-2 text-center">
-              <i
-                class="w-100 ms-1 bi bi-bell"
-                style="border-radius: 50% 50% 50% 50%"
-              >
-              </i>
+          <div class="row g-0 mb-3 dropdown-item" type="button">
+            <div class="row g-0">
+              <div class="col-2 text-center">
+                <i
+                  class="w-100 ms-1 bi bi-bell"
+                  style="border-radius: 50% 50% 50% 50%"
+                >
+                </i>
+              </div>
+              <div class="col-10">Notification</div>
             </div>
-            <div class="col-10">Notification</div>
           </div>
         </div>
-        <create-group :profile="profile"/>
-        <div class="row g-0 border mt-3 ms-3 me-3 mb-3"></div>
-        <div class="row g-0 mb-3">My groups</div>
-        <div class="row g-0" style="overflow: auto; height: 400px">
-          <div @click="viewGroup(group)" class="row g-0 mb-3" v-for="group in groups" :key="group.id">
+        <create-group :profile="profile" />
+        <div class="row g-0 border ms-3 me-3 mb-1"></div>
+        <div class="row g-0 mb-1">My groups</div>
+        <div class="row g-0" style="overflow: auto; height: 250px">
+          <div
+            @click="viewGroup(group)"
+            class="row g-0 mb-1"
+            v-for="group in groups"
+            :key="group.id"
+          >
+            <group-item :group="group" />
+          </div>
+        </div>
+        <div class="row g-0 border ms-3 me-3 mb-1"></div>
+        <div class="row g-0 mb-1">The group you joined</div>
+        <div class="row g-0" style="overflow: auto; height: 250px">
+          <div
+            @click="viewGroup(group)"
+            class="row g-0 mb-1"
+            v-for="join in joins"
+            :key="join.id"
+          >
             <div class="col-10">
-              <group-item :group="group"/>
+              <group-item :group="join" />
             </div>
           </div>
         </div>
@@ -69,8 +92,8 @@
 <script>
 import BaseRequest from "@/helpers/BaseRequest";
 import CreateGroup from "@/views/pages/group/List/CreateGroup.vue";
-import GroupItem from "@/views/pages/group/GroupItem.vue"
-import EventBus from '@/main';
+import GroupItem from "@/views/pages/group/GroupItem.vue";
+import EventBus from "@/main";
 export default {
   components: {
     CreateGroup,
@@ -81,6 +104,7 @@ export default {
       profile: {},
       groups: [],
       isDiscover: false,
+      joins: [],
     };
   },
   mounted() {
@@ -97,6 +121,9 @@ export default {
       BaseRequest.get("groups/mec").then((res) => {
         this.groups = res.data.groups;
       });
+      BaseRequest.get("groups/listJoin").then((res) => {
+        this.joins = res.data.groups;
+      });
     },
     showDiscover() {
       EventBus.$emit("showDiscoverGroup");
@@ -105,8 +132,8 @@ export default {
       EventBus.$emit("showPostGroup");
     },
     viewGroup(group) {
-      this.$router.push({ name: 'groupView', params: {group: group}})
-    }
+      this.$router.push({ name: "groupView", params: { group: group } });
+    },
   },
 };
 </script>

@@ -83,7 +83,6 @@
                                 :id="'image' + post.id"
                                 v-show="image"
                                 class="row g-0"
-                                :src="'http://localhost:8080' + fileName"
                             />
                             <video
                                 :id="'video' + post.id"
@@ -92,7 +91,6 @@
                                 controls
                             >
                                 <source
-                                    :src="'http://localhost:8080' + fileName"
                                     type="video/mp4"
                                 />
                                 Your browser does not support HTML video.

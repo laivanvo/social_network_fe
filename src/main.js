@@ -1,6 +1,11 @@
 import Vue from 'vue'
 import App from './App.vue'
 import VueRouter from 'vue-router'
+import ModalFullScreenVue from 'modal-fullscreen-vue'
+import FullpageModal from 'vue-fullpage-modal'
+
+Vue.use(FullpageModal)
+Vue.use(ModalFullScreenVue)
 Vue.use(VueRouter)
 Vue.config.productionTip = false
 
@@ -15,6 +20,10 @@ import FriendApp from "@/views/pages/personal/friend/FriendApp"
 import ListRequest from "@/views/pages/personal/friend/ListRequest"
 import PersonalAuth from "@/views/pages/personal/PersonalAuth"
 import PersonalApp from "@/views/pages/personal/PersonalApp"
+import SavePost from "@/views/pages/post/save/SavePost"
+import PostView from "@/views/pages/post/view/PostView"
+import SearchApp from "@/views/pages/search/SearchApp"
+import PostShow from "@/views/pages/post/createPostModal/PostShow"
 
 import "bootstrap/dist/css/bootstrap.min.css"
 import "bootstrap"
@@ -35,6 +44,10 @@ const routes = [
   { path: '/request', component: ListRequest, name: 'request' },
   { path: '/Personal', component: PersonalAuth, name: 'personal' },
   { path: '/personalApp', component: PersonalApp, name: 'personalApp' },
+  { path: '/save', component: SavePost, name: 'save' },
+  { path: '/postView', component: PostView, name: 'postView' },
+  { path: '/search', component: SearchApp, name: 'search' },
+  { path: '/postShow', component: PostShow, name: 'postShow' },
 ]
 
 const router = new VueRouter({
