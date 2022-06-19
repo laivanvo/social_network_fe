@@ -60,7 +60,7 @@
             </div>
           </div>
           <div class="row g-0 mb-3">
-            <div class="row g-0 dropdown-item" type="button">
+            <div class="row g-0 dropdown-item" @click="goSave()" type="button">
               <div class="row g-0">
                 <div class="col-auto ms-2 text-center">
                   <i
@@ -154,7 +154,7 @@
           <div class="row g-0 border mb-2"></div>
           <h5 class="row g-0 mb-3">List friend</h5>
           <div
-            class="row g-0"
+            class="row g-0 d-flex align-items-start"
             :style="
               'background-color: white; overflow: auto;min-height: 10px; height: ' +
               height / 3 +
@@ -238,6 +238,9 @@ export default {
     group() {
       this.$router.push("/group");
     },
+    goSave() {
+      this.$router.push('save');
+    }
   },
 };
 </script>

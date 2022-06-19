@@ -118,10 +118,10 @@
                 <div class="col-auto ms-5 mt-2">{{ profile.phone_number }}</div>
               </div>
               <div class="row g-0 mb-3">
-                <div class="col-auto ms-2">
+                <div class="col-2 ps-2">
                   <center><i class="bi bi-geo-alt fs-3"></i></center>
                 </div>
-                <div class="col-auto ms-5 mt-2">{{ profile.address }}</div>
+                <div class="col-10 ps-5 mt-2 text-truncate">{{ profile.address }}</div>
               </div>
               <div class="row g-0 mb-3">
                 <div class="col-auto ms-2">

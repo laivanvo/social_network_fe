@@ -1,5 +1,5 @@
 <template>
-    <div class="row g-0">
+    <div class="row g-0" v-if="user.profile">
         <!-- Button trigger modal -->
         <!-- Modal -->
         <div
@@ -70,34 +70,37 @@
                                 </option>
                             </select>
                         </div>
-                        <div class="form-floating row">
+                        <div class="mb-3">
+                            <label class="form-label">text: </label>
                             <textarea
-                                :style="'; height:' + height + 'px;' + bg_image"
+                                style="height: 100px"
+                                type="text"
+                                class="form-control"
                                 v-model="post.text"
-                                id="content"
-                                :class="'form-control'"
-                            ></textarea>
+                                placeholder="say some thing about this post"
+                            />
                         </div>
                         <div class="row g-0">
-                            <img
-                                :id="'image' + post.id"
-                                v-show="image"
-                                class="row g-0"
-                            />
-                            <video
-                                :id="'video' + post.id"
-                                v-show="video"
-                                width="row"
-                                controls
+                            <div
+                                class="col-6 row g-0"
+                                v-for="(src, index) in srcs1"
+                                :key="index"
                             >
-                                <source
-                                    type="video/mp4"
+                                <img
+                                    @click="delFile(index)"
+                                    v-if="src.type === 'image'"
+                                    :src="src.path"
                                 />
-                                Your browser does not support HTML video.
-                            </video>
+                                <video v-else controls @click="delFile(index)">
+                                    <source :src="src.path" type="video/mp4" />
+                                </video>
+                            </div>
                         </div>
-                        <div v-show="isFile" class="row g-0 justify-content-center">
-                            <div class="row g-0">
+                        <div
+                            v-show="isFile"
+                            class="row g-0 justify-content-center"
+                        >
+                            <div class="col-md-8">
                                 <div class="card">
                                     <div class="card-header">
                                         Choose file you want
@@ -110,9 +113,12 @@
                                             {{ success }}
                                         </div>
                                         <input
+                                            v-show="false"
+                                            multiple
+                                            :id="'edit' + post.id"
                                             type="file"
                                             class="form-control"
-                                            v-on:change="onChange"
+                                            v-on:change="onChange1"
                                         />
                                     </div>
                                 </div>
@@ -130,17 +136,16 @@
                                     :src="
                                         'http://localhost:8080' + bgImage.path
                                     "
-                                    @click="addBg(bgImage.path)"
+                                    @click="addBg(bgImage.name, bgImage.id)"
                                 />
                             </div>
                         </div>
                         <div class="row g-0">
                             <div class="col-6">Thêm vào bài viết</div>
                             <div class="col-6 row">
-                                <i
-                                    @click="upload"
-                                    class="bi bi-image col-3"
-                                ></i>
+                                <label :for="'edit' + post.id" class="col-3">
+                                    <i class="bi bi-image row"></i>
+                                </label>
                                 <i
                                     @click="showBgImage"
                                     class="bi bi-emoji-smile col-3"
@@ -177,8 +182,6 @@
 
 <script>
 import BaseRequest from "@/helpers/BaseRequest";
-// import $ from "jquery";
-
 export default {
     components: {},
     props: {
@@ -191,40 +194,39 @@ export default {
         id: {
             type: String,
         },
+        group_id: {
+            type: Number,
+        },
+        in_queue: {
+            type: Boolean,
+        },
     },
     data() {
         return {
             bgImages: [],
-            isFile: true,
+            isFile: false,
             isBgImage: false,
-            post: {},
+            post: {
+                audience: "select option",
+            },
             success: "",
             height: 100,
             bg: "",
             options: ["public", "private"],
-            image: false,
-            video: false,
-            edit: false,
-            file: "",
-            fileName: "",
             bg_image: "",
+            image: "",
+            video: "",
+            files1: [],
+            fileName: null,
+            srcs1: [],
         };
     },
     mounted() {
+        this.getBgImage;
         this.post = this.postPre;
-        if (this.post.bg_image) {
-            this.bg_image =
-                "background-image: url(http://localhost:8080" +
-                this.post.bg_image.path +
-                ")";
-        }
-        this.fileName = this.post.file;
-        this.getBgImage();
-        this.getFile();
     },
     methods: {
         upload() {
-            this.height = 30;
             this.isFile = !this.isFile;
         },
         getBgImage() {
@@ -245,35 +247,39 @@ export default {
             this.bg_image = this.bg_image =
                 "background-image: url(http://localhost:8080" + name + ")";
         },
-        onChange(e) {
-            this.file = e.target.files[0];
-            this.post.type = this.file.type.substr(0, 5);
-            this.getFile();
-            document.getElementById(this.post.type + this.post.id).src =
-                URL.createObjectURL(e.target.files[0]);
+        onChange1(e) {
+            for (let i = 0; i < e.target.files.length; i++) {
+                this.srcs1.push({
+                    path: URL.createObjectURL(e.target.files[i]),
+                    type: e.target.files[i].type.substr(0, 5),
+                });
+                this.files1.push(e.target.files[i]);
+            }
         },
+
         updatePost() {
             let data = new FormData();
-            let _this = this
-            data.append("file", this.file);
+            let _this = this;
+            for (let i = 0; i < this.files1.length; i++) {
+                data.append("file" + i, this.files1[i]);
+            }
+            data.append("count", this.files1.length);
             data.append("text", this.post.text);
             data.append("audience", this.post.audience);
-            data.append("bg", this.post.bg ? this.post.bg : '');
+            console.log(this.post.audience);
+            data.append("group_id", this.group_id);
+            console.log(this.group_id);
+            data.append("in_queue", this.in_queue);
             BaseRequest.post("post/" + this.post.id, data)
                 .then(function (res) {
                     _this.$emit('updatePost', res.data.post);
                 })
                 .catch(function () {});
         },
-        getFile() {
-            if (this.post.type === "image") {
-                this.image = true;
-                this.video = false;
-            } else if (this.post.type === "video") {
-                this.image = false;
-                this.video = true;
-            } else {
-                this.isFile = false;
+        delFile(index) {
+            if (confirm("Are you sure cancel this file")) {
+                this.srcs1.splice(index, 1);
+                this.files1.splice(index, 1);
             }
         },
     },

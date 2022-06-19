@@ -2,7 +2,7 @@
     <div class="home row p-0 m-0">
         <div class="row g-0 p-0 m-0" v-for="post in posts" :key="post.id">
             <post-app
-                class="row g-0 border mt-5 bg-white"
+                class="row g-0 border mb-5 bg-white"
                 :postP="post"
                 :user="post.user"
             />
@@ -53,9 +53,9 @@ export default {
     methods: {
         getPost() {
             let _this = this;
-            BaseRequest.get("posts?page=1")
+            BaseRequest.get("posts/groups")
                 .then((response) => {
-                    response.data.posts.data.forEach((e) => {
+                    response.data.posts.forEach((e) => {
                         _this.posts.map((x) => x.id).indexOf(e.id) === -1
                             ? _this.posts.push(e)
                             : console.log("This item already exists");

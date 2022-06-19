@@ -1,11 +1,7 @@
 import Vue from 'vue'
 import App from './App.vue'
 import VueRouter from 'vue-router'
-import ModalFullScreenVue from 'modal-fullscreen-vue'
-import FullpageModal from 'vue-fullpage-modal'
 
-Vue.use(FullpageModal)
-Vue.use(ModalFullScreenVue)
 Vue.use(VueRouter)
 Vue.config.productionTip = false
 

@@ -9,7 +9,7 @@
           v-for="save in saves"
           :key="save.id"
         >
-          <post-item class="row g-0" :post="save.post" :user="user" />
+          <post-item class="row g-0" :post="save.post" :user="user"/>
         </div>
       </div>
     </div>

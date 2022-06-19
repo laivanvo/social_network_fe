@@ -29,10 +29,10 @@
               <group-item-join :group="groups[i]"/>
             </div>
             <div class="col-4 ps-2 ps-2 border border-5 rounded">
-              <group-item-join :group="groups[i]"/>
+              <group-item-join :group="groups[i + 1]"/>
             </div>
             <div class="col-4 ps-2 ps-2 border border-5 rounded">
-              <group-item-join :group="groups[i]"/>
+              <group-item-join :group="groups[i + 2]"/>
             </div>
           </div>
         </div>
@@ -44,8 +44,8 @@
       data-bs-target="#carouselExampleInterval"
       data-bs-slide="prev"
     >
-      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-      <span class="visually-hidden" @click="prev()">Previous</span>
+      <span class="carousel-control-prev-icon" @click="prev()" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
     </button>
     <button
       class="carousel-control-next"
@@ -53,8 +53,8 @@
       data-bs-target="#carouselExampleInterval"
       data-bs-slide="next"
     >
-      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-      <span class="visually-hidden" @click="next()">Next</span>
+      <span class="carousel-control-next-icon" @click="next()" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
     </button>
   </div>
 </template>

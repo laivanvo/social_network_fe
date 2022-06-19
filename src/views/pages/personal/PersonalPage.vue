@@ -1,6 +1,6 @@
 <template>
   <div class="row g-0">
-    <div class="row g-0 bg-light" v-if="profile.id">
+    <div class="row g-0 bg-light" v-if="profile.id" >
       <div class="row g-0 bg-white">
         <div class="row g-0 d-flex align-items-start">
           <div class="row g-0">
@@ -8,7 +8,7 @@
               <div class="row g-0">
                 <img
                   :style="
-                    'width: 69.4%; height: ' +
+                    'width: 74.4%; height: ' +
                     height / 2 +
                     'px; position: absolute;'
                   "
@@ -93,42 +93,42 @@
             <div class="row g-0 border" style="overflow: auto, height: 300px">
               <div class="row g-0 mb-3">welcome to profile of me!!!!</div>
               <div class="row g-0 mb-3">
-                <div class="col-auto ms-2">
+                <div class="col-2">
                   <center><i class="bi bi-briefcase-fill fs-3"></i></center>
                 </div>
-                <div class="col-auto ms-5 mt-2">zinza technology</div>
+                <div class="col-10 ps-2 mt-2">zinza technology</div>
               </div>
               <div class="row g-0 mb-3">
-                <div class="col-auto ms-2">
+                <div class="col-2">
                   <center><i class="bi bi-mortarboard-fill fs-3"></i></center>
                 </div>
-                <div class="col-auto ms-5 mt-2">12/12</div>
+                <div class="col-10 ps-2 mt-2">12/12</div>
               </div>
               <div class="row g-0 mb-3">
-                <div class="col-auto ms-2">
+                <div class="col-2">
                   <center><i class="bi bi-suit-heart-fill fs-3"></i></center>
                 </div>
-                <div class="col-auto ms-5 mt-2">Single</div>
+                <div class="col-10 ps-2 mt-2">Single</div>
               </div>
               <div class="row g-0 mb-3">
-                <div class="col-auto ms-2">
+                <div class="col-2">
                   <center><i class="bi bi-telephone-fill fs-3"></i></center>
                 </div>
-                <div class="col-auto ms-5 mt-2">{{ profile.phone_number }}</div>
+                <div class="col-10 ps-2 mt-2">{{ profile.phone_number }}</div>
               </div>
               <div class="row g-0 mb-3">
-                <div class="col-auto ms-2">
+                <div class="col-2">
                   <center><i class="bi bi-geo-alt fs-3"></i></center>
                 </div>
-                <div class="col-auto ms-5 mt-2">{{ profile.address }}</div>
+                <div class="col-10 ps-2 mt-2">{{ profile.address }}</div>
               </div>
               <div class="row g-0 mb-3">
-                <div class="col-auto ms-2">
+                <div class="col-2">
                   <center>
                     <i class="bi bi-calendar-heart-fill fs-3"></i>
                   </center>
                 </div>
-                <div class="col-auto ms-5 mt-2">{{ profile.birthday }}</div>
+                <div class="col-10 ps-2 mt-2">{{ profile.birthday }}</div>
               </div>
             </div>
             <div class="row g-0 border">

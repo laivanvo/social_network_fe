@@ -4,7 +4,7 @@
       <div class="col-3 border">
         <div class="row g-0 mb-3" style="overflow: auto; height: 200px">
           <div class="row g-0 mb-3">
-            <div class="col-2">Group</div>
+            <h5 class="col-2">Group</h5>
             <div class="col-9"></div>
             <div class="col-1"></div>
           </div>
@@ -55,8 +55,8 @@
         </div>
         <create-group :profile="profile" />
         <div class="row g-0 border ms-3 me-3 mb-1"></div>
-        <div class="row g-0 mb-1">My groups</div>
-        <div class="row g-0" style="overflow: auto; height: 250px">
+        <h5 class="row g-0 mb-1">My groups</h5>
+        <div class="row g-0" style="overflow: auto; max-height: 250px">
           <div
             @click="viewGroup(group)"
             class="row g-0 mb-1"
@@ -67,7 +67,7 @@
           </div>
         </div>
         <div class="row g-0 border ms-3 me-3 mb-1"></div>
-        <div class="row g-0 mb-1">The group you joined</div>
+        <h5 class="row g-0 mb-1">The group you joined</h5>
         <div class="row g-0" style="overflow: auto; height: 250px">
           <div
             @click="viewGroup(group)"
@@ -81,7 +81,7 @@
           </div>
         </div>
       </div>
-      <div class="col-9 ps-3 pe-5" style="overflow: auto; height: 1000px">
+      <div class="col-9" style="overflow: auto; max-height: 1000px">
         <slot />
       </div>
     </div>

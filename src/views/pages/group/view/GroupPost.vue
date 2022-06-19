@@ -35,7 +35,7 @@
                 class="row g-0 border mt-5 bg-white"
                 :postP="post"
                 :user="user"
-                v-if="(user && post)"
+                v-if="user && post"
             />
         </div>
     </div>
@@ -49,7 +49,7 @@ export default {
     props: {
         id: {
             type: Number,
-        }
+        },
     },
     components: {
         PostApp,

@@ -6,12 +6,12 @@
         :style="'overflow: auto; height: ' + height + 'px;'"
       >
         <div class="row g-0 mb-2">Request</div>
-        <div class="row g-0 mb-2" v-for="item in profiles" :key="item.id">
+        <div class="row g-0 mb-2 dropdown-item" type="button" v-for="item in profiles" :key="item.id">
           <personal-item :profileP="item"/>
         </div>
       </div>
       <div class="col-9 row g-0">
-          <slot :profile="profile" class="row g-0"/>
+          <slot class="row g-0"/>
       </div>
     </div>
   </div>

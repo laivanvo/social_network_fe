@@ -1,5 +1,5 @@
 <template>
-  <div class="row g-0">
+  <div class="row g-0 dropdown-item border" type="button" @click="postView()">
     <div class="row g-0">
       <div class="col-auto row g-0">
         <img

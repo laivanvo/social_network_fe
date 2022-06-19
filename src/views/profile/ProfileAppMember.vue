@@ -1,14 +1,14 @@
 <template>
-  <div class="row g-0 ps-0" v-if="profile">
-    <div class="row g-0 mb-2 dropdown-item">
+  <div class="row g-0 ps-0" v-if="profile" @click="viewPersonal()">
+    <div class="row g-0 mb-2 dropdown-item" type="button">
       <div class="row g-0">
-        <div class="col-auto" @click="viewPersonal()" type="button">
+        <div class="col-auto" type="button">
           <img
             style="width: 30px; height: 30px; border-radius: 50% 50% 50% 50%"
             :src="'http://localhost:8080' + profile.avatar"
           />
         </div>
-        <div class="col-auto row ms-1 g-0 d-flex align-items-center">
+        <div class="col-auto row ps-1 g-0 d-flex align-items-center text-truncate">
           <h5 class="row g-0">
             <center>
               <div class="row g-0">
@@ -16,46 +16,8 @@
               </div>
             </center>
           </h5>
-          <div class="row g-0 opacity-50 ms-2">
+          <div class="row g-0 opacity-50 text-truncate ms-2">
             {{ profile.address }}
-          </div>
-        </div>
-        <div class="col-auto row g-0 ms-auto" v-if ="request">
-          <div class="col-auto me-1">
-            <button
-              @click="accept()"
-              v-show="!(isAccept || isDelete)"
-              class="btn btn-primary"
-            >
-              Accept
-            </button>
-          </div>
-          <div class="col-auto">
-            <button
-              @click="delete_()"
-              v-show="!(isAccept || isDelete)"
-              class="btn btn-danger"
-            >
-              Delete
-            </button>
-          </div>
-          <div class="col-auto">
-            <button
-              v-show="isAccept"
-              disabled
-              class="opacity-50 btn btn-danger"
-            >
-              Accepted
-            </button>
-          </div>
-          <div class="col-auto">
-            <button
-              v-show="isDelete"
-              disabled
-              class="opacity-50 btn btn-danger"
-            >
-              Deleted
-            </button>
           </div>
         </div>
       </div>

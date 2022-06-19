@@ -3,7 +3,6 @@
     <img
       :src="'http://localhost:8080' + group.avatar"
       class="d-block w-100 mb-3"
-      style="height: 300px"
     />
     <h4 class="row g-0 mb-3">
       {{ group.name }}
@@ -14,7 +13,7 @@
     <center>
       <button
         v-show="!isJoin"
-        class="btn btn-secondary w-75 mb-3"
+        class="btn btn-primary w-75 mb-3"
         @click="joinGroup(group.id)"
       >
         Join Group
