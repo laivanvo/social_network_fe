@@ -59,6 +59,7 @@
                     class="form-check-input"
                     type="checkbox"
                     id="flexSwitchCheckDefault"
+                    @click="searchOfFriend"
                   />
                 </div>
               </div>
@@ -182,8 +183,12 @@
         </div>
       </div>
       <div class="row g-0 p-2" v-show="isPeople">
-        <div class="row g-0 mb-2 bg-light rounded" v-for="profile in peoples" :key="profile.id">
-          <profile-item :profile="profile"/>
+        <div
+          class="row g-0 mb-2 bg-light rounded"
+          v-for="profile in peoples"
+          :key="profile.id"
+        >
+          <profile-item :profile="profile" />
         </div>
       </div>
     </div>
@@ -195,7 +200,7 @@ import $ from "jquery";
 import Login from "@/views/pages/auth/LoginApp.vue";
 import BaseRequest from "@/helpers/BaseRequest";
 import PostApp from "../post/PostApp.vue";
-import ProfileItem from '../personal/profile/ProfileItem.vue';
+import ProfileItem from "../personal/profile/ProfileItem.vue";
 export default {
   components: { PostApp, ProfileItem },
   data() {
@@ -211,7 +216,11 @@ export default {
     };
   },
   created() {
-      this.text = this.$route.params.text ?? '';
+    this.text = this.$route.params.text ? this.$route.params.text : "";
+    if (!this.text) {
+      this.text = JSON.parse(window.localStorage.getItem("text", this.text));
+    }
+    window.localStorage.setItem("text", JSON.stringify(this.text));
   },
   mounted() {},
   methods: {
@@ -235,7 +244,6 @@ export default {
       $("#address").focus();
     },
     offAddress() {
-      alert(1);
       this.isAddress = false;
     },
     openModal() {
@@ -249,18 +257,31 @@ export default {
     },
     searchPost() {
       let data = new FormData();
-      data.append("text", "a");
+      data.append("text", this.text);
       BaseRequest.post("posts/search", data).then((res) => {
-        this.posts = res.data.data;
+        this.posts = res.data.posts;
         this.user = res.data.user;
       });
     },
     searchPeople() {
       let data = new FormData();
-      data.append("text", "a");
+      data.append("text", this.text);
       BaseRequest.post("profiles/search", data).then((res) => {
-        this.peoples = res.data.data;
+        this.peoples = res.data.profiles;
       });
+    },
+    searchOfFriend(e) {
+      let data = new FormData();
+      data.append("text", this.text);
+      if (e.target.value) {
+        BaseRequest.post("profiles/searchOfFriend", data).then((res) => {
+          this.peoples = res.data.profiles;
+        });
+      } else {
+        BaseRequest.post("profiles/search", data).then((res) => {
+          this.peoples = res.data.profiles;
+        });
+      }
     },
   },
 };

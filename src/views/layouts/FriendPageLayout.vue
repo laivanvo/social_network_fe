@@ -7,35 +7,47 @@
         </div>
       </div>
       <div class="row g-0">
-        <div class="row g-0 mb-3">
-          <div class="col-auto ms-2 text-center">
-            <i
-              class="fs-3 w-100 ms-1 bi bi-people"
-              style="border-radius: 50% 50% 50% 50%"
-            >
-            </i>
+        <div class="row g-0 mb-3 dropdown-item" type="button">
+          <div class="row g-0">
+            <div class="col-auto ms-2 text-center">
+              <i
+                class="w-100 ms-1 bi bi-people"
+                style="border-radius: 50% 50% 50% 50%"
+              >
+              </i>
+            </div>
+            <div class="col-auto ms-2 d-flex align-items-center">
+              Friend Page
+            </div>
           </div>
-          <div class="col-auto ms-2 d-flex align-items-center">Friend Page</div>
         </div>
-        <div class="row g-0 mb-3" @click="showRequest()">
-          <div class="col-auto ms-2 text-center">
-            <i
-              class="fs-3 w-100 ms-1 bi bi-collection-fill"
-              style="border-radius: 50% 50% 50% 50%"
-            >
-            </i>
+        <div
+          class="row g-0 mb-3 dropdown-item"
+          type="button"
+          @click="showRequest()"
+        >
+          <div class="row g-0">
+            <div class="col-auto ms-2 text-center">
+              <i
+                class="w-100 ms-1 bi bi-collection-fill"
+                style="border-radius: 50% 50% 50% 50%"
+              >
+              </i>
+            </div>
+            <div class="col-auto ms-2 d-flex align-items-center">Request</div>
           </div>
-          <div class="col-auto ms-2 d-flex align-items-center">Request</div>
         </div>
-        <div class="row g-0 mb-3">
-          <div class="col-auto ms-2 text-center">
-            <i
-              class="fs-3 w-100 ms-1 bi bi-save2"
-              style="border-radius: 50% 50% 50% 50%"
-            >
-            </i>
+        <div class="row g-0 mb-3 dropdown-item" type="button">
+          <div class="row g-0">
+            <div class="col-auto ms-2 text-center">
+              <i
+                class="w-100 ms-1 bi bi-save2"
+                style="border-radius: 50% 50% 50% 50%"
+              >
+              </i>
+            </div>
+            <div class="col-auto ms-2 d-flex align-items-center">suggest</div>
           </div>
-          <div class="col-auto ms-2 d-flex align-items-center">suggest</div>
         </div>
       </div>
     </div>

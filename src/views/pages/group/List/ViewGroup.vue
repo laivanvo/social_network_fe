@@ -140,7 +140,6 @@ export default {
     created() {
         this.group = this.$route.params.group ? this.$route.params.group : null;
         if (!this.group) {
-            console.log(1);
             this.group = JSON.parse(
                 window.localStorage.getItem("groupView", this.group)
             );

@@ -330,7 +330,6 @@ export default {
       BaseRequest.post("comments/" + this.comment.id, data)
         .then(function () {
           _this.isEdit = !_this.isEdit;
-          console.log(1);
         })
         .catch(function (err) {
           console.log(err);

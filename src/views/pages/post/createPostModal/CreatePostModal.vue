@@ -265,7 +265,6 @@ export default {
             console.log(this.in_queue);
             BaseRequest.post("posts", data)
                 .then(function (res) {
-                    alert(1)
                     _this.$emit("addPost", res.data.post);
                 })
                 .catch(function (err) {

@@ -11,13 +11,13 @@
     <div class="carousel-inner" style="height: 300px;">
       <div class="carousel-item active">
         <div class="row g-0 ps-2">
-          <div class="col-4 ps-2 border border-5 rounded">
+          <div class="col-4 ps-2 border border-5 rounded" type="button">
             <profile-item-join :profile="profiles[0]"/>
           </div>
-          <div class="col-4 ps-2 border border-5 rounded">
+          <div class="col-4 ps-2 border border-5 rounded" type="button">
             <profile-item-join :profile="profiles[1]"/>
           </div>
-          <div class="col-4 ps-2 border border-5 rounded">
+          <div class="col-4 ps-2 border border-5 rounded" type="button">
             <profile-item-join :profile="profiles[2]"/>
           </div>
         </div>
@@ -25,13 +25,13 @@
       <div class="row g-0" v-if="(i <= profiles.length - 6)">
         <div class="carousel-item" v-for="profile in profiles" :key="profile.id">
           <div class="row g-0">
-            <div class="col-4 ps-2  ps-2 border border-5 rounded">
+            <div class="col-4 ps-2  ps-2 border border-5 rounded" type="button">
               <profile-item-join :profile="profiles[i]"/>
             </div>
-            <div class="col-4 ps-2 ps-2 border border-5 rounded">
+            <div class="col-4 ps-2 ps-2 border border-5 rounded" type="button">
               <profile-item-join :profile="profiles[i + 1]"/>
             </div>
-            <div class="col-4 ps-2 ps-2 border border-5 rounded">
+            <div class="col-4 ps-2 ps-2 border border-5 rounded" type="button">
               <profile-item-join :profile="profiles[i + 2]"/>
             </div>
           </div>

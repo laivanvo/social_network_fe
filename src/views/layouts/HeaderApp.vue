@@ -23,11 +23,6 @@
             placeholder="      input in social-media"
             @keyup.enter="search"
           />
-          <i
-            v-show="!isSearch"
-            style="color: blue; position: absolute"
-            class="bi bi-search ms-2"
-          ></i>
         </div>
       </div>
       <div class="col-4 row g-0">
@@ -101,12 +96,14 @@
             <div class="dropdown">
               <div
                 style="width: 30px; height: 30px; border-radius: 50%"
-                class="btn btn-secondary bi bi-bell"
+                class="btn btn-secondary d-flex align-items-center text-center justify-content-center"
                 type="button"
                 id="dropdownMenuButton1"
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
-              ></div>
+              >
+                <i class="bi bi-bell"></i>
+              </div>
               <div
                 class="dropdown-menu row g-0"
                 style="width: 300px"
@@ -154,12 +151,14 @@
             <div class="dropdown">
               <div
                 style="width: 30px; height: 30px; border-radius: 50%"
-                class="btn btn-secondary dropdown-toggle"
+                class="btn btn-secondary d-flex align-items-center text-center justify-content-center"
                 type="button"
                 id="dropdownMenuButton1"
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
-              ></div>
+              >
+              <i class="dropdown-toggle"></i>
+              </div>
               <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                 <li @click="logout()">
                   <a class="dropdown-item" type="button"
@@ -221,9 +220,6 @@ export default {
         this.groups = res.data.groups;
       });
     },
-    inputSearch() {
-      alert(1);
-    },
     ViewPersonal() {
       this.$router.push({
         name: "personal",
@@ -241,12 +237,12 @@ export default {
     notification(noti) {
       this.$router.push({
         name: "postView",
-        params: { post: noti.post, user: noti.user_to }
+        params: { post: noti.post, user: noti.user_to },
       });
     },
     search(e) {
-      this.$router.push({name: 'search', text: e.target.value})
-    }
+      this.$router.push({ name: "search", params: { text: e.target.value } });
+    },
   },
 };
 </script>
