@@ -210,6 +210,9 @@ export default {
       isPost: false,
     };
   },
+  created() {
+      this.text = this.$route.params.text ?? '';
+  },
   mounted() {},
   methods: {
     showPost() {

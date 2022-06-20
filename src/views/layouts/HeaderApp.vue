@@ -21,6 +21,7 @@
             class="form-control ms-1 me-1 rounded-pill opacity-50"
             style="position: absolute"
             placeholder="      input in social-media"
+            @keyup.enter="search"
           />
           <i
             v-show="!isSearch"
@@ -243,6 +244,9 @@ export default {
         params: { post: noti.post, user: noti.user_to }
       });
     },
+    search(e) {
+      this.$router.push({name: 'search', text: e.target.value})
+    }
   },
 };
 </script>
