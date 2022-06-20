@@ -1,5 +1,5 @@
 <template>
-    <div class="row g-0 border border-3 rounded d-flex align-items-start">
+    <div class="row g-0 border border-3 rounded">
         <div class="row g-0">
             <div class="row g-0 mt-3 mb-3 ms-2">
                 <h5 class="col-auto">Membership</h5>
@@ -13,16 +13,12 @@
             >
                 <input
                     v-on:keyup.enter="addComment"
+                    @keyup="myFunction"
                     type="text"
                     class="form-control ms-1 me-1 rounded-pill"
-                    placeholder="           comment in this"
+                    placeholder="search in this"
                     style="position: absolute"
                 />
-                <div class="col-auto ms-4 d-flex align-items-center">
-                    <label>
-                        <i class="bi bi-search fs-4 opacity-50"></i>
-                    </label>
-                </div>
             </div>
             <div class="dropdown col-auto ms-auto me-4">
                 <div
@@ -44,11 +40,7 @@
                 </ul>
             </div>
             <div class="row g-0 mt-3 ps-3 pe-3 mb-3">
-                <div
-                    class="row g-0"
-                    v-for="profile in profiles"
-                    :key="profile.id"
-                >
+                <div class="row g-0" v-for="profile in pros" :key="profile.id">
                     <profile-app-member
                         :request="false"
                         :id="group.id"
@@ -74,6 +66,7 @@ export default {
     data() {
         return {
             profiles: [],
+            pros: [],
         };
     },
     mounted() {
@@ -83,7 +76,15 @@ export default {
         getRequest() {
             BaseRequest.get("members/index/" + this.group.id).then((res) => {
                 this.profiles = res.data.profiles;
-                console.log(this.profiles);
+                this.pros = this.profiles;
+            });
+        },
+        myFunction(input) {
+            this.pros = [];
+            this.profiles.map((e) => {
+                if (e.first_name.toLowerCase().indexOf(input.target.value) !== -1) {
+                    this.pros.push(e);
+                }
             });
         },
     },

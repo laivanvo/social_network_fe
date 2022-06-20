@@ -1,6 +1,6 @@
 <template>
     <div class="row g-0">
-        <div class="col-3 border" style="height: 1000px">
+        <div class="col-3 border">
             <div class="row g-0 mt-3 mb-3">
                 <h6 class="col-auto">Manager Group</h6>
                 <div class="col-3"></div>
@@ -107,7 +107,7 @@
                 <div class="col-auto ms-2">Setting</div>
             </div>
         </div>
-        <div class="col-9 row g-0">
+        <div class="col-9 row g-0 d-flex align-items-start">
             <div class="row g-0">
                 <group-info :group="group" v-show="isInfo" />
                 <post-group-view :group="group" v-show="isPost" />

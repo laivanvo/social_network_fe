@@ -1,5 +1,5 @@
 <template>
-    <div class="row g-0 border border-3 rounded d-flex align-items-start">
+    <div class="row g-0 border border-3 rounded">
         <div class="row g-0">
             <div class="row g-0 mt-3 mb-3 ms-2">
                 <h5 class="col-auto">Request membership</h5>
