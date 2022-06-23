@@ -2,13 +2,13 @@
   <div class="row g-0 ps-0" v-if="profile" @click="viewPersonal()">
     <div class="row g-0 mb-2 dropdown-item" type="button">
       <div class="row g-0">
-        <div class="col-auto" type="button">
+        <div class="col-2" type="button">
           <img
             style="width: 30px; height: 30px; border-radius: 50% 50% 50% 50%"
             :src="'http://localhost:8080' + profile.avatar"
           />
         </div>
-        <div class="col-auto row ps-1 g-0 d-flex align-items-center text-truncate">
+        <div class="col-10 row ps-1 g-0 d-flex align-items-center text-truncate">
           <h5 class="row g-0">
             <center>
               <div class="row g-0">

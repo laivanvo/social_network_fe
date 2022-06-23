@@ -71,8 +71,11 @@
           </div>
         </div>
       </div>
-      <div class="col-auto ms-auto">
-        <div class="dropdown col-auto ms-auto me-3">
+      <div class="col-auto ms-auto row g-0">
+        <div class="col-auto ms-auto me-4" type="button" @click="getPost">
+          <i class="bi bi-arrow-clockwise"></i>
+        </div>
+        <div class="dropdown col-auto ms-auto me-4">
           <i
             class="fa fa-ellipsis-h"
             type="button"
@@ -155,14 +158,11 @@
       <div class="col-10 g-0 ms-5 mb-2 me-5 border"></div>
     </div>
 
-    <div class="row g-0 mb-3">
+    <div class="row g-0">
       <div class="col-5">
         <reaction-app @addLike="addLike($event)" :id="post.id" :type="'post'" />
       </div>
-      <div
-        class="col-auto mt-3 mb-3 d-flex align-items-center"
-        @click="showComment"
-      >
+      <div class="col-auto mt-3 d-flex align-items-center" @click="showComment">
         <div
           @mouseover="over('showComment' + post.id)"
           @mouseleave="leave('showComment' + post.id)"
@@ -172,6 +172,9 @@
           comment
         </div>
       </div>
+    </div>
+    <div class="row g-0 mb-3" type="button" @click="load">
+      <i class="bi bi-arrow-clockwise"></i>
     </div>
     <div class="row g-0" v-show="!isBlock">
       <div class="row g-0 m-0 mb-1">
@@ -272,7 +275,7 @@
             :id="'load' + post.id"
             type="button"
           >
-            load more
+            <i class="bi bi-arrow-clockwise"></i>
           </div>
         </div>
       </div>
@@ -377,6 +380,16 @@ export default {
     this.listImage = this.post.file.split("-");
   },
   methods: {
+    getPost() {
+      BaseRequest.get("posts/load/" + this.post.id).then((res) => {
+        this.post = res.data.post;
+        this.blocks = this.post.blocks
+          ? this.post.blocks.map((i) => i.user_id)
+          : [];
+
+        this.checkAuthor();
+      });
+    },
     getComment(page) {
       let data = new FormData();
       let _this = this;
@@ -470,6 +483,8 @@ export default {
       }
       if (this.blocks.indexOf(this.user.id) != -1) {
         this.isBlock = true;
+      } else {
+        this.isBlock = false;
       }
       this.isOffComment = this.post.off_comment === 0 ? false : true;
     },
@@ -497,6 +512,13 @@ export default {
     },
     leave(id) {
       $("#" + id).css({ "text-decoration": "none", color: "black" });
+    },
+    load() {
+      this.page = 0;
+      this.comments = [];
+      if (!this.comments.length) {
+        this.getComment(++this.page);
+      }
     },
   },
 };

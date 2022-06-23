@@ -391,7 +391,7 @@ export default {
       if (this.user.id === this.comment.user.id) {
         this.isAuthor = true;
       }
-      this.isBlock = this.blocks.indexOf(this.comment.user.id) != -1;
+      this.isBlock = this.blocks.indexOf(this.comment.user.id) !== -1;
     },
     block() {
       let data = new FormData();
