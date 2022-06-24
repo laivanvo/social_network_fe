@@ -98,7 +98,7 @@
                   :key="index"
                   style="height: 100px"
                 >
-                  <img class="w-100" :src="'http://localhost:8080' + image" />
+                  <img class="w-100" :src="'http://localhost:8080' + image.path" />
                 </div>
               </div>
             </div>
