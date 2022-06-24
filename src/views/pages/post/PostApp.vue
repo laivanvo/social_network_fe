@@ -1,5 +1,5 @@
 <template>
-  <div name="post" v-show="!isDelete" class="row g-0" v-if="user && post">
+  <div name="post" v-show="!isDelete" class="row g-0 border border-3 rounded" v-if="user && post">
     <edit-post-modal
       :id="'postEdit' + post.id"
       :user="post.user"
@@ -85,7 +85,7 @@
           >
           </i>
           <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-            <li v-show="isAuthor">
+            <li type="button" v-show="isAuthor">
               <a
                 class="dropdown-item"
                 data-bs-toggle="modal"
@@ -94,16 +94,16 @@
                 Edit
               </a>
             </li>
-            <li v-show="isAuthor">
+            <li type="button" v-show="isAuthor">
               <a class="dropdown-item" @click="deletePost">Delete</a>
             </li>
-            <li v-show="!(isAuthor && isSave)" @click="save()">
+            <li type="button" v-show="!isAuthor && !isSave" @click="save()">
               <a class="dropdown-item">Save</a>
             </li>
-            <li v-show="!isAuthor && isSave" @click="save()">
+            <li type="button" v-show="!isAuthor && isSave" @click="save()">
               <a class="dropdown-item">UnSave</a>
             </li>
-            <li>
+            <li type="button">
               <a
                 class="dropdown-item"
                 type="button"
@@ -112,7 +112,7 @@
                 >turn off comments</a
               >
             </li>
-            <li>
+            <li type="button">
               <a
                 class="dropdown-item"
                 type="button"
@@ -134,6 +134,7 @@
       data-bs-toggle="modal"
       data-bs-target="#post"
       @click="showPost()"
+      type="button"
     >
       <div class="col-6 row g-0" v-for="file in post.files" :key="file.id">
         <img
@@ -451,7 +452,7 @@ export default {
     },
     deletePost() {
       let _this = this;
-      BaseRequest.post("posts/" + this.post.id)
+      BaseRequest.get("posts/destroy/" + this.post.id)
         .then(function () {
           _this.isDelete = !_this.isDelete;
         })

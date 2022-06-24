@@ -31,7 +31,7 @@
             :user="user"
             :in_queue="false"
         />
-        <div class="row g-0 border border-3 rounded ms-1 me-1 pt-2 mb-3" v-for="post in posts" :key="post.id">
+        <div class="row g-0 ps-1 pe-1 pt-2" v-for="post in posts" :key="post.id">
             <post-app
                 class="row g-0 bg-white"
                 :postP="post"
@@ -48,6 +48,7 @@ import CreatePostModal from "@/views/pages//post/createPostModal/CreatePostModal
 import DefaultLayout from "@/views/layouts/DefaultLayout";
 
 export default {
+    name: "HomeIndex",
     components: {
         PostApp,
         CreatePostModal,

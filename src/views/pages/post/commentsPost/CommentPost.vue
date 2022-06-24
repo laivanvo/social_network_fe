@@ -180,7 +180,7 @@
             </div>
           </div>
           <div class="row ms-3 g-0 mt-1" @click="loadMoreComment">
-            <styledLink>load more</styledLink>
+            <i class="bi bi-arrow-clockwise"></i>
           </div>
           <div class="row g-0 m-0 mb-3">
             <div class="col-1">
@@ -229,15 +229,6 @@
 </template>
 
 <script>
-import styled, { css } from "vue-styled-components";
-const styledLink = styled.p`
-  &:hover {
-    ${() => css`
-      text-decoration: underline;
-      color: blue;
-    `}
-  }
-`;
 import RepComment1 from "@/views/pages//post/commentsPost/repComment/RepComment1.vue";
 import ReactionApp from "@/views/pages//post/commentsPost/ReactionApp.vue";
 import BaseRequest from "@/helpers/BaseRequest";
@@ -246,7 +237,6 @@ import $ from "jquery";
 
 export default {
   components: {
-    styledLink,
     RepComment1,
     ReactionApp,
   },

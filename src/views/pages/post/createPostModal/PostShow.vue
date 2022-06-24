@@ -9,23 +9,27 @@
           data-bs-ride="carousel"
         >
           <div class="carousel-inner">
-            <div class="carousel-item active">
+            <div
+              class="carousel-item"
+              :class="{ active: index === 0 }"
+              v-for="(file, index) in post.files"
+              :key="file.id"
+            >
               <img
+                v-if="file.type === 'image'"
                 :style="'width: 100%; height: ' + height + 'px;'"
-                :src="'http://localhost:8080' + post.files[0].path"
+                :src="'http://localhost:8080' + file.path"
               />
-            </div>
-            <div class="carousel-item">
-              <img
-               :style="'width: 100%; height: ' + height + 'px;'"
-                :src="'http://localhost:8080' + post.files[1].path"
-              />
-            </div>
-            <div class="carousel-item">
-              <img
-               :style="'width: 100%; height: ' + height + 'px;'"
-                :src="'http://localhost:8080' + post.files[2].path"
-              />
+              <video
+                v-else
+                controls
+                :style="'width: 100%; height: ' + height + 'px;'"
+              >
+                <source
+                  :src="'http://localhost:8080' + file.path"
+                  type="video/mp4"
+                />
+              </video>
             </div>
           </div>
           <button
@@ -50,7 +54,7 @@
       </div>
       <div class="col-1 bg-dark" @click="back"></div>
       <div class="col-3">
-        <post-app-view :postP="post" :user="user" :height="height"/>
+        <post-app-view :postP="post" :user="user" :height="height" />
       </div>
     </div>
   </div>

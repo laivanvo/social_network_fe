@@ -33,13 +33,17 @@
                 </div>
                 <div class="col-7 row g-0 mt-5">
                   <div class="row g-0">
-                    <h5 class="col-auto ms-2 mt-3 " style="font-weight: bold;">
+                    <h5 class="col-auto ms-2 mt-3" style="font-weight: bold">
                       {{ profile.last_name + " " + profile.first_name }}
                     </h5>
                   </div>
                   <div class="row g-0">
                     <div class="col-9"></div>
-                    <edit-profile :profileP="profile" @editProfile="editProfile($event)" class="col-3" />
+                    <edit-profile
+                      :profileP="profile"
+                      @editProfile="editProfile($event)"
+                      class="col-3"
+                    />
                   </div>
                 </div>
               </div>
@@ -97,8 +101,13 @@
                   v-for="(image, index) in images"
                   :key="index"
                   style="height: 100px"
+                  type="button"
+                  @click="showPost()"
                 >
-                  <img class="w-100" :src="'http://localhost:8080' + image.path" />
+                  <img
+                    class="w-100"
+                    :src="'http://localhost:8080' + image.path"
+                  />
                 </div>
               </div>
             </div>
@@ -109,9 +118,12 @@
                   class="col-3 ms-2"
                   v-for="(video, index) in videos"
                   :key="index"
-                  style="height: 200px"
+                  style="height: 100px"
                 >
-                  <video :src="'http://localhost:8080' + video"></video>
+                  <video
+                    class="w-100"
+                    :src="'http://localhost:8080' + video.path"
+                  ></video>
                 </div>
               </div>
             </div>
@@ -121,7 +133,11 @@
             style="overflow: auto; height: 1000px"
             v-if="posts"
           >
-            <div class="row g-0 border border-5 rounded mb-3" v-for="post in posts" :key="post.id">
+            <div
+              class="row g-0 border border-5 rounded mb-3"
+              v-for="post in posts"
+              :key="post.id"
+            >
               <post-app :postP="post" :user="post.user" />
             </div>
           </div>
@@ -137,6 +153,7 @@ import BaseRequest from "@/helpers/BaseRequest";
 import PostApp from "../post/PostApp.vue";
 import EditProfile from "@/views/pages/personal/profile/EditProfile.vue";
 export default {
+  name: "PersonalAuth",
   components: {
     PostApp,
     EditProfile,
@@ -168,11 +185,17 @@ export default {
       });
     },
     editProfile(profile) {
-        this.profile = profile;
-        BaseRequest.get("posts/byPerson/" + this.profile.user_id).then((res) => {
+      this.profile = profile;
+      BaseRequest.get("posts/byPerson/" + this.profile.user_id).then((res) => {
         this.posts = res.data.posts;
       });
-    }
+    },
+    showPost() {
+      this.$router.push({
+        name: "postShow",
+        params: { post: this.post, user: this.user },
+      });
+    },
   },
 };
 </script>

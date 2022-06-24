@@ -44,12 +44,6 @@
             >
               <i class="fa fa-ellipsis-h"></i>
             </div>
-            <!-- <div class="col-auto" v-show="!(isAccept || isDelete)" @click="accept">
-              <button class="btn btn-primary">accept</button>
-            </div>
-            <div class="col-auto" v-show="!(isAccept || isDelete)" @click="delete_">
-              <button class="btn btn-danger">delete</button>
-            </div> -->
             <div class="col-auto" v-show="isAccept">
               <button class="btn btn-secondary opacity-25" disabled>accepted</button>
             </div>

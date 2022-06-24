@@ -6,34 +6,17 @@
     v-if="(profiles.length >= 3)"
   >
     <h4 class="row g-0 mt-3 mb-3">
-      List request
+      List suggest
     </h4>
     <div class="carousel-inner" style="height: 300px;">
-      <div class="carousel-item active">
+      <div class="carousel-item" :class="{ active: index === 0 }" v-for="(da, index) in data" :key="index">
         <div class="row g-0 ps-2">
-          <div class="col-4 ps-2 border border-5 rounded">
-            <profile-item-join :profile="profiles[0]"/>
-          </div>
-          <div class="col-4 ps-2 border border-5 rounded">
-            <profile-item-join :profile="profiles[1]"/>
-          </div>
-          <div class="col-4 ps-2 border border-5 rounded">
-            <profile-item-join :profile="profiles[2]"/>
-          </div>
-        </div>
-      </div>
-      <div class="row g-0" v-if="(i <= profiles.length - 6)">
-        <div class="carousel-item" v-for="profile in profiles" :key="profile.id">
-          <div class="row g-0">
-            <div class="col-4 ps-2  ps-2 border border-5 rounded">
-              <profile-item-join :profile="profiles[i]"/>
-            </div>
-            <div class="col-4 ps-2 ps-2 border border-5 rounded">
-              <profile-item-join :profile="profiles[i + 1]"/>
-            </div>
-            <div class="col-4 ps-2 ps-2 border border-5 rounded">
-              <profile-item-join :profile="profiles[i + 2]"/>
-            </div>
+          <div
+            class="col-4 ps-2 border border-5 rounded"
+            v-for="p in da"
+            :key="p.id"
+          >
+            <profile-item-join :profile="p"/>
           </div>
         </div>
       </div>
@@ -70,6 +53,7 @@ export default {
     return {
       profiles: [],
       i: 1,
+      data: [],
     };
   },
   mounted() {
@@ -79,6 +63,20 @@ export default {
     getprofile() {
       BaseRequest.get("profiles/list").then((res) => {
         this.profiles = res.data.profiles;
+        let a = 0;
+        let pus = [];
+        this.profiles.map((e) =>  {
+          if (a !== 3) {
+              a += 1;
+              pus.push(e)
+              console.log(a)
+          } else {
+            a = 0;
+            this.data.push(pus);
+            pus = [];
+          }
+        })
+        console.log(this.data)
       });
     },
     next() {
